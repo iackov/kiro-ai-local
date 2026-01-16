@@ -22,6 +22,7 @@ from conversation_manager import conversation_manager
 from task_executor import task_executor
 from execution_engine import ExecutionEngine
 from adaptive_planner import adaptive_planner
+from decision_engine import decision_engine
 
 # Rate limiting
 rate_limit_store = defaultdict(list)
@@ -363,6 +364,11 @@ async def get_learning_insights():
 async def get_adaptive_learning():
     """Get adaptive planner learning insights"""
     return adaptive_planner.get_learning_insights()
+
+@app.get("/api/decisions/insights")
+async def get_decision_insights():
+    """Get decision engine insights"""
+    return decision_engine.get_decision_insights()
 
 @app.get("/api/production/metrics")
 async def get_production_metrics():
@@ -793,9 +799,11 @@ async def autonomous_interface(
     except:
         pass
     
-    # Phase 3: Intelligent Planning with Adaptive Learning
+    # Phase 3: Intelligent Planning with Adaptive Learning & Decision Making
     execution_plan = None
     adaptive_suggestions = None
+    autonomous_decision = None
+    
     if intent in ["execute", "modify"]:
         # Create task with intelligent decomposition
         task_obj = task_executor.create_task(message)
@@ -804,8 +812,28 @@ async def autonomous_interface(
         # Get adaptive suggestions
         adaptive_suggestions = adaptive_planner.suggest_improvements(message, steps)
         
+        # Make autonomous decision
+        decision_context = {
+            "intent": intent,
+            "message": message,
+            "pattern": adaptive_suggestions.get("pattern", "generic"),
+            "historical_success_rate": adaptive_suggestions.get("historical_success_rate", 0),
+            "entities": entities,
+            "rag_context_available": len(rag_context) > 0
+        }
+        autonomous_decision = decision_engine.make_decision(decision_context)
+        
         # Optimize steps based on learning
         optimized_steps = adaptive_planner.optimize_steps(steps)
+        
+        # Add safety steps if decision requires them
+        if hasattr(autonomous_decision, 'safety_steps') and autonomous_decision.safety_steps:
+            for safety_step in autonomous_decision.safety_steps:
+                if safety_step == "backup" and not any("backup" in s.lower() for s in optimized_steps):
+                    optimized_steps.insert(0, "Create backup point")
+                elif safety_step == "validation" and not any("validat" in s.lower() for s in optimized_steps):
+                    optimized_steps.append("Validate changes")
+        
         task_obj.steps = optimized_steps
         
         execution_plan = {
@@ -814,14 +842,25 @@ async def autonomous_interface(
             "original_steps": steps,
             "optimizations_applied": len(steps) != len(optimized_steps),
             "estimated_duration": len(optimized_steps) * 2,
-            "requires_approval": not auto_execute,
+            "requires_approval": not auto_execute or autonomous_decision.action == "require_approval",
             "safety_level": "high" if any(word in message.lower() for word in ["delete", "remove", "drop"]) else "medium",
-            "adaptive_suggestions": adaptive_suggestions
+            "adaptive_suggestions": adaptive_suggestions,
+            "autonomous_decision": autonomous_decision.to_dict()
         }
     
-    # Phase 4: Execution (if auto_execute)
+    # Phase 4: Execution (if auto_execute and decision allows)
     task_result = None
-    if auto_execute and execution_plan:
+    should_execute = auto_execute and execution_plan
+    
+    # Check autonomous decision
+    if should_execute and autonomous_decision:
+        if autonomous_decision.action == "require_approval":
+            should_execute = False
+        elif autonomous_decision.action == "suggest_execute":
+            # Execute but mark as suggested
+            pass
+    
+    if should_execute:
         task_obj.status = "running"
         task_obj.started_at = datetime.now().isoformat()
         
