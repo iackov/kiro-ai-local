@@ -23,6 +23,7 @@ from task_executor import task_executor
 from execution_engine import ExecutionEngine
 from adaptive_planner import adaptive_planner
 from decision_engine import decision_engine
+from self_improvement import self_improvement_engine
 
 # Rate limiting
 rate_limit_store = defaultdict(list)
@@ -369,6 +370,32 @@ async def get_adaptive_learning():
 async def get_decision_insights():
     """Get decision engine insights"""
     return decision_engine.get_decision_insights()
+
+@app.get("/api/self-improvement/analyze")
+async def analyze_for_improvements():
+    """Analyze system and identify improvement opportunities"""
+    metrics = metrics_store.get_stats()
+    adaptive_insights = adaptive_planner.get_learning_insights()
+    decision_insights = decision_engine.get_decision_insights()
+    
+    opportunities = self_improvement_engine.analyze_system_performance(
+        metrics, adaptive_insights, decision_insights
+    )
+    
+    return {
+        "opportunities_found": len(opportunities),
+        "opportunities": [o.to_dict() for o in opportunities]
+    }
+
+@app.get("/api/self-improvement/plan")
+async def get_improvement_plan():
+    """Get prioritized improvement plan"""
+    return self_improvement_engine.generate_improvement_plan()
+
+@app.get("/api/self-improvement/insights")
+async def get_improvement_insights():
+    """Get self-improvement insights"""
+    return self_improvement_engine.get_improvement_insights()
 
 @app.get("/api/production/metrics")
 async def get_production_metrics():
