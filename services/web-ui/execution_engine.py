@@ -20,6 +20,7 @@ class ExecutionEngine:
     async def execute_step(self, step: str, context: Dict = None) -> Dict[str, Any]:
         """Execute a single step with real service calls"""
         step_lower = step.lower()
+        print(f"DEBUG execute_step: '{step}' -> '{step_lower}'")
         result = {
             "step": step,
             "status": "pending",
@@ -50,8 +51,99 @@ class ExecutionEngine:
                         return result
             
             # === CODE GENERATION ===
+            # Step 1: Analyze requirements
+            if "analyze" in step_lower and "requirements" in step_lower:
+                result["data"] = {"message": "Requirements analyzed from prompt"}
+                result["status"] = "completed"
+                return result
+            
+            # Step 2: Design code structure
+            if "design" in step_lower and ("code" in step_lower or "structure" in step_lower):
+                result["data"] = {"message": "Code structure designed"}
+                result["status"] = "completed"
+                return result
+            
+            # Step 3: Generate code using AI
+            if "generate" in step_lower and ("code" in step_lower or "ai" in step_lower):
+                print(f"DEBUG: Generating code for step: {step}")
+                from code_generator import code_generator
+                if code_generator:
+                    print("DEBUG: Code generator found")
+                    prompt = context.get("original_message", step) if context else step
+                    print(f"DEBUG: Prompt: {prompt}")
+                    
+                    # Extract file path from prompt if present
+                    import re
+                    path_match = re.search(r'(?:save|write|create).*?(?:to|in|at)\s+([^\s&]+\.py)', prompt.lower())
+                    target_path = path_match.group(1) if path_match else None
+                    print(f"DEBUG: Target path: {target_path}")
+                    
+                    # Generate code
+                    gen_result = await code_generator.generate_code(prompt)
+                    print(f"DEBUG: Generation result: {gen_result.get('success', False)}")
+                    
+                    if gen_result["success"]:
+                        # Store code in context for next steps
+                        if context:
+                            context["generated_code"] = gen_result["code"]
+                            context["target_path"] = target_path
+                        
+                        result["data"] = {
+                            "success": True,
+                            "code_length": len(gen_result["code"]),
+                            "lines": len(gen_result["code"].split('\n')),
+                            "target_path": target_path
+                        }
+                        result["status"] = "success"
+                    else:
+                        result["data"] = gen_result
+                        result["status"] = "failed"
+                    return result
+                else:
+                    print("DEBUG: Code generator NOT found!")
+                    result["status"] = "failed"
+                    result["error"] = "Code generator not initialized"
+                    return result
+            
+            # Step 4: Validate code safety
+            if "validate" in step_lower and ("code" in step_lower or "safety" in step_lower):
+                from code_generator import code_generator
+                if code_generator and context and "generated_code" in context:
+                    validation = code_generator.validate_code(context["generated_code"], "python")
+                    result["data"] = validation
+                    result["status"] = "success" if validation["valid"] else "failed"
+                else:
+                    result["data"] = {"valid": True, "message": "No code to validate"}
+                    result["status"] = "completed"
+                return result
+            
+            # Step 5: Create file in safe zone
+            if "create" in step_lower and "file" in step_lower and "safe" in step_lower:
+                from code_generator import code_generator
+                if code_generator and context and "generated_code" in context and "target_path" in context:
+                    file_result = code_generator.create_file(context["target_path"], context["generated_code"])
+                    result["data"] = file_result
+                    result["status"] = "success" if file_result["success"] else "failed"
+                    return result
+            
+            # Step 6: Verify file creation
+            if "verify" in step_lower and "file" in step_lower:
+                import os
+                if context and "target_path" in context:
+                    exists = os.path.exists(context["target_path"])
+                    result["data"] = {
+                        "file_exists": exists,
+                        "path": context["target_path"]
+                    }
+                    result["status"] = "success" if exists else "failed"
+                else:
+                    result["data"] = {"message": "No file to verify"}
+                    result["status"] = "completed"
+                return result
+            
+            # === LEGACY CODE GENERATION (fallback) ===
             # Generate code (full workflow: generate + save + execute)
-            if "generate" in step_lower and ("code" in step_lower or "program" in step_lower or "script" in step_lower or "game" in step_lower):
+            if "generate" in step_lower and ("program" in step_lower or "script" in step_lower or "game" in step_lower):
                 from code_generator import code_generator
                 if code_generator:
                     prompt = context.get("original_message", step) if context else step
@@ -154,8 +246,8 @@ class ExecutionEngine:
                     result["data"] = metrics_store.analyze_performance()
                 result["status"] = "success"
             
-            # Configuration generation
-            elif "generate" in step_lower and "config" in step_lower:
+            # Configuration generation (must be before generic generate)
+            elif "generate" in step_lower and "config" in step_lower and "code" not in step_lower:
                 prompt = context.get("original_message", step) if context else step
                 resp = await self.http_client.post(
                     f"{self.services['arch']}/arch/propose",

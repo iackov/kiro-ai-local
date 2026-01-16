@@ -50,6 +50,18 @@ class TaskExecutor:
         """Break task into steps with intelligent analysis"""
         desc_lower = description.lower()
         
+        # CODE/GAME CREATION - NEW!
+        if any(word in desc_lower for word in ['create', 'generate', 'write', 'build']) and \
+           any(word in desc_lower for word in ['code', 'program', 'script', 'game', 'calculator', 'app', 'tic-tac-toe']):
+            return [
+                "Analyze requirements",
+                "Design code structure",
+                "Generate code using AI",
+                "Validate code safety",
+                "Create file in safe zone",
+                "Verify file creation"
+            ]
+        
         # Advanced pattern matching with context
         if "health" in desc_lower or "status" in desc_lower:
             return [

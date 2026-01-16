@@ -55,7 +55,9 @@ class CodeGenerator:
     async def generate_code(self, prompt: str, language: str = "python") -> Dict[str, Any]:
         """Generate code using Ollama"""
         try:
+            print(f"DEBUG generate_code: Starting generation for prompt: {prompt[:100]}...")
             async with httpx.AsyncClient(timeout=60.0) as client:
+                print(f"DEBUG generate_code: Calling Ollama at {self.ollama_url}")
                 response = await client.post(
                     f"{self.ollama_url}/api/generate",
                     json={
@@ -65,9 +67,12 @@ class CodeGenerator:
                     }
                 )
                 
+                print(f"DEBUG generate_code: Ollama response status: {response.status_code}")
+                
                 if response.status_code == 200:
                     result = response.json()
                     code = result.get("response", "")
+                    print(f"DEBUG generate_code: Got code, length: {len(code)}")
                     
                     # Clean up code (remove markdown if present)
                     if "```" in code:
@@ -81,14 +86,18 @@ class CodeGenerator:
                         "language": language
                     }
                 else:
+                    error_msg = f"Ollama returned {response.status_code}"
+                    print(f"DEBUG generate_code: ERROR - {error_msg}")
                     return {
                         "success": False,
-                        "error": f"Ollama returned {response.status_code}"
+                        "error": error_msg
                     }
         except Exception as e:
+            error_msg = str(e)
+            print(f"DEBUG generate_code: EXCEPTION - {error_msg}")
             return {
                 "success": False,
-                "error": str(e)
+                "error": error_msg
             }
     
     def validate_code(self, code: str, language: str) -> Dict[str, Any]:
