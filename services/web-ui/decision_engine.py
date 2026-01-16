@@ -63,10 +63,20 @@ class DecisionEngine:
         confidence = 0.5
         
         # Decision 1: Should we auto-execute?
-        if intent in ["execute", "modify"]:
+        if intent in ["execute", "modify", "create"]:  # Added "create"
             # Check risk level
             is_high_risk = any(risk in message.lower() for risk in self.decision_rules["auto_execute"]["high_risk_patterns"])
             is_low_risk = pattern in self.decision_rules["auto_execute"]["low_risk_patterns"]
+            
+            # NEW: Create operations in safe zones are low risk
+            if intent == "create":
+                safe_zones = ["playground/", "generated/", "experiments/", "tic-tac-toe/", "demos/", "examples/"]
+                is_in_safe_zone = any(zone in message.lower() for zone in safe_zones)
+                if is_in_safe_zone:
+                    confidence = 0.95
+                    reasoning.append("Code creation in safe zone - auto-approved")
+                    action = "auto_execute"
+                    return Decision(intent, action, confidence, reasoning)
             
             if is_high_risk:
                 confidence = 0.3

@@ -29,6 +29,79 @@ class ExecutionEngine:
         }
         
         try:
+            # === FILE AND FOLDER CREATION ===
+            # Create folder
+            if "create" in step_lower and ("folder" in step_lower or "directory" in step_lower):
+                from code_generator import code_generator
+                if code_generator and context and "path" in context:
+                    folder_result = code_generator.create_folder(context["path"])
+                    result["data"] = folder_result
+                    result["status"] = "success" if folder_result["success"] else "failed"
+                    return result
+            
+            # Create file with content
+            if "create" in step_lower and "file" in step_lower:
+                from code_generator import code_generator
+                if code_generator and context:
+                    if "path" in context and "code" in context:
+                        file_result = code_generator.create_file(context["path"], context["code"])
+                        result["data"] = file_result
+                        result["status"] = "success" if file_result["success"] else "failed"
+                        return result
+            
+            # === CODE GENERATION ===
+            # Generate code (full workflow: generate + save + execute)
+            if "generate" in step_lower and ("code" in step_lower or "program" in step_lower or "script" in step_lower or "game" in step_lower):
+                from code_generator import code_generator
+                if code_generator:
+                    prompt = context.get("original_message", step) if context else step
+                    
+                    # Extract file path from prompt if present
+                    import re
+                    path_match = re.search(r'(?:save|write|create).*?(?:to|in|at)\s+([^\s]+\.py)', prompt.lower())
+                    target_path = path_match.group(1) if path_match else None
+                    
+                    # Generate code
+                    gen_result = await code_generator.generate_code(prompt)
+                    
+                    if gen_result["success"] and target_path:
+                        # Auto-save if path specified
+                        code = gen_result["code"]
+                        file_result = code_generator.create_file(target_path, code)
+                        gen_result["file_created"] = target_path if file_result["success"] else None
+                        gen_result["file_result"] = file_result
+                    
+                    result["data"] = gen_result
+                    result["status"] = "success" if gen_result["success"] else "failed"
+                    return result
+            
+            # Save generated code to file
+            if "save" in step_lower and ("code" in step_lower or "file" in step_lower):
+                from code_generator import code_generator
+                if code_generator and context and "code" in context and "path" in context:
+                    file_result = code_generator.create_file(context["path"], context["code"])
+                    result["data"] = file_result
+                    result["status"] = "success" if file_result["success"] else "failed"
+                    return result
+            
+            # Execute code
+            if ("execute" in step_lower or "run" in step_lower or "test" in step_lower) and ("code" in step_lower or "program" in step_lower or "script" in step_lower):
+                from code_generator import code_generator
+                if code_generator and context:
+                    # Try to get code from context or from file
+                    code = context.get("code")
+                    if not code and "path" in context:
+                        # Read from file
+                        import os
+                        if os.path.exists(context["path"]):
+                            with open(context["path"], 'r') as f:
+                                code = f.read()
+                    
+                    if code:
+                        exec_result = code_generator.execute_code(code)
+                        result["data"] = exec_result
+                        result["status"] = "success" if exec_result["success"] else "failed"
+                        return result
             # Health checks
             if "health" in step_lower:
                 if "rag" in step_lower:

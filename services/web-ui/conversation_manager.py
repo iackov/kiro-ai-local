@@ -57,16 +57,35 @@ class ConversationManager:
         """Advanced intent detection with context awareness"""
         message_lower = message.lower()
         
-        # Priority 1: Action verbs (execute)
+        # Priority 1: Code/Content Creation (NEW - highest priority for creative tasks)
+        creation_keywords = ["create", "generate", "write", "build", "make"]
+        creative_targets = ["code", "program", "script", "game", "app", "calculator", 
+                          "function", "class", "tic-tac-toe", "file", "project", "python"]
+        safe_zones = ["playground/", "generated/", "experiments/", "tic-tac-toe/", 
+                     "demos/", "examples/"]
+        
+        has_creation = any(verb in message_lower for verb in creation_keywords)
+        has_creative_target = any(target in message_lower for target in creative_targets)
+        has_safe_zone = any(zone in message_lower for zone in safe_zones)
+        has_save_to_safe = "save" in message_lower and has_safe_zone
+        
+        # If creating code/game OR saving to safe zone, it's creation
+        if (has_creation and (has_creative_target or has_safe_zone)) or has_save_to_safe:
+            return "create"
+        
+        # Priority 2: Action verbs (execute)
         action_verbs = ["check", "test", "run", "execute", "perform", "start", "stop", 
-                       "restart", "deploy", "rollback", "apply", "fix", "debug"]
+                       "restart", "deploy", "rollback", "apply", "fix", "debug", "play"]
         if any(verb in message_lower for verb in action_verbs):
+            # But if it's "play" after creation, still treat as create
+            if "play" in message_lower and has_creation:
+                return "create"
             return "execute"
         
-        # Priority 2: Creation/Modification
-        creation_verbs = ["add", "create", "build", "setup", "configure", "install",
-                         "update", "modify", "change", "remove", "delete"]
-        if any(verb in message_lower for verb in creation_verbs):
+        # Priority 3: Infrastructure Modification (dangerous)
+        modification_verbs = ["add", "setup", "configure", "install",
+                             "update", "modify", "change", "remove", "delete"]
+        if any(verb in message_lower for verb in modification_verbs):
             return "modify"
         
         # Priority 3: Analysis
