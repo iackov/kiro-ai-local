@@ -42,9 +42,9 @@ try {
 Write-Host "[3] Unified Autonomous..." -NoNewline
 $total++
 try {
-    $body = @{ message = "Check health"; auto_execute = $true }
-    $unified = Invoke-RestMethod -Uri "$baseUrl/api/autonomous" -Method Post -Body $body -TimeoutSec 30
-    if ($unified.task_executed) {
+    $body = "message=Check health&auto_execute=true"
+    $unified = Invoke-RestMethod -Uri "$baseUrl/api/autonomous" -Method Post -Body $body -ContentType "application/x-www-form-urlencoded" -TimeoutSec 30
+    if ($unified.task_result) {
         Write-Host " OK" -ForegroundColor Green
         $passed++
     } else {
