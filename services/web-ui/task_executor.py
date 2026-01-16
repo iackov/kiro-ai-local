@@ -1,11 +1,15 @@
 """
-Task Execution Engine - Autonomous Task Execution
+Task Execution Engine - Autonomous Task Execution with Loop Protection
 """
 from typing import Dict, List
 from datetime import datetime
 import uuid
 
 class Task:
+    # Anti-loop protection
+    MAX_STEPS = 50
+    MAX_EXECUTION_TIME = 300  # 5 minutes max per task
+    
     def __init__(self, task_id: str, description: str):
         self.task_id = task_id
         self.description = description
@@ -16,6 +20,7 @@ class Task:
         self.created_at = datetime.now().isoformat()
         self.started_at = None
         self.completed_at = None
+        self.execution_start_time = None  # For timeout detection
     
     def to_dict(self) -> Dict:
         return {

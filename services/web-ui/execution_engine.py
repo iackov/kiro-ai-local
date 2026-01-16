@@ -6,10 +6,16 @@ import httpx
 from datetime import datetime
 
 class ExecutionEngine:
+    # Anti-loop protection constants
+    MAX_STEPS_PER_TASK = 50  # Prevent infinite step execution
+    MAX_RETRY_ATTEMPTS = 3   # Prevent infinite retries
+    STEP_TIMEOUT = 30.0      # Maximum time per step (seconds)
+    
     def __init__(self, http_client: httpx.AsyncClient, services: Dict[str, str]):
         self.http_client = http_client
         self.services = services
         self.execution_history = []
+        self.current_step_count = 0  # Track steps to prevent loops
     
     async def execute_step(self, step: str, context: Dict = None) -> Dict[str, Any]:
         """Execute a single step with real service calls"""
@@ -166,11 +172,27 @@ class ExecutionEngine:
         return result
     
     async def execute_task(self, steps: List[str], context: Dict = None) -> List[Dict]:
-        """Execute all steps in a task"""
+        """Execute all steps in a task with anti-loop protection"""
+        # ANTI-LOOP PROTECTION: Limit total steps
+        if len(steps) > self.MAX_STEPS_PER_TASK:
+            raise ValueError(f"Too many steps ({len(steps)}). Maximum allowed: {self.MAX_STEPS_PER_TASK}")
+        
         results = []
         execution_context = context.copy() if context else {}
+        self.current_step_count = 0  # Reset counter
         
         for i, step in enumerate(steps):
+            # ANTI-LOOP PROTECTION: Check step count
+            self.current_step_count += 1
+            if self.current_step_count > self.MAX_STEPS_PER_TASK:
+                results.append({
+                    "step": "LOOP_PROTECTION",
+                    "status": "failed",
+                    "error": f"Maximum steps exceeded ({self.MAX_STEPS_PER_TASK}). Possible infinite loop detected.",
+                    "timestamp": datetime.now().isoformat()
+                })
+                break
+            
             # Execute step
             result = await self.execute_step(step, execution_context)
             results.append(result)
