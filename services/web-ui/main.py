@@ -12,12 +12,14 @@ import time
 import asyncio
 from contextlib import asynccontextmanager
 from collections import defaultdict
+from datetime import datetime
 
 from metrics import metrics_store
 from circuit_breaker import circuit_breaker, CircuitBreakerOpenError
 from knowledge_graph import knowledge_graph
 from goal_manager import goal_manager, GoalStatus
 from conversation_manager import conversation_manager
+from task_executor import task_executor
 
 # Rate limiting
 rate_limit_store = defaultdict(list)
@@ -685,6 +687,67 @@ async def get_session_history(session_id: str):
         "session": session.to_dict(),
         "messages": session.messages
     }
+
+@app.post("/api/execute")
+async def execute_task(task: str = Form(...)):
+    """Execute autonomous task"""
+    # Create task
+    task_obj = task_executor.create_task(task)
+    
+    # Decompose into steps
+    steps = task_executor.decompose_task(task)
+    task_obj.steps = steps
+    task_obj.status = "running"
+    task_obj.started_at = datetime.now().isoformat()
+    
+    # Execute steps
+    results = []
+    for i, step in enumerate(steps):
+        task_obj.current_step = i + 1
+        
+        # Execute step based on type
+        if "health" in step.lower():
+            try:
+                health = await http_client.get(f"{SERVICES['rag']}/health")
+                results.append({"step": step, "status": "success", "data": health.json()})
+            except:
+                results.append({"step": step, "status": "failed"})
+        
+        elif "metrics" in step.lower():
+            try:
+                metrics = metrics_store.get_stats()
+                results.append({"step": step, "status": "success", "data": metrics})
+            except:
+                results.append({"step": step, "status": "failed"})
+        
+        else:
+            results.append({"step": step, "status": "completed"})
+    
+    # Complete task
+    task_obj.status = "completed"
+    task_obj.completed_at = datetime.now().isoformat()
+    task_obj.result = results
+    
+    return {
+        "task_id": task_obj.task_id,
+        "status": task_obj.status,
+        "steps_completed": len(steps),
+        "results": results
+    }
+
+@app.get("/api/tasks")
+async def list_tasks():
+    """List all tasks"""
+    tasks = [t.to_dict() for t in task_executor.tasks.values()]
+    return {"tasks": tasks, "total": len(tasks)}
+
+@app.get("/api/tasks/{task_id}")
+async def get_task_status(task_id: str):
+    """Get task status"""
+    task = task_executor.get_task(task_id)
+    if not task:
+        return {"error": "Task not found"}
+    return task.to_dict()
 
 @app.get("/api/metrics/insights")
 async def get_metrics_insights():
