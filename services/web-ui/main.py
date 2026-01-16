@@ -21,6 +21,7 @@ from goal_manager import goal_manager, GoalStatus
 from conversation_manager import conversation_manager
 from task_executor import task_executor
 from execution_engine import ExecutionEngine
+from adaptive_planner import adaptive_planner
 
 # Rate limiting
 rate_limit_store = defaultdict(list)
@@ -357,6 +358,11 @@ async def dismiss_suggestion(suggestion_action: str = Form(...)):
 async def get_learning_insights():
     """Get learning insights from user preferences"""
     return metrics_store.get_learning_insights()
+
+@app.get("/api/learning/adaptive")
+async def get_adaptive_learning():
+    """Get adaptive planner learning insights"""
+    return adaptive_planner.get_learning_insights()
 
 @app.get("/api/production/metrics")
 async def get_production_metrics():
@@ -787,20 +793,30 @@ async def autonomous_interface(
     except:
         pass
     
-    # Phase 3: Intelligent Planning
+    # Phase 3: Intelligent Planning with Adaptive Learning
     execution_plan = None
+    adaptive_suggestions = None
     if intent in ["execute", "modify"]:
         # Create task with intelligent decomposition
         task_obj = task_executor.create_task(message)
         steps = task_executor.decompose_task(message)
-        task_obj.steps = steps
+        
+        # Get adaptive suggestions
+        adaptive_suggestions = adaptive_planner.suggest_improvements(message, steps)
+        
+        # Optimize steps based on learning
+        optimized_steps = adaptive_planner.optimize_steps(steps)
+        task_obj.steps = optimized_steps
         
         execution_plan = {
             "task_id": task_obj.task_id,
-            "steps": steps,
-            "estimated_duration": len(steps) * 2,  # seconds
+            "steps": optimized_steps,
+            "original_steps": steps,
+            "optimizations_applied": len(steps) != len(optimized_steps),
+            "estimated_duration": len(optimized_steps) * 2,
             "requires_approval": not auto_execute,
-            "safety_level": "high" if any(word in message.lower() for word in ["delete", "remove", "drop"]) else "medium"
+            "safety_level": "high" if any(word in message.lower() for word in ["delete", "remove", "drop"]) else "medium",
+            "adaptive_suggestions": adaptive_suggestions
         }
     
     # Phase 4: Execution (if auto_execute)
@@ -816,8 +832,11 @@ async def autonomous_interface(
             "entities": entities
         }
         
-        results = await execution_engine.execute_task(steps, execution_context)
+        results = await execution_engine.execute_task(optimized_steps, execution_context)
         summary = execution_engine.get_execution_summary(results)
+        
+        # Record execution for adaptive learning
+        adaptive_planner.record_execution(message, optimized_steps, results, summary)
         
         task_obj.status = summary["status"]
         task_obj.completed_at = datetime.now().isoformat()
