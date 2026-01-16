@@ -181,6 +181,18 @@ async def apply_change(change_id: str = Form(...)):
     except Exception as e:
         return {"error": str(e)}
 
+@app.post("/api/arch/rollback")
+async def rollback_change(rollback_id: str = Form(...)):
+    """Rollback architecture change"""
+    try:
+        resp = await http_client.post(
+            f"{SERVICES['arch']}/arch/rollback",
+            json={"rollback_id": rollback_id}
+        )
+        return resp.json()
+    except Exception as e:
+        return {"error": str(e)}
+
 @app.post("/api/ollama/generate")
 async def ollama_generate(
     prompt: str = Form(...),
