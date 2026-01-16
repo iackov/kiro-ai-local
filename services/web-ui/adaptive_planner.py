@@ -48,10 +48,14 @@ class AdaptivePlanner:
             return "health_check"
         elif "add" in task_lower or "create" in task_lower:
             if "redis" in task_lower or "cache" in task_lower:
-                return "add_cache"
+                return "add_service"
             elif "service" in task_lower:
                 return "add_service"
             return "create_resource"
+        elif "update" in task_lower or "modify" in task_lower:
+            if "production" in task_lower or "database" in task_lower or "schema" in task_lower:
+                return "modify_production"
+            return "modify_config"
         elif "optimize" in task_lower or "improve" in task_lower:
             return "optimization"
         elif "analyze" in task_lower:
@@ -114,12 +118,21 @@ class AdaptivePlanner:
                     })
         
         # Suggest additional steps based on patterns
-        if pattern == "add_service" and not any("backup" in s.lower() for s in proposed_steps):
+        if pattern in ["add_service", "modify_production", "modify_config"] and not any("backup" in s.lower() for s in proposed_steps):
             suggestions.append({
                 "type": "missing_step",
                 "message": "Consider adding backup step before applying changes",
                 "suggested_step": "Create backup point",
                 "insert_before": "Apply configuration",
+                "confidence": "high"
+            })
+        
+        if pattern == "modify_production" and not any("validat" in s.lower() for s in proposed_steps):
+            suggestions.append({
+                "type": "missing_step",
+                "message": "Production changes require validation",
+                "suggested_step": "Validate changes in staging",
+                "insert_before": "Apply changes",
                 "confidence": "high"
             })
         

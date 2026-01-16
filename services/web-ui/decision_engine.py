@@ -40,8 +40,8 @@ class DecisionEngine:
                 "high_risk_patterns": ["delete", "drop", "remove", "modify_production"]
             },
             "safety": {
-                "require_backup": ["add_service", "modify_config", "update_schema"],
-                "require_validation": ["generate_config", "modify_architecture"],
+                "require_backup": ["add_service", "modify_config", "modify_production", "create_resource"],
+                "require_validation": ["generate_config", "modify_architecture", "modify_production"],
                 "max_retries": 3
             },
             "optimization": {
