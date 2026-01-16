@@ -55,6 +55,11 @@ class ConversationManager:
     
     def detect_intent(self, message: str) -> str:
         message_lower = message.lower()
+        
+        # Execute patterns (more specific)
+        if any(word in message_lower for word in ["check", "analyze", "inspect", "review", "test"]):
+            return "execute"
+        
         for intent, patterns in self.intent_patterns.items():
             if any(pattern in message_lower for pattern in patterns):
                 return intent
