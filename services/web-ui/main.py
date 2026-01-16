@@ -25,6 +25,7 @@ from adaptive_planner import adaptive_planner
 from decision_engine import decision_engine
 from self_improvement import self_improvement_engine
 from meta_learning import meta_learning_engine
+from predictive_engine import predictive_engine
 
 # Rate limiting
 rate_limit_store = defaultdict(list)
@@ -402,6 +403,26 @@ async def get_improvement_insights():
 async def get_meta_learning_insights():
     """Get meta-learning insights"""
     return meta_learning_engine.get_meta_insights()
+
+@app.get("/api/predictive/analyze")
+async def analyze_predictions():
+    """Analyze trends and generate predictions"""
+    metrics = metrics_store.get_stats()
+    adaptive_insights = adaptive_planner.get_learning_insights()
+    
+    predictions = predictive_engine.analyze_trends(metrics, adaptive_insights)
+    proactive_actions = predictive_engine.generate_proactive_actions(predictions)
+    
+    return {
+        "predictions": [p.to_dict() for p in predictions],
+        "proactive_actions": proactive_actions,
+        "total_predictions": len(predictions)
+    }
+
+@app.get("/api/predictive/insights")
+async def get_predictive_insights():
+    """Get predictive engine insights"""
+    return predictive_engine.get_predictive_insights()
 
 @app.get("/api/production/metrics")
 async def get_production_metrics():
@@ -880,6 +901,10 @@ async def autonomous_interface(
             "adaptive_suggestions": adaptive_suggestions,
             "autonomous_decision": autonomous_decision.to_dict()
         }
+        
+        # Predict failure points
+        failure_predictions = predictive_engine.predict_failure_points(execution_plan)
+        execution_plan["predicted_failure_points"] = failure_predictions
     
     # Phase 4: Execution (if auto_execute and decision allows)
     task_result = None
