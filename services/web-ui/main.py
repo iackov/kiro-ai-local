@@ -20,6 +20,7 @@ from knowledge_graph import knowledge_graph
 from goal_manager import goal_manager, GoalStatus
 from conversation_manager import conversation_manager
 from task_executor import task_executor
+from execution_engine import ExecutionEngine
 
 # Rate limiting
 rate_limit_store = defaultdict(list)
@@ -43,16 +44,22 @@ def check_rate_limit(client_ip: str) -> bool:
 
 # Global HTTP client with connection pooling
 http_client = None
+execution_engine = None
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Manage HTTP client lifecycle"""
-    global http_client
+    global http_client, execution_engine
     # Startup: create client with connection pooling
     limits = httpx.Limits(max_keepalive_connections=20, max_connections=100)
     timeout = httpx.Timeout(30.0, connect=10.0)
     http_client = httpx.AsyncClient(limits=limits, timeout=timeout)
     print("✓ HTTP client initialized with connection pooling")
+    
+    # Initialize execution engine
+    execution_engine = ExecutionEngine(http_client, SERVICES)
+    print("✓ Execution engine initialized")
+    
     yield
     # Shutdown: close client gracefully
     print("Shutting down HTTP client...")
@@ -802,71 +809,31 @@ async def autonomous_interface(
         task_obj.status = "running"
         task_obj.started_at = datetime.now().isoformat()
         
-        results = []
-        for i, step in enumerate(steps):
-            task_obj.current_step = i + 1
-            
-            # Execute based on step content
-            step_lower = step.lower()
-            
-            if "health" in step_lower:
-                try:
-                    health = await http_client.get(f"{SERVICES['rag']}/health", timeout=5.0)
-                    results.append({"step": step, "status": "success", "data": health.json()})
-                except Exception as e:
-                    results.append({"step": step, "status": "failed", "error": str(e)})
-            
-            elif "metrics" in step_lower or "measure" in step_lower:
-                try:
-                    metrics = metrics_store.get_stats()
-                    results.append({"step": step, "status": "success", "data": metrics})
-                except Exception as e:
-                    results.append({"step": step, "status": "failed", "error": str(e)})
-            
-            elif "analyze" in step_lower:
-                try:
-                    analysis = metrics_store.analyze_performance()
-                    results.append({"step": step, "status": "success", "data": analysis})
-                except Exception as e:
-                    results.append({"step": step, "status": "failed", "error": str(e)})
-            
-            elif "optimize" in step_lower or "improve" in step_lower:
-                try:
-                    opportunities = metrics_store.detect_auto_healing_opportunities()
-                    results.append({"step": step, "status": "success", "data": {"opportunities": len(opportunities)}})
-                except Exception as e:
-                    results.append({"step": step, "status": "failed", "error": str(e)})
-            
-            elif "generate" in step_lower and "config" in step_lower:
-                try:
-                    # Use arch engine to generate config
-                    arch_resp = await http_client.post(
-                        f"{SERVICES['arch']}/arch/propose",
-                        json={"prompt": message, "auto_apply": False},
-                        timeout=10.0
-                    )
-                    arch_data = arch_resp.json()
-                    results.append({"step": step, "status": "success", "data": arch_data})
-                except Exception as e:
-                    results.append({"step": step, "status": "failed", "error": str(e)})
-            
-            else:
-                # Generic step completion
-                results.append({"step": step, "status": "completed", "data": {"message": "Step executed"}})
-            
-            # Small delay between steps
-            await asyncio.sleep(0.1)
+        # Use real execution engine
+        execution_context = {
+            "original_message": message,
+            "intent": intent,
+            "entities": entities
+        }
         
-        task_obj.status = "completed"
+        results = await execution_engine.execute_task(steps, execution_context)
+        summary = execution_engine.get_execution_summary(results)
+        
+        task_obj.status = summary["status"]
         task_obj.completed_at = datetime.now().isoformat()
         task_obj.result = results
-        task_result = task_obj.to_dict()
+        task_result = {
+            **task_obj.to_dict(),
+            "summary": summary
+        }
     
     # Phase 5: Generate Response
     response_text = ""
     if task_result:
-        successful_steps = sum(1 for r in task_result["result"] if r["status"] in ["success", "completed"])
-        response_text = f"✓ Task executed: {successful_steps}/{len(steps)} steps completed successfully. Task ID: {task_result['task_id']}"
+        summary = task_result.get("summary", {})
+        successful_steps = summary.get("successful", 0)
+        total_steps = summary.get("total_steps", len(steps))
+        response_text = f"✓ Task {summary.get('status', 'completed')}: {successful_steps}/{total_steps} steps successful ({summary.get('success_rate', 0)}%). Task ID: {task_result['task_id']}"
     elif execution_plan:
         response_text = f"📋 Execution plan ready: {len(execution_plan['steps'])} steps. Set auto_execute=true to run."
     else:
