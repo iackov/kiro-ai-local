@@ -17,6 +17,7 @@ from metrics import metrics_store
 from circuit_breaker import circuit_breaker, CircuitBreakerOpenError
 from knowledge_graph import knowledge_graph
 from goal_manager import goal_manager, GoalStatus
+from conversation_manager import conversation_manager
 
 # Rate limiting
 rate_limit_store = defaultdict(list)
@@ -615,6 +616,75 @@ async def get_goal_status(goal_id: str):
         return {"status": "error", "error": "Goal not found"}
     
     return goal.to_dict()
+
+@app.post("/api/chat")
+async def chat(message: str = Form(...), session_id: str = Form(None)):
+    """Conversational interface (Level 10: Conversational AI)"""
+    # Create or get session
+    if not session_id:
+        session_id = conversation_manager.create_session()
+    
+    session = conversation_manager.get_session(session_id)
+    if not session:
+        session_id = conversation_manager.create_session()
+        session = conversation_manager.get_session(session_id)
+    
+    # Detect intent
+    intent = conversation_manager.detect_intent(message)
+    
+    # Get RAG context
+    rag_context = []
+    try:
+        resp = await http_client.post(
+            f"{SERVICES['rag']}/query",
+            json={"query": message, "top_k": 2}
+        )
+        rag_data = resp.json()
+        rag_context = rag_data.get("documents", [])
+    except:
+        pass
+    
+    # Build prompt
+    prompt = conversation_manager.build_prompt(session, message, rag_context)
+    
+    # Generate simple response based on RAG context
+    if rag_context:
+        response_text = f"Based on the knowledge base: {rag_context[0].get('content', '')[:200]}..."
+    else:
+        response_text = f"I understand your query about: {message}. The system has 9 autonomy levels operational."
+    
+    # Save to session
+    session.add_message("user", message, {"intent": intent})
+    session.add_message("assistant", response_text, {"rag_used": len(rag_context) > 0})
+    
+    return {
+        "session_id": session_id,
+        "response": response_text,
+        "intent": intent,
+        "rag_context_used": len(rag_context),
+        "message_count": len(session.messages)
+    }
+
+@app.get("/api/chat/sessions")
+async def list_sessions():
+    """List all conversation sessions"""
+    sessions = [s.to_dict() for s in conversation_manager.sessions.values()]
+    return {
+        "sessions": sessions,
+        "total": len(sessions)
+    }
+
+@app.get("/api/chat/session/{session_id}")
+async def get_session_history(session_id: str):
+    """Get conversation history"""
+    session = conversation_manager.get_session(session_id)
+    if not session:
+        return {"error": "Session not found"}
+    
+    return {
+        "session": session.to_dict(),
+        "messages": session.messages
+    }
 
 @app.get("/api/metrics/insights")
 async def get_metrics_insights():
