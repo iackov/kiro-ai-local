@@ -26,6 +26,7 @@ from decision_engine import decision_engine
 from self_improvement import self_improvement_engine
 from meta_learning import meta_learning_engine
 from predictive_engine import predictive_engine
+from code_generator import CodeGenerator
 
 # Rate limiting
 rate_limit_store = defaultdict(list)
@@ -64,6 +65,11 @@ async def lifespan(app: FastAPI):
     # Initialize execution engine
     execution_engine = ExecutionEngine(http_client, SERVICES)
     print("✓ Execution engine initialized")
+    
+    # Initialize code generator
+    import code_generator as cg_module
+    cg_module.code_generator = CodeGenerator(ollama_url=SERVICES["ollama"])
+    print("✓ Code generator initialized")
     
     yield
     # Shutdown: close client gracefully
@@ -858,7 +864,7 @@ async def autonomous_interface(
     adaptive_suggestions = None
     autonomous_decision = None
     
-    if intent in ["execute", "modify"]:
+    if intent in ["execute", "modify", "create"]:
         # Create task with intelligent decomposition
         task_obj = task_executor.create_task(message)
         steps = task_executor.decompose_task(message)
