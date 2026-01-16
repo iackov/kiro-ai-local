@@ -14,6 +14,7 @@ from contextlib import asynccontextmanager
 from collections import defaultdict
 
 from metrics import metrics_store
+from circuit_breaker import circuit_breaker, CircuitBreakerOpenError
 
 # Rate limiting
 rate_limit_store = defaultdict(list)
@@ -120,10 +121,14 @@ async def rag_query(request: Request, query: str = Form(...), top_k: int = Form(
     
     start_time = time.time()
     try:
-        resp = await http_client.post(
-            f"{SERVICES['rag']}/query",
-            json={"query": query, "top_k": top_k}
-        )
+        # Use circuit breaker
+        async def rag_call():
+            return await http_client.post(
+                f"{SERVICES['rag']}/query",
+                json={"query": query, "top_k": top_k}
+            )
+        
+        resp = await circuit_breaker.call("rag", rag_call)
         latency = (time.time() - start_time) * 1000
         result = resp.json()
         
@@ -131,6 +136,11 @@ async def rag_query(request: Request, query: str = Form(...), top_k: int = Form(
         metrics_store.record_query("rag", query, latency, True)
         
         return result
+    except CircuitBreakerOpenError as e:
+        return JSONResponse(
+            status_code=503,
+            content={"error": str(e), "service": "rag", "circuit_open": True}
+        )
     except Exception as e:
         latency = (time.time() - start_time) * 1000
         metrics_store.record_query("rag", query, latency, False)
@@ -365,6 +375,38 @@ async def get_production_metrics():
         "issues": analysis["issues"],
         "top_patterns": stats["top_patterns"]
     }
+
+@app.get("/api/resilience/circuit-breakers")
+async def get_circuit_breaker_status():
+    """Get circuit breaker status for all services"""
+    services = ["rag", "arch", "ollama"]
+    status = {}
+    
+    for service in services:
+        state = circuit_breaker.get_state(service)
+        status[service] = {
+            "state": state.value,
+            "failures": circuit_breaker.failure_counts[service],
+            "healthy": state.value == "closed"
+        }
+    
+    return {
+        "circuit_breakers": status,
+        "all_healthy": all(s["healthy"] for s in status.values())
+    }
+
+@app.post("/api/resilience/reset-circuit")
+async def reset_circuit_breaker(service: str = Form(...)):
+    """Manually reset a circuit breaker"""
+    try:
+        circuit_breaker.reset(service)
+        return {
+            "status": "reset",
+            "service": service,
+            "message": f"Circuit breaker for {service} has been reset"
+        }
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
 
 @app.get("/api/metrics/insights")
 async def get_metrics_insights():
