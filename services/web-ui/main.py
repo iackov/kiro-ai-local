@@ -16,6 +16,7 @@ from collections import defaultdict
 from metrics import metrics_store
 from circuit_breaker import circuit_breaker, CircuitBreakerOpenError
 from knowledge_graph import knowledge_graph
+from goal_manager import goal_manager, GoalStatus
 
 # Rate limiting
 rate_limit_store = defaultdict(list)
@@ -525,6 +526,83 @@ async def find_concept_path(from_concept: str = Form(...), to_concept: str = For
         "detailed_path": detailed_path,
         "length": len(path) - 1
     }
+
+@app.post("/api/goals/create")
+async def create_goal(description: str = Form(...), priority: str = Form("medium"), template: str = Form(None)):
+    """Create a new goal (Level 9: Goal-Oriented)"""
+    goal = goal_manager.create_goal(description, priority, template)
+    return {
+        "status": "created",
+        "goal": goal.to_dict()
+    }
+
+@app.get("/api/goals/list")
+async def list_goals():
+    """List all goals"""
+    all_goals = [goal.to_dict() for goal in goal_manager.goals.values()]
+    active_goals = [goal.to_dict() for goal in goal_manager.get_active_goals()]
+    
+    return {
+        "all_goals": all_goals,
+        "active_goals": active_goals,
+        "total": len(all_goals),
+        "active_count": len(active_goals)
+    }
+
+@app.get("/api/goals/suggestions")
+async def get_goal_suggestions():
+    """Get suggested goals based on system state"""
+    analysis = metrics_store.analyze_performance()
+    predictions = metrics_store.predict_future_issues()
+    
+    suggestions = goal_manager.suggest_goals(
+        {"health_score": analysis["health_score"], "avg_latencies": metrics_store.get_stats()["avg_latencies"]},
+        predictions
+    )
+    
+    return {
+        "suggestions": suggestions,
+        "count": len(suggestions)
+    }
+
+@app.post("/api/goals/start")
+async def start_goal(goal_id: str = Form(...)):
+    """Start executing a goal"""
+    success = goal_manager.start_goal(goal_id)
+    
+    if not success:
+        return {"status": "error", "error": "Goal not found"}
+    
+    goal = goal_manager.get_goal(goal_id)
+    return {
+        "status": "started",
+        "goal": goal.to_dict()
+    }
+
+@app.post("/api/goals/complete")
+async def complete_goal(goal_id: str = Form(...), result: str = Form(None)):
+    """Mark goal as completed"""
+    result_data = {"message": result} if result else None
+    goal_manager.complete_goal(goal_id, result_data)
+    
+    goal = goal_manager.get_goal(goal_id)
+    if not goal:
+        return {"status": "error", "error": "Goal not found"}
+    
+    return {
+        "status": "completed",
+        "goal": goal.to_dict()
+    }
+
+@app.get("/api/goals/{goal_id}")
+async def get_goal_status(goal_id: str):
+    """Get goal status"""
+    goal = goal_manager.get_goal(goal_id)
+    
+    if not goal:
+        return {"status": "error", "error": "Goal not found"}
+    
+    return goal.to_dict()
 
 @app.get("/api/metrics/insights")
 async def get_metrics_insights():
