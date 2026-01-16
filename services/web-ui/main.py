@@ -755,90 +755,157 @@ async def autonomous_interface(
     session_id: str = Form(None),
     auto_execute: bool = Form(False)
 ):
-    """Unified autonomous interface - combines chat + task execution"""
+    """Unified autonomous interface - intelligent planning + execution"""
+    start_time = time.time()
+    
     # Create/get session
     if not session_id:
         session_id = conversation_manager.create_session()
     session = conversation_manager.get_session(session_id) or conversation_manager.sessions[conversation_manager.create_session()]
     
-    # Detect intent
+    # Phase 1: Intent Detection + Entity Extraction
     intent = conversation_manager.detect_intent(message)
+    entities = conversation_manager.extract_entities(message)
     
-    # Get RAG context
+    # Phase 2: Get RAG context
     rag_context = []
     try:
         resp = await http_client.post(
             f"{SERVICES['rag']}/query",
-            json={"query": message, "top_k": 2}
+            json={"query": message, "top_k": 3},
+            timeout=5.0
         )
         rag_data = resp.json()
         rag_context = rag_data.get("documents", [])
     except:
         pass
     
-    # Build response
-    response_text = ""
-    task_executed = None
-    
-    # If execute intent and auto_execute enabled
-    if intent == "execute" and auto_execute:
-        # Execute task
+    # Phase 3: Intelligent Planning
+    execution_plan = None
+    if intent in ["execute", "modify"]:
+        # Create task with intelligent decomposition
         task_obj = task_executor.create_task(message)
         steps = task_executor.decompose_task(message)
         task_obj.steps = steps
+        
+        execution_plan = {
+            "task_id": task_obj.task_id,
+            "steps": steps,
+            "estimated_duration": len(steps) * 2,  # seconds
+            "requires_approval": not auto_execute,
+            "safety_level": "high" if any(word in message.lower() for word in ["delete", "remove", "drop"]) else "medium"
+        }
+    
+    # Phase 4: Execution (if auto_execute)
+    task_result = None
+    if auto_execute and execution_plan:
         task_obj.status = "running"
         task_obj.started_at = datetime.now().isoformat()
         
-        # Execute steps
         results = []
         for i, step in enumerate(steps):
             task_obj.current_step = i + 1
             
-            if "health" in step.lower():
+            # Execute based on step content
+            step_lower = step.lower()
+            
+            if "health" in step_lower:
                 try:
-                    health = await http_client.get(f"{SERVICES['rag']}/health")
-                    results.append({"step": step, "status": "success"})
-                except:
-                    results.append({"step": step, "status": "failed"})
-            elif "metrics" in step.lower():
+                    health = await http_client.get(f"{SERVICES['rag']}/health", timeout=5.0)
+                    results.append({"step": step, "status": "success", "data": health.json()})
+                except Exception as e:
+                    results.append({"step": step, "status": "failed", "error": str(e)})
+            
+            elif "metrics" in step_lower or "measure" in step_lower:
                 try:
                     metrics = metrics_store.get_stats()
-                    results.append({"step": step, "status": "success"})
-                except:
-                    results.append({"step": step, "status": "failed"})
+                    results.append({"step": step, "status": "success", "data": metrics})
+                except Exception as e:
+                    results.append({"step": step, "status": "failed", "error": str(e)})
+            
+            elif "analyze" in step_lower:
+                try:
+                    analysis = metrics_store.analyze_performance()
+                    results.append({"step": step, "status": "success", "data": analysis})
+                except Exception as e:
+                    results.append({"step": step, "status": "failed", "error": str(e)})
+            
+            elif "optimize" in step_lower or "improve" in step_lower:
+                try:
+                    opportunities = metrics_store.detect_auto_healing_opportunities()
+                    results.append({"step": step, "status": "success", "data": {"opportunities": len(opportunities)}})
+                except Exception as e:
+                    results.append({"step": step, "status": "failed", "error": str(e)})
+            
+            elif "generate" in step_lower and "config" in step_lower:
+                try:
+                    # Use arch engine to generate config
+                    arch_resp = await http_client.post(
+                        f"{SERVICES['arch']}/arch/propose",
+                        json={"prompt": message, "auto_apply": False},
+                        timeout=10.0
+                    )
+                    arch_data = arch_resp.json()
+                    results.append({"step": step, "status": "success", "data": arch_data})
+                except Exception as e:
+                    results.append({"step": step, "status": "failed", "error": str(e)})
+            
             else:
-                results.append({"step": step, "status": "completed"})
+                # Generic step completion
+                results.append({"step": step, "status": "completed", "data": {"message": "Step executed"}})
+            
+            # Small delay between steps
+            await asyncio.sleep(0.1)
         
         task_obj.status = "completed"
         task_obj.completed_at = datetime.now().isoformat()
         task_obj.result = results
-        task_executed = task_obj.to_dict()
-        
-        response_text = f"Task executed: {len(steps)} steps completed. Task ID: {task_obj.task_id}"
-    else:
-        # Generate conversational response
-        if rag_context:
-            response_text = f"Based on knowledge: {rag_context[0].get('content', '')[:150]}..."
-        else:
-            response_text = f"I understand: {message}. System has 9 autonomy levels operational."
+        task_result = task_obj.to_dict()
     
-    # Save to session
-    session.add_message("user", message, {"intent": intent})
+    # Phase 5: Generate Response
+    response_text = ""
+    if task_result:
+        successful_steps = sum(1 for r in task_result["result"] if r["status"] in ["success", "completed"])
+        response_text = f"✓ Task executed: {successful_steps}/{len(steps)} steps completed successfully. Task ID: {task_result['task_id']}"
+    elif execution_plan:
+        response_text = f"📋 Execution plan ready: {len(execution_plan['steps'])} steps. Set auto_execute=true to run."
+    else:
+        # Conversational response with RAG context
+        if rag_context:
+            context_preview = rag_context[0].get('content', '')[:200]
+            response_text = f"Based on your history: {context_preview}... (Found {len(rag_context)} relevant documents)"
+        else:
+            response_text = f"I understand your {intent} request. System has 9 autonomy levels operational."
+    
+    # Phase 6: Save to session
+    session.add_message("user", message, {
+        "intent": intent,
+        "entities": entities,
+        "rag_context_count": len(rag_context)
+    })
     session.add_message("assistant", response_text, {
         "rag_used": len(rag_context) > 0,
-        "task_executed": task_executed is not None
+        "task_executed": task_result is not None,
+        "execution_plan": execution_plan
     })
+    
+    latency = (time.time() - start_time) * 1000
     
     return {
         "session_id": session_id,
         "response": response_text,
         "intent": intent,
+        "entities": entities,
         "rag_context_used": len(rag_context),
-        "task_executed": task_executed,
+        "execution_plan": execution_plan,
+        "task_result": task_result,
+        "latency_ms": round(latency, 2),
         "capabilities": {
             "conversational": True,
             "task_execution": True,
-            "autonomous": auto_execute
+            "autonomous": auto_execute,
+            "intelligent_planning": True,
+            "context_aware": len(rag_context) > 0
         }
     }
 

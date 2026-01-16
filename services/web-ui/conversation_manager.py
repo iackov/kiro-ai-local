@@ -54,16 +54,63 @@ class ConversationManager:
         return self.sessions.get(session_id)
     
     def detect_intent(self, message: str) -> str:
+        """Advanced intent detection with context awareness"""
         message_lower = message.lower()
         
-        # Execute patterns (more specific)
-        if any(word in message_lower for word in ["check", "analyze", "inspect", "review", "test"]):
+        # Priority 1: Action verbs (execute)
+        action_verbs = ["check", "test", "run", "execute", "perform", "start", "stop", 
+                       "restart", "deploy", "rollback", "apply", "fix", "debug"]
+        if any(verb in message_lower for verb in action_verbs):
             return "execute"
         
-        for intent, patterns in self.intent_patterns.items():
-            if any(pattern in message_lower for pattern in patterns):
-                return intent
+        # Priority 2: Creation/Modification
+        creation_verbs = ["add", "create", "build", "setup", "configure", "install",
+                         "update", "modify", "change", "remove", "delete"]
+        if any(verb in message_lower for verb in creation_verbs):
+            return "modify"
+        
+        # Priority 3: Analysis
+        analysis_verbs = ["analyze", "inspect", "review", "investigate", "examine",
+                         "diagnose", "profile", "measure"]
+        if any(verb in message_lower for verb in analysis_verbs):
+            return "analyze"
+        
+        # Priority 4: Information queries
+        query_words = ["what", "how", "why", "when", "where", "who", "explain",
+                      "tell me", "show me", "list", "get", "find"]
+        if any(word in message_lower for word in query_words):
+            return "query"
+        
+        # Default: treat as query
         return "query"
+    
+    def extract_entities(self, message: str) -> Dict:
+        """Extract key entities from message"""
+        message_lower = message.lower()
+        entities = {
+            "services": [],
+            "actions": [],
+            "metrics": [],
+            "technologies": []
+        }
+        
+        # Services
+        services = ["rag", "ollama", "arch", "redis", "postgres", "mongodb", "nginx"]
+        entities["services"] = [s for s in services if s in message_lower]
+        
+        # Actions
+        actions = ["optimize", "scale", "monitor", "backup", "restore", "migrate"]
+        entities["actions"] = [a for a in actions if a in message_lower]
+        
+        # Metrics
+        metrics = ["latency", "throughput", "memory", "cpu", "disk", "network"]
+        entities["metrics"] = [m for m in metrics if m in message_lower]
+        
+        # Technologies
+        tech = ["docker", "kubernetes", "python", "fastapi", "flask"]
+        entities["technologies"] = [t for t in tech if t in message_lower]
+        
+        return entities
     
     def build_prompt(self, session: ConversationSession, user_message: str, 
                      rag_context: List[Dict] = None) -> str:
