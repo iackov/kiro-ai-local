@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Combiner Stack - Control Panel</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #667eea;
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        .status-grid {
+            display: grid;
+            gap: 10px;
+        }
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status-healthy { background: #d4edda; color: #155724; }
+        .status-unhealthy { background: #f8d7da; color: #721c24; }
+        .status-unknown { background: #fff3cd; color: #856404; }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #218838;
+        }
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        .result-box {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .result-box pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 13px;
+            color: #333;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #667eea;
+        }
+        .loading.active {
+            display: block;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .stat-item {
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .history-item {
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            border-left: 3px solid #667eea;
+        }
+        .history-item .sha {
+            font-family: monospace;
+            color: #667eea;
+            font-size: 12px;
+        }
+        .history-item .message {
+            font-weight: 500;
+            margin: 5px 0;
+        }
+        .history-item .timestamp {
+            font-size: 12px;
+            color: #666;
+        }
+        .doc-item {
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .doc-score {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #667eea;
+            color: white;
+            border-radius: 3px;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+        .doc-content {
+            font-size: 13px;
+            color: #333;
+            margin-top: 5px;
+            max-height: 100px;
+            overflow: hidden;
+        }
+        .suggestion-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .suggestion-banner.active {
+            display: block;
+        }
+        .suggestion-banner h3 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+        }
+        .suggestion-banner p {
+            margin: 5px 0;
+            opacity: 0.9;
+        }
+        .suggestion-banner .btn {
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+        .suggestion-banner .btn-light {
+            background: white;
+            color: #667eea;
+        }
+        .suggestion-banner .btn-light:hover {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🚀 AI Combiner Stack - Control Panel</h1>
+            <p>Manage your self-modifying AI infrastructure</p>
+        </div>
+
+        <!-- AI Suggestion Banner -->
+        <div id="suggestionBanner" class="suggestion-banner">
+            <h3>💡 AI Suggestion</h3>
+            <p id="bannerIssue"></p>
+            <p id="bannerSuggestion"></p>
+            <p id="bannerImpact" style="font-weight: 500;"></p>
+            <button onclick="applyBannerSuggestion()" class="btn btn-light">Apply Now</button>
+            <button onclick="dismissBanner()" class="btn btn-danger">Dismiss</button>
+        </div>
+
+        <!-- Status Dashboard -->
+        <div class="card" style="margin-bottom: 20px;">
+            <h2>📊 System Status</h2>
+            <div class="status-grid" id="statusGrid">
+                <div class="loading active">Loading status...</div>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid">
+            <!-- RAG Query -->
+            <div class="card">
+                <h2>🔍 RAG Query</h2>
+                <form id="ragForm">
+                    <div class="form-group">
+                        <label>Search Query</label>
+                        <input type="text" id="ragQuery" placeholder="e.g., Docker troubleshooting" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Top K Results</label>
+                        <input type="number" id="ragTopK" value="5" min="1" max="20">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+                <div id="ragResult" class="result-box" style="display:none;"></div>
+            </div>
+
+            <!-- Architecture Modification -->
+            <div class="card">
+                <h2>🧠 Architecture Engine</h2>
+                <form id="archForm">
+                    <div class="form-group">
+                        <label>Natural Language Command</label>
+                        <textarea id="archPrompt" placeholder="e.g., Add Postgres database service" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Propose Change</button>
+                </form>
+                <div id="archResult" class="result-box" style="display:none;"></div>
+            </div>
+
+            <!-- Ollama Generation -->
+            <div class="card">
+                <h2>🤖 Qwen Generation</h2>
+                <form id="ollamaForm">
+                    <div class="form-group">
+                        <label>Prompt</label>
+                        <textarea id="ollamaPrompt" placeholder="e.g., Explain Docker Compose" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Model</label>
+                        <select id="ollamaModel">
+                            <option value="qwen2.5-coder:7b">Qwen2.5-Coder 7B</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 10px;">
+                            <input type="checkbox" id="ollamaUseRag" checked style="width: auto;">
+                            <span>Use RAG context (search knowledge base first)</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Generate</button>
+                </form>
+                <div id="ollamaResult" class="result-box" style="display:none;"></div>
+            </div>
+
+            <!-- RAG Statistics -->
+            <div class="card">
+                <h2>📈 RAG Statistics</h2>
+                <button onclick="loadRagStats()" class="btn btn-primary">Refresh Stats</button>
+                <div id="ragStats" class="stats-grid" style="display:none;"></div>
+            </div>
+
+            <!-- Architecture History -->
+            <div class="card">
+                <h2>📜 Architecture History</h2>
+                <button onclick="loadArchHistory()" class="btn btn-primary">Refresh History</button>
+                <div id="archHistory" style="margin-top: 15px;"></div>
+            </div>
+
+            <!-- System Metrics -->
+            <div class="card">
+                <h2>📊 System Metrics</h2>
+                <button onclick="loadMetrics()" class="btn btn-primary">Refresh Metrics</button>
+                <div id="metricsDisplay" style="margin-top: 15px;"></div>
+            </div>
+
+            <!-- AI Suggestions -->
+            <div class="card">
+                <h2>💡 AI Suggestions</h2>
+                <button onclick="loadSuggestions()" class="btn btn-primary">Analyze Performance</button>
+                <div id="suggestionsDisplay" style="margin-top: 15px;"></div>
+            </div>
+
+            <!-- Learning Insights -->
+            <div class="card">
+                <h2>🧠 Learning Insights</h2>
+                <button onclick="loadLearningInsights()" class="btn btn-primary">View Learning</button>
+                <div id="learningDisplay" style="margin-top: 15px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variable for current suggestion
+        let currentSuggestion = null;
+
+        // Load status on page load
+        window.addEventListener('load', () => {
+            loadStatus();
+            loadRagStats();
+            loadArchHistory();
+            checkForSuggestions(); // Check for AI suggestions
+            setInterval(loadStatus, 10000); // Refresh every 10s
+            setInterval(checkForSuggestions, 30000); // Check suggestions every 30s
+        });
+
+        // Check for AI suggestions and show banner
+        async function checkForSuggestions() {
+            try {
+                const resp = await fetch('/api/metrics/analysis');
+                const data = await resp.json();
+                
+                // Find highest priority suggestion
+                if (data.suggestions && data.suggestions.length > 0) {
+                    const highPriority = data.suggestions.find(s => s.priority === 'high');
+                    const suggestion = highPriority || data.suggestions[0];
+                    
+                    // Store current suggestion
+                    currentSuggestion = suggestion;
+                    
+                    // Update banner
+                    document.getElementById('bannerIssue').textContent = '⚠️ ' + suggestion.issue;
+                    document.getElementById('bannerSuggestion').textContent = '💡 ' + suggestion.suggestion;
+                    document.getElementById('bannerImpact').textContent = '📈 Expected: ' + suggestion.expected_improvement;
+                    
+                    // Show banner
+                    document.getElementById('suggestionBanner').classList.add('active');
+                }
+            } catch (e) {
+                console.error('Failed to check suggestions:', e);
+            }
+        }
+
+        // Apply suggestion from banner
+        async function applyBannerSuggestion() {
+            if (!currentSuggestion) return;
+            
+            const banner = document.getElementById('suggestionBanner');
+            banner.innerHTML = '<h3>⏳ Applying suggestion...</h3><p>Please wait...</p>';
+            
+            try {
+                const formData = new FormData();
+                formData.append('suggestion_action', currentSuggestion.action);
+                
+                const resp = await fetch('/api/auto/apply-suggestion', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await resp.json();
+                
+                if (data.status === 'applied') {
+                    banner.innerHTML = `
+                        <h3>✅ Suggestion Applied!</h3>
+                        <p>Change ID: ${data.change_id}</p>
+                        <p>Rollback ID: ${data.rollback_id}</p>
+                        <p style="font-weight: 500;">Next steps:</p>
+                        <ul style="margin: 10px 0;">
+                            ${data.next_steps.map(step => `<li>${step}</li>`).join('')}
+                        </ul>
+                        <button onclick="dismissBanner()" class="btn btn-light">Close</button>
+                    `;
+                    
+                    // Reload architecture history
+                    setTimeout(loadArchHistory, 2000);
+                } else if (data.status === 'unsafe') {
+                    banner.innerHTML = `
+                        <h3>⚠️ Safety Check Failed</h3>
+                        <p>${data.message}</p>
+                        <button onclick="dismissBanner()" class="btn btn-light">Close</button>
+                    `;
+                } else {
+                    banner.innerHTML = `
+                        <h3>❌ Error</h3>
+                        <p>${data.error || 'Unknown error'}</p>
+                        <button onclick="dismissBanner()" class="btn btn-light">Close</button>
+                    `;
+                }
+            } catch (e) {
+                banner.innerHTML = `
+                    <h3>❌ Error</h3>
+                    <p>${e.message}</p>
+                    <button onclick="dismissBanner()" class="btn btn-light">Close</button>
+                `;
+            }
+        }
+
+        // Dismiss banner
+        function dismissBanner() {
+            if (currentSuggestion) {
+                // Record dismissal
+                const formData = new FormData();
+                formData.append('suggestion_action', currentSuggestion.action);
+                fetch('/api/auto/dismiss-suggestion', {
+                    method: 'POST',
+                    body: formData
+                }).catch(e => console.error('Failed to record dismissal:', e));
+            }
+            
+            document.getElementById('suggestionBanner').classList.remove('active');
+            currentSuggestion = null;
+        }
+
+        // Load system status
+        async function loadStatus() {
+            try {
+                const resp = await fetch('/api/status');
+                const data = await resp.json();
+                
+                const grid = document.getElementById('statusGrid');
+                grid.innerHTML = '';
+                
+                const services = [
+                    { key: 'rag', name: 'RAG API', port: '9001' },
+                    { key: 'arch', name: 'Arch Engine', port: '9004' },
+                    { key: 'ollama', name: 'Ollama', port: '11434' }
+                ];
+                
+                services.forEach(svc => {
+                    const status = data[svc.key]?.status || 'unknown';
+                    const item = document.createElement('div');
+                    item.className = 'status-item';
+                    item.innerHTML = `
+                        <div>
+                            <strong>${svc.name}</strong>
+                            <div style="font-size: 12px; color: #666;">:${svc.port}</div>
+                        </div>
+                        <span class="status-badge status-${status}">${status}</span>
+                    `;
+                    grid.appendChild(item);
+                });
+            } catch (e) {
+                console.error('Failed to load status:', e);
+            }
+        }
+
+        // RAG Query
+        document.getElementById('ragForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const query = document.getElementById('ragQuery').value;
+            const topK = document.getElementById('ragTopK').value;
+            const resultDiv = document.getElementById('ragResult');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<div class="loading active">Searching...</div>';
+            
+            try {
+                const formData = new FormData();
+                formData.append('query', query);
+                formData.append('top_k', topK);
+                
+                const resp = await fetch('/api/rag/query', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await resp.json();
+                
+                if (data.error) {
+                    resultDiv.innerHTML = `<pre style="color: red;">Error: ${data.error}</pre>`;
+                } else {
+                    let html = `<div><strong>Found ${data.total_results} results in ${data.processing_time_ms.toFixed(2)}ms</strong></div>`;
+                    data.documents.forEach((doc, i) => {
+                        html += `
+                            <div class="doc-item">
+                                <span class="doc-score">Score: ${doc.score.toFixed(3)}</span>
+                                <div class="doc-content">${doc.content.substring(0, 200)}...</div>
+                            </div>
+                        `;
+                    });
+                    resultDiv.innerHTML = html;
+                }
+            } catch (e) {
+                resultDiv.innerHTML = `<pre style="color: red;">Error: ${e.message}</pre>`;
+            }
+        });
+
+        // Architecture Modification
+        document.getElementById('archForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const prompt = document.getElementById('archPrompt').value;
+            const resultDiv = document.getElementById('archResult');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<div class="loading active">Proposing change...</div>';
+            
+            try {
+                const formData = new FormData();
+                formData.append('prompt', prompt);
+                
+                const resp = await fetch('/api/arch/propose', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await resp.json();
+                
+                if (data.error) {
+                    resultDiv.innerHTML = `<pre style="color: red;">Error: ${data.error}</pre>`;
+                } else {
+                    let html = `
+                        <div><strong>Change ID:</strong> ${data.change_id}</div>
+                        <div><strong>Intent:</strong> ${data.intent.action} ${data.intent.type}</div>
+                        <div style="margin-top: 10px;"><strong>Diff:</strong></div>
+                        <pre>${data.diff}</pre>
+                        <div style="margin-top: 10px;"><strong>Safety Checks:</strong></div>
+                    `;
+                    data.safety_checks.forEach(check => {
+                        const icon = check.passed ? '✓' : '✗';
+                        const color = check.passed ? 'green' : 'red';
+                        html += `<div style="color: ${color};">${icon} ${check.name}: ${check.message}</div>`;
+                    });
+                    
+                    if (data.safe) {
+                        html += `
+                            <button onclick="applyChange('${data.change_id}')" class="btn btn-success" style="margin-top: 10px;">
+                                Apply Change
+                            </button>
+                        `;
+                    }
+                    
+                    resultDiv.innerHTML = html;
+                }
+            } catch (e) {
+                resultDiv.innerHTML = `<pre style="color: red;">Error: ${e.message}</pre>`;
+            }
+        });
+
+        // Apply architecture change
+        async function applyChange(changeId) {
+            const resultDiv = document.getElementById('archResult');
+            resultDiv.innerHTML = '<div class="loading active">Applying change...</div>';
+            
+            try {
+                const formData = new FormData();
+                formData.append('change_id', changeId);
+                
+                const resp = await fetch('/api/arch/apply', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await resp.json();
+                
+                if (data.error) {
+                    resultDiv.innerHTML = `<pre style="color: red;">Error: ${data.error}</pre>`;
+                } else {
+                    let html = `
+                        <div style="color: green; font-weight: bold;">✓ Change Applied Successfully!</div>
+                        <div><strong>Rollback ID:</strong> ${data.rollback_id}</div>
+                        <div style="margin-top: 10px;"><strong>Next Steps:</strong></div>
+                        <ul>
+                    `;
+                    data.next_steps.forEach(step => {
+                        html += `<li>${step}</li>`;
+                    });
+                    html += '</ul>';
+                    resultDiv.innerHTML = html;
+                    
+                    // Reload history
+                    setTimeout(loadArchHistory, 1000);
+                }
+            } catch (e) {
+                resultDiv.innerHTML = `<pre style="color: red;">Error: ${e.message}</pre>`;
+            }
+        }
+
+        // Ollama Generation
+        document.getElementById('ollamaForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const prompt = document.getElementById('ollamaPrompt').value;
+            const model = document.getElementById('ollamaModel').value;
+            const useRag = document.getElementById('ollamaUseRag').checked;
+            const resultDiv = document.getElementById('ollamaResult');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<div class="loading active">Generating...</div>';
+            
+            try {
+                const formData = new FormData();
+                formData.append('prompt', prompt);
+                formData.append('model', model);
+                formData.append('use_rag', useRag);
+                
+                const resp = await fetch('/api/ollama/generate', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await resp.json();
+                
+                if (data.error) {
+                    resultDiv.innerHTML = `<pre style="color: red;">Error: ${data.error}</pre>`;
+                } else {
+                    resultDiv.innerHTML = `<pre>${data.response}</pre>`;
+                }
+            } catch (e) {
+                resultDiv.innerHTML = `<pre style="color: red;">Error: ${e.message}</pre>`;
+            }
+        });
+
+        // Load RAG stats
+        async function loadRagStats() {
+            try {
+                const resp = await fetch('/api/rag/stats');
+                const data = await resp.json();
+                
+                const statsDiv = document.getElementById('ragStats');
+                statsDiv.style.display = 'grid';
+                
+                if (data.error) {
+                    statsDiv.innerHTML = `<div style="color: red;">Error: ${data.error}</div>`;
+                } else {
+                    statsDiv.innerHTML = `
+                        <div class="stat-item">
+                            <div class="stat-value">${data.total_documents || 0}</div>
+                            <div class="stat-label">Documents</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">${data.collection || 'N/A'}</div>
+                            <div class="stat-label">Collection</div>
+                        </div>
+                    `;
+                }
+            } catch (e) {
+                console.error('Failed to load RAG stats:', e);
+            }
+        }
+
+        // Load architecture history
+        async function loadArchHistory() {
+            try {
+                const resp = await fetch('/api/arch/history');
+                const data = await resp.json();
+                
+                const historyDiv = document.getElementById('archHistory');
+                
+                if (data.error) {
+                    historyDiv.innerHTML = `<div style="color: red;">Error: ${data.error}</div>`;
+                } else if (data.total === 0) {
+                    historyDiv.innerHTML = '<div style="color: #666;">No changes yet</div>';
+                } else {
+                    let html = '';
+                    data.changes.forEach(change => {
+                        html += `
+                            <div class="history-item">
+                                <div class="sha">${change.sha}</div>
+                                <div class="message">${change.message}</div>
+                                <div class="timestamp">${new Date(change.timestamp).toLocaleString()}</div>
+                            </div>
+                        `;
+                    });
+                    historyDiv.innerHTML = html;
+                }
+            } catch (e) {
+                console.error('Failed to load history:', e);
+            }
+        }
+
+        // Load system metrics
+        async function loadMetrics() {
+            try {
+                const resp = await fetch('/api/metrics/stats');
+                const data = await resp.json();
+                
+                const metricsDiv = document.getElementById('metricsDisplay');
+                
+                let html = '<div class="stats-grid">';
+                html += `
+                    <div class="stat-item">
+                        <div class="stat-value">${data.total_queries}</div>
+                        <div class="stat-label">Total Queries</div>
+                    </div>
+                `;
+                
+                // Average latencies
+                for (const [service, latency] of Object.entries(data.avg_latencies || {})) {
+                    html += `
+                        <div class="stat-item">
+                            <div class="stat-value">${latency.toFixed(0)}ms</div>
+                            <div class="stat-label">${service} latency</div>
+                        </div>
+                    `;
+                }
+                
+                html += '</div>';
+                
+                // Top patterns
+                if (data.top_patterns && Object.keys(data.top_patterns).length > 0) {
+                    html += '<div style="margin-top: 15px;"><strong>Top Query Topics:</strong></div>';
+                    html += '<div style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px;">';
+                    for (const [word, count] of Object.entries(data.top_patterns)) {
+                        html += `<span style="background: #667eea; color: white; padding: 4px 8px; border-radius: 3px; font-size: 12px;">${word} (${count})</span>`;
+                    }
+                    html += '</div>';
+                }
+                
+                metricsDiv.innerHTML = html;
+            } catch (e) {
+                console.error('Failed to load metrics:', e);
+            }
+        }
+
+        // Load AI suggestions
+        async function loadSuggestions() {
+            try {
+                const resp = await fetch('/api/metrics/analysis');
+                const data = await resp.json();
+                
+                const suggestionsDiv = document.getElementById('suggestionsDisplay');
+                
+                let html = `<div style="margin-bottom: 10px;"><strong>Health Score: ${data.health_score}/100</strong></div>`;
+                
+                // Learning indicator
+                if (data.learning_applied) {
+                    html += '<div style="padding: 8px; background: #e7f3ff; border-left: 3px solid #667eea; margin-bottom: 10px; border-radius: 3px; font-size: 13px;">🧠 Suggestions adapted based on your preferences</div>';
+                }
+                
+                // Insights
+                if (data.insights && data.insights.length > 0) {
+                    html += '<div style="margin-top: 10px;"><strong>📊 Insights:</strong></div>';
+                    data.insights.forEach(insight => {
+                        html += `<div style="padding: 8px; background: #e7f3ff; border-left: 3px solid #667eea; margin-top: 5px; border-radius: 3px; font-size: 13px;">${insight}</div>`;
+                    });
+                }
+                
+                // Issues
+                if (data.issues && data.issues.length > 0) {
+                    html += '<div style="margin-top: 15px;"><strong>⚠️ Issues Detected:</strong></div>';
+                    data.issues.forEach(issue => {
+                        html += `
+                            <div style="padding: 10px; background: #f8d7da; border-left: 3px solid #dc3545; margin-top: 5px; border-radius: 3px;">
+                                <strong>${issue.service}</strong>: ${issue.metric} = ${issue.value.toFixed(0)} (threshold: ${issue.threshold})
+                            </div>
+                        `;
+                    });
+                }
+                
+                // Suggestions
+                if (data.suggestions && data.suggestions.length > 0) {
+                    html += '<div style="margin-top: 15px;"><strong>💡 AI Suggestions:</strong></div>';
+                    data.suggestions.forEach((sug, i) => {
+                        const priorityColor = sug.priority === 'high' ? '#dc3545' : sug.priority === 'medium' ? '#ffc107' : '#28a745';
+                        const learningBadge = sug.learning_adjusted ? '<span style="background: #667eea; color: white; padding: 2px 6px; border-radius: 3px; font-size: 10px; margin-left: 5px;">🧠 Adapted</span>' : '';
+                        html += `
+                            <div style="padding: 10px; background: #d4edda; border-left: 3px solid ${priorityColor}; margin-top: 5px; border-radius: 3px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="font-weight: 500;">${sug.issue}</div>
+                                    <div>
+                                        <span style="background: ${priorityColor}; color: white; padding: 2px 8px; border-radius: 3px; font-size: 11px;">${sug.priority}</span>
+                                        ${learningBadge}
+                                    </div>
+                                </div>
+                                <div style="margin-top: 5px; color: #666;">💡 ${sug.suggestion}</div>
+                                <div style="margin-top: 5px; font-size: 12px; color: #28a745;">Expected: ${sug.expected_improvement}</div>
+                                <button onclick="applySuggestion('${sug.action}')" class="btn btn-success" style="margin-top: 5px; font-size: 12px;">
+                                    Apply Suggestion
+                                </button>
+                            </div>
+                        `;
+                    });
+                } else {
+                    html += '<div style="margin-top: 15px; color: #28a745;">✓ No issues detected. System is performing well!</div>';
+                }
+                
+                suggestionsDiv.innerHTML = html;
+            } catch (e) {
+                console.error('Failed to load suggestions:', e);
+            }
+        }
+
+        // Apply AI suggestion
+        async function applySuggestion(action) {
+            const resultDiv = document.getElementById('archResult');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<div class="loading active">Proposing change...</div>';
+            
+            try {
+                const formData = new FormData();
+                formData.append('prompt', action);
+                
+                const resp = await fetch('/api/arch/propose', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await resp.json();
+                
+                if (data.error) {
+                    resultDiv.innerHTML = `<pre style="color: red;">Error: ${data.error}</pre>`;
+                } else {
+                    let html = `
+                        <div><strong>Change ID:</strong> ${data.change_id}</div>
+                        <div><strong>Intent:</strong> ${data.intent.action} ${data.intent.type}</div>
+                        <div style="margin-top: 10px;"><strong>Diff:</strong></div>
+                        <pre>${data.diff}</pre>
+                    `;
+                    
+                    if (data.safe) {
+                        html += `
+                            <button onclick="applyChange('${data.change_id}')" class="btn btn-success" style="margin-top: 10px;">
+                                Apply Change
+                            </button>
+                        `;
+                    }
+                    
+                    resultDiv.innerHTML = html;
+                    
+                    // Scroll to result
+                    resultDiv.scrollIntoView({ behavior: 'smooth' });
+                }
+            } catch (e) {
+                resultDiv.innerHTML = `<pre style="color: red;">Error: ${e.message}</pre>`;
+            }
+        }
+
+        // Load learning insights
+        async function loadLearningInsights() {
+            try {
+                const resp = await fetch('/api/learning/insights');
+                const data = await resp.json();
+                
+                const learningDiv = document.getElementById('learningDisplay');
+                
+                if (data.total_suggestions === 0) {
+                    learningDiv.innerHTML = '<div style="color: #666;">No learning data yet. Use the system to generate insights.</div>';
+                    return;
+                }
+                
+                let html = '<div class="stats-grid">';
+                html += `
+                    <div class="stat-item">
+                        <div class="stat-value">${data.total_suggestions}</div>
+                        <div class="stat-label">Total Suggestions</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${data.applied_count}</div>
+                        <div class="stat-label">Applied</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${data.dismissed_count}</div>
+                        <div class="stat-label">Dismissed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${(data.acceptance_rate * 100).toFixed(0)}%</div>
+                        <div class="stat-label">Acceptance Rate</div>
+                    </div>
+                `;
+                html += '</div>';
+                
+                // Insights
+                if (data.insights && data.insights.length > 0) {
+                    html += '<div style="margin-top: 15px;"><strong>🧠 Learning Insights:</strong></div>';
+                    data.insights.forEach(insight => {
+                        html += `<div style="padding: 8px; background: #e7f3ff; border-left: 3px solid #667eea; margin-top: 5px; border-radius: 3px; font-size: 13px;">${insight}</div>`;
+                    });
+                }
+                
+                // Preferred actions
+                if (data.preferred_actions && Object.keys(data.preferred_actions).length > 0) {
+                    html += '<div style="margin-top: 15px;"><strong>✅ Preferred Actions:</strong></div>';
+                    for (const [action, count] of Object.entries(data.preferred_actions)) {
+                        html += `<div style="padding: 5px; background: #d4edda; border-radius: 3px; margin-top: 3px; font-size: 12px;">${action} (${count}x)</div>`;
+                    }
+                }
+                
+                // Avoided actions
+                if (data.avoided_actions && Object.keys(data.avoided_actions).length > 0) {
+                    html += '<div style="margin-top: 15px;"><strong>❌ Avoided Actions:</strong></div>';
+                    for (const [action, count] of Object.entries(data.avoided_actions)) {
+                        html += `<div style="padding: 5px; background: #f8d7da; border-radius: 3px; margin-top: 3px; font-size: 12px;">${action} (${count}x)</div>`;
+                    }
+                }
+                
+                learningDiv.innerHTML = html;
+            } catch (e) {
+                console.error('Failed to load learning insights:', e);
+            }
+        }
+    </script>
+</body>
+</html>

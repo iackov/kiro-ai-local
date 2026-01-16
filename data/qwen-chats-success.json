@@ -1,0 +1,2985 @@
+{
+  "success": true,
+  "request_id": "7c7cafa1-4bf4-4d95-b7c5-5d18d2f1b82e",
+  "data": [
+    {
+      "id": "2b797e74-7fd0-4b4c-891f-e24f8860dd5c",
+      "title": "Текстовое подтверждение",
+      "updated_at": 1768527754,
+      "created_at": 1768527751,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "f9faff5d-fe93-4ada-9389-4d875dcc50c2",
+      "title": "MCP MongoDB Перезапуск",
+      "updated_at": 1768518962,
+      "created_at": 1768518948,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "41700fa1-93df-4a03-801a-fa8fd69ea5b1",
+      "title": "Claude AI Combiner Full Deployment",
+      "updated_at": 1768518503,
+      "created_at": 1768517686,
+      "chat_type": "t2t",
+      "project_id": "",
+      "pinned": false
+    },
+    {
+      "id": "e4c9ce7a-a06a-4238-9a3f-9e006f6f3f32",
+      "title": "Механизмы внимания в LLM",
+      "updated_at": 1768516777,
+      "created_at": 1768513667,
+      "chat_type": "t2t",
+      "project_id": "",
+      "pinned": false
+    },
+    {
+      "id": "b8a20b15-f4c4-46a7-b484-62370aa313d7",
+      "title": "Оптимизация Сканирования Антивирусов",
+      "updated_at": 1768513316,
+      "created_at": 1768512207,
+      "chat_type": "t2t",
+      "project_id": "",
+      "pinned": false
+    },
+    {
+      "id": "846d46a8-9e65-4a00-9299-309e844d3846",
+      "title": "Пределы Информации и Ангелы",
+      "updated_at": 1768091047,
+      "created_at": 1768075448,
+      "chat_type": "search",
+      "project_id": "",
+      "pinned": false
+    },
+    {
+      "id": "2824a537-29b2-4e57-b5d6-2a911bb81486",
+      "title": "Венесуэльский кризис аспекты",
+      "updated_at": 1768070782,
+      "created_at": 1768069719,
+      "chat_type": "search",
+      "project_id": "",
+      "pinned": false
+    },
+    {
+      "id": "07c3a920-4beb-4072-afb7-dba82d735039",
+      "title": "Приложения для YT Shorts пранков",
+      "updated_at": 1768067094,
+      "created_at": 1768067053,
+      "chat_type": "search",
+      "project_id": "",
+      "pinned": false
+    },
+    {
+      "id": "f19d883b-1a5e-4bb5-a072-7ce6778a17d1",
+      "title": "Искусство будущего с ИИ",
+      "updated_at": 1767373573,
+      "created_at": 1767372937,
+      "chat_type": "t2t",
+      "project_id": "",
+      "pinned": false
+    },
+    {
+      "id": "156cbabb-c1ce-4fb6-b2e8-5fb02949d0f6",
+      "title": "Новогодние салаты 2026",
+      "updated_at": 1767240674,
+      "created_at": 1767224460,
+      "chat_type": "search",
+      "project_id": "",
+      "pinned": false
+    },
+    {
+      "id": "d2c662e5-42f5-4c5d-b749-a98ebf083cf9",
+      "title": "Мысленный Эксперимент",
+      "updated_at": 1767142317,
+      "created_at": 1767122257,
+      "chat_type": "search",
+      "project_id": "",
+      "pinned": false
+    },
+    {
+      "id": "76b52577-760f-486a-9bc4-559c04a6a426",
+      "title": "Мерность чисел через множители",
+      "updated_at": 1766795780,
+      "created_at": 1766667586,
+      "chat_type": "search",
+      "project_id": "",
+      "pinned": false
+    },
+    {
+      "id": "1bb2bb6b-3651-4078-a1b1-3c6c09f8b15d",
+      "title": "Poetic Ballad Translation",
+      "updated_at": 1766795455,
+      "created_at": 1766794892,
+      "chat_type": "t2t",
+      "project_id": "",
+      "pinned": false
+    },
+    {
+      "id": "0fb8f7c8-e9a6-4076-8568-ed8d1b1e5903",
+      "title": "Музыка для размышлений",
+      "updated_at": 1766726052,
+      "created_at": 1766704603,
+      "chat_type": "search",
+      "project_id": "",
+      "pinned": false
+    },
+    {
+      "id": "4be63287-a013-40f5-8380-ba3bf6dc5136",
+      "title": "Символика персонажа Jinx",
+      "updated_at": 1766093184,
+      "created_at": 1766092034,
+      "chat_type": "t2t",
+      "project_id": "",
+      "pinned": false
+    },
+    {
+      "id": "4454c5c0-304b-469d-a9e6-6bd533aaa1c9",
+      "title": "Создание GitHub репозитория AI Stuck",
+      "updated_at": 1766091646,
+      "created_at": 1766091011,
+      "chat_type": "search",
+      "project_id": "",
+      "pinned": false
+    },
+    {
+      "id": "291cb48d-27d9-4375-be28-4d39ee7b10bd",
+      "title": "Трихотомия_vs_Дихотомия_в_Бифуркациях",
+      "updated_at": 1766087972,
+      "created_at": 1766079769,
+      "chat_type": "search",
+      "project_id": "",
+      "pinned": false
+    },
+    {
+      "id": "6ec83753-e82b-46f7-ab29-aec013e18474",
+      "title": "Где Жизнь во Вселенной",
+      "updated_at": 1765923548,
+      "created_at": 1765922036,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "38378055-4823-4cc7-9a22-84d2127a6579",
+      "title": "Larisa Dolina vs Lurye Satire",
+      "updated_at": 1765917897,
+      "created_at": 1765913819,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "6018a295-1641-407e-b3f3-abd599dc2da5",
+      "title": "Разработка универсального тестера для радиоэлементов",
+      "updated_at": 1765911251,
+      "created_at": 1765909653,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "db663d31-f196-4284-b8f7-d1f91e28770e",
+      "title": "Комментарий о расположении заряда в конденсаторе",
+      "updated_at": 1765750089,
+      "created_at": 1765729000,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "e1c046f2-5af3-4b62-b840-e5b005c32fbc",
+      "title": "ЮрАспекты Использования SunoAI",
+      "updated_at": 1765659743,
+      "created_at": 1765656274,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "a83a2139-2513-40ec-9848-b7b2f92ad516",
+      "title": "Анализ профиля ВКонтакте",
+      "updated_at": 1765649386,
+      "created_at": 1765649348,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "4ac09af8-7247-4b46-8b7c-ae69c0abc56f",
+      "title": "Ретроспектива ZX Spectrum Pentagon 128",
+      "updated_at": 1765648490,
+      "created_at": 1765630990,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "5a5aef88-0364-46fb-aab1-f8122a888cda",
+      "title": "IdentifyClosestLanguageTranslate",
+      "updated_at": 1765582486,
+      "created_at": 1765576706,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "9ff758b6-58d4-4197-93af-9a89db2989b1",
+      "title": "Минималистичная музыка с эхом",
+      "updated_at": 1765574753,
+      "created_at": 1765557792,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "3bf9a056-b144-4ea4-bad0-e79f35047f26",
+      "title": "Комментарий о лекциях по космологии",
+      "updated_at": 1765565448,
+      "created_at": 1762912015,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "7ac89b35-f080-4414-98f4-5d266fcc2b0a",
+      "title": "Model-Driven Web-App Без Программирования",
+      "updated_at": 1765518476,
+      "created_at": 1765517752,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "fdb50023-a98b-446a-9d0a-08d006a6ed85",
+      "title": "Бизнес-модель для ИИ-сервиса генерации контента",
+      "updated_at": 1765512098,
+      "created_at": 1765511954,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "22463e1b-ec0c-4887-96b9-af641c08c3ea",
+      "title": "Защита ВГ93 от пропадания +12В",
+      "updated_at": 1765241867,
+      "created_at": 1765220693,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "b9e58cd9-cdec-462f-9f57-b2c76390263e",
+      "title": "Центр Масс В Картинке",
+      "updated_at": 1765137397,
+      "created_at": 1765137392,
+      "chat_type": "i2v",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "3e5e00c5-356b-43fa-a622-ac216f19aa3d",
+      "title": "Анимация вокруг центра масс",
+      "updated_at": 1765137305,
+      "created_at": 1765137258,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "6b951678-fd5d-46d8-ba4c-23aaa65e8b20",
+      "title": "Математика и Философия Доказательств",
+      "updated_at": 1765136416,
+      "created_at": 1764872291,
+      "chat_type": "t2i",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "a1049c30-7c44-4d37-a143-6c1c2779f485",
+      "title": "Неоднозначная Задача Раскрыта",
+      "updated_at": 1764198641,
+      "created_at": 1764182430,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "7458f017-9b47-41f2-912b-46aff8b16e28",
+      "title": "Магнетрон и фамилия Гретнахер",
+      "updated_at": 1764012790,
+      "created_at": 1764011917,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "3c036572-6e62-471c-81f8-42b854a85629",
+      "title": "Democratizing System-Level Data Management",
+      "updated_at": 1763930817,
+      "created_at": 1763927911,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "e0745391-c7ea-41d6-b1d2-fd4deeb1be71",
+      "title": "ИИ преодолевает зловещую долину в генерации контента",
+      "updated_at": 1763768958,
+      "created_at": 1763760883,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "6177e3e3-2dbe-4cc2-a07b-53415f252056",
+      "title": "Временные почтовые сервисы",
+      "updated_at": 1763551754,
+      "created_at": 1763547204,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "dd243134-a0c0-4a2f-b383-9bb1b16f042c",
+      "title": "Мир как многомерная история",
+      "updated_at": 1763475483,
+      "created_at": 1763321723,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "14680483-2521-422e-af52-601b4a3ca7dd",
+      "title": "Фильмы с Moreno J Remixes",
+      "updated_at": 1763357483,
+      "created_at": 1763357049,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "3965e83c-c699-496c-ae7e-1181d0b56940",
+      "title": "Фундаментальная Симметрия и Вектора Удивления",
+      "updated_at": 1763341147,
+      "created_at": 1763335685,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "2ae79456-1c63-44d4-aafa-35331c1ce5ff",
+      "title": "Continual AI Task Processing",
+      "updated_at": 1763335406,
+      "created_at": 1763332893,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "59f17a9a-1aac-4366-a1f4-6230363d68e5",
+      "title": "HL 3 Будет VR Игра?",
+      "updated_at": 1763288873,
+      "created_at": 1763288704,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "562e551b-78f3-43a3-839b-92e30f4b2856",
+      "title": "Японская Анимация World-Art",
+      "updated_at": 1762940459,
+      "created_at": 1762939966,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "ebd936a3-47d6-4361-9ac1-166a075b8051",
+      "title": "YouTube Канал Переход На Технический Контент",
+      "updated_at": 1762937708,
+      "created_at": 1762937577,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "81859bf9-8def-43d9-8b02-354f6bf7ebe7",
+      "title": "Два подхода к познанию действительности",
+      "updated_at": 1762930879,
+      "created_at": 1762888839,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "75e52a68-b134-4c75-a04d-f25930c642da",
+      "title": "Virt a Mate Asset Extraction and Injection",
+      "updated_at": 1762725880,
+      "created_at": 1762717869,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "fac59a4b-5aaf-46bd-a5d8-321160f16cfb",
+      "title": "Safety Marking Update",
+      "updated_at": 1762717180,
+      "created_at": 1762712180,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "790e7489-934e-41ef-ab83-08d74a8d417e",
+      "title": "Обновление скрипта для новой логики",
+      "updated_at": 1762532901,
+      "created_at": 1762531313,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "01360896-144d-497d-ac34-6dabb830961a",
+      "title": "Neural Intrusion Scene",
+      "updated_at": 1762465694,
+      "created_at": 1762459389,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "886c5b0c-f507-4df6-86f0-9b78c4a4ef7b",
+      "title": "Семейные Узы Киберпанка",
+      "updated_at": 1762459037,
+      "created_at": 1762455997,
+      "chat_type": "t2i",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "2c188d1d-a303-4cfa-a3ab-f4d1c2f8ec04",
+      "title": "UnityFS Bundle Extractor",
+      "updated_at": 1762352875,
+      "created_at": 1762351067,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "e59cd8a7-f8c4-46c4-9b16-9a6bd5c72266",
+      "title": "Юмор в Машинном Понимании",
+      "updated_at": 1762172427,
+      "created_at": 1762172078,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "d3cfcbf8-cebb-4665-a4bc-5aee894edaa1",
+      "title": "Optimizing Docker Images with Alpine Linux",
+      "updated_at": 1761763157,
+      "created_at": 1761552754,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "072bdd39-1271-47e0-82f8-520e091fb5d1",
+      "title": "Мутации в гене MC1R и рыжий цвет волос",
+      "updated_at": 1761760509,
+      "created_at": 1761760078,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "616f45cd-6a83-4a1d-824b-9c093ad5ae91",
+      "title": "История культурной мешанины",
+      "updated_at": 1761593530,
+      "created_at": 1761588959,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "0c80168d-dc72-456d-a276-f957c0aaba26",
+      "title": "Анализ и структурирование файла Anno 1800",
+      "updated_at": 1761580559,
+      "created_at": 1761405979,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "d30854bc-f686-4bee-9271-7fe4f8cfe888",
+      "title": "Аксиoma Применeния",
+      "updated_at": 1761577147,
+      "created_at": 1761564337,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "c3462b01-9d87-4743-acb8-3bd2d5b891bb",
+      "title": "Исходники SavegameReader",
+      "updated_at": 1761459996,
+      "created_at": 1761458777,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "4d2a2980-fa5c-4ea9-bf6b-1df4586ceba1",
+      "title": "Free Code Models on Openrouter",
+      "updated_at": 1761265411,
+      "created_at": 1761265377,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "f4f54286-8a4f-4edb-bec7-bbedf5d18890",
+      "title": "IPv4 Literals WARN Pass",
+      "updated_at": 1760998596,
+      "created_at": 1760996704,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "3ef7563e-a88f-4fcc-9658-aa3e34802f3d",
+      "title": "Полупроводниковый зоопарк",
+      "updated_at": 1760826303,
+      "created_at": 1760822883,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "b695a44e-d702-4361-a56a-63c5c0c581c2",
+      "title": "Bash Country Code to Color",
+      "updated_at": 1760771872,
+      "created_at": 1760770814,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "b923f28a-82ae-4e38-a59e-f9bef67c9c72",
+      "title": "Анализ и разбор псевдо-ASM",
+      "updated_at": 1760565618,
+      "created_at": 1760557957,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "df19ecf3-4977-4c23-9aaa-a7149c30af7e",
+      "title": "Test Agent Task FileAnalysis",
+      "updated_at": 1760322139,
+      "created_at": 1760322124,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "2b4dd3f9-773b-44ff-85f8-8331ecd47296",
+      "title": "Complex Agent Task Challenge",
+      "updated_at": 1760322087,
+      "created_at": 1760322026,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "051a5b47-1234-4996-951a-2ff60ad40857",
+      "title": "Игра слов с числами",
+      "updated_at": 1760302806,
+      "created_at": 1760288406,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "04b075d0-8723-48ef-85f8-c3f82e5c1ab2",
+      "title": "Pure Math Declaration",
+      "updated_at": 1760280829,
+      "created_at": 1760235964,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "a69527cc-3d43-4dfa-a53a-9a058471e0fc",
+      "title": "YouTube Top Videos History",
+      "updated_at": 1760234749,
+      "created_at": 1760233546,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "6b10d8bd-bb65-4842-9f60-37fe96ca15f9",
+      "title": "Магнитные Поля и Структура",
+      "updated_at": 1760233233,
+      "created_at": 1760233138,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "08fdd129-243a-4bca-9c79-a39dfa578075",
+      "title": "Молоток Разума",
+      "updated_at": 1760231624,
+      "created_at": 1760230641,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "45df88dc-3b0a-406d-9fed-119e426c2e8f",
+      "title": "Лютая дичь в стихах",
+      "updated_at": 1760231338,
+      "created_at": 1760231306,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "4fddfd41-ba51-4e6c-9b64-3559472b93ab",
+      "title": "HybridModelArchitecture",
+      "updated_at": 1760230311,
+      "created_at": 1760211207,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "87ad5f9a-65a7-48c9-8c92-e19be9dec3c2",
+      "title": "Python API Client with Key File",
+      "updated_at": 1759927423,
+      "created_at": 1759927372,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "cbb7c4fe-fae7-4e9f-ae8d-411e1b54a8de",
+      "title": "Цитатная игра на знание",
+      "updated_at": 1759885981,
+      "created_at": 1759852789,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "dd53ec90-3984-4be8-a96d-424946516677",
+      "title": "Code Analysis Summary",
+      "updated_at": 1759815896,
+      "created_at": 1759688396,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "f6919534-33fa-4dc9-a73a-712020756e41",
+      "title": "Python Qwen API Client Analysis",
+      "updated_at": 1759621679,
+      "created_at": 1759526974,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "775a6621-5ed6-40a6-a910-e25aa158b9a3",
+      "title": "На что настроено дело",
+      "updated_at": 1759602155,
+      "created_at": 1759602146,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "0caf5f9c-ff8a-41d2-9436-b0ec29b7c9bb",
+      "title": "Spec-Driven Pong Game",
+      "updated_at": 1759409485,
+      "created_at": 1759409440,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "2be5de35-786a-478b-8595-106f94adb227",
+      "title": "Top Hits на YouTube",
+      "updated_at": 1759076890,
+      "created_at": 1759074403,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "7d4d7c33-f542-4135-9f26-9748a9b71484",
+      "title": "Октавы в натуральном органе",
+      "updated_at": 1759073970,
+      "created_at": 1759066643,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "178cac9f-6bcd-4e73-8eae-750b11e107d1",
+      "title": "It from Math vs It from Bit",
+      "updated_at": 1759073502,
+      "created_at": 1759053341,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "a33670f0-9322-4089-9e98-69e14b698147",
+      "title": "Эмодзи Виселица и Гильотина",
+      "updated_at": 1759057184,
+      "created_at": 1759052381,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "7b19267d-5efe-4d8d-a27b-81975fc894d3",
+      "title": "Популярные видео YouTube в постсоветских странах",
+      "updated_at": 1759015643,
+      "created_at": 1759010999,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "2c3f9525-3e33-4001-8928-73b8635911a2",
+      "title": "Дилемма базового стимула",
+      "updated_at": 1759009213,
+      "created_at": 1759005437,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "e500955a-022b-4ed2-acdd-21c9a34623e4",
+      "title": "Qwen API Chat Interaction Logic",
+      "updated_at": 1758999561,
+      "created_at": 1758592200,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "9357faaa-9c68-447f-9762-09aa49666847",
+      "title": "Децентрализованный ИИ без хаба: архитектура, PoC, ROADMAP",
+      "updated_at": 1758849313,
+      "created_at": 1758828893,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "a6055c55-52c4-41aa-a768-52a959ff6b99",
+      "title": "Взял да не взял",
+      "updated_at": 1758609065,
+      "created_at": 1758607094,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "c910f047-03be-4c0d-9a2e-e04b6471d796",
+      "title": "Удаление чатов по шаблону и времени",
+      "updated_at": 1758589054,
+      "created_at": 1758425808,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "76d9678c-f9e9-4c01-9483-d93fd40fa9b4",
+      "title": "Optimizing Context Window with State Graphs",
+      "updated_at": 1758573220,
+      "created_at": 1758572607,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "beabdbd6-7b9a-4f9c-a90c-426dcb5d51e1",
+      "title": "Архитектура TRAE IDE с кастомной моделью",
+      "updated_at": 1758335423,
+      "created_at": 1758333620,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "aac93012-8694-4189-939a-5b6073f2047b",
+      "title": "Integration of RAG and MCP in TRAE.AI",
+      "updated_at": 1758050564,
+      "created_at": 1758043702,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "ab2b8662-e46a-452b-8c7a-79c5056ff1d8",
+      "title": "Эмуляция PlayStation 3 в RPCS3",
+      "updated_at": 1758047775,
+      "created_at": 1757940302,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "99db5bd4-937a-4fb3-be56-5b4050a98cdc",
+      "title": "Фрактальные алгоритмы сжатия с ИИ",
+      "updated_at": 1757940117,
+      "created_at": 1757940026,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "d128eee0-a9de-40cd-9fb2-8ad1773ccbe7",
+      "title": "Перевод названия песни No Code Transfer",
+      "updated_at": 1757892266,
+      "created_at": 1757875041,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "1ada4deb-a9c4-4fd8-ac2e-65142d90ec9f",
+      "title": "HTML to Valid PDF Conversion",
+      "updated_at": 1757891821,
+      "created_at": 1757886419,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "158bdb16-b6b7-42b0-9478-f6300f0340e1",
+      "title": "Этимология слова \"блесть\"",
+      "updated_at": 1757860618,
+      "created_at": 1757858791,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "4b334cc5-bf84-4eab-b039-9551040d560c",
+      "title": "YouTube комментарий о Википедии",
+      "updated_at": 1757856102,
+      "created_at": 1757852658,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "5c4b8a50-74c6-4c65-9700-5d028dc35ea1",
+      "title": "Анализ обложки и аватара YouTube-канала",
+      "updated_at": 1757850374,
+      "created_at": 1757848121,
+      "chat_type": "t2v",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "927a0c9a-8f84-410e-830e-1ed7639ab7d7",
+      "title": "Geopolitical Reality of Moscow Never Sleeps",
+      "updated_at": 1757611085,
+      "created_at": 1757610915,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "ddd0669a-7454-4f6e-88d9-ebc26800f938",
+      "title": "Docker Meme Generator",
+      "updated_at": 1757608140,
+      "created_at": 1757607917,
+      "chat_type": "t2i",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "d92875d6-4d23-4e06-8e8e-fbf7f5f24407",
+      "title": "YouTube Без Рекламы В России 2025",
+      "updated_at": 1757595201,
+      "created_at": 1757594455,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "799d0a6d-818d-4717-847c-eed5fdf92b8e",
+      "title": "Восприятие реальности через динамику",
+      "updated_at": 1757584231,
+      "created_at": 1757583969,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "3dbe08f9-e61b-4e83-8975-ee84e503f3ea",
+      "title": "Diagnostika Problemy s DNS v Windows 10",
+      "updated_at": 1757568825,
+      "created_at": 1757568553,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "5d7a8e99-b7f1-4b27-9adf-c63cb9ab0788",
+      "title": "IDE Integration Test",
+      "updated_at": 1757522453,
+      "created_at": 1757522450,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "e6a6a7e2-7155-43d2-aeb0-297b8deb8cd5",
+      "title": "Тест Авторизации",
+      "updated_at": 1757520935,
+      "created_at": 1757520929,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "78bd5447-cc91-40f0-8e5c-1bc88f5662ab",
+      "title": "Gratitude and Farewell",
+      "updated_at": 1757515944,
+      "created_at": 1757515939,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "c1ec95ce-2283-4728-b0fa-b9ab941c3c45",
+      "title": "Что такое ИИ простыми словами",
+      "updated_at": 1757515936,
+      "created_at": 1757515922,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "3b58eacb-2ea5-4836-b6dc-69919b1f903f",
+      "title": "Погода в Москве",
+      "updated_at": 1757515919,
+      "created_at": 1757515910,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "89100da0-3cf4-43c8-88b5-7162c3c9f6de",
+      "title": "Russian Joke",
+      "updated_at": 1757515907,
+      "created_at": 1757515903,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "b91ac582-405c-426e-a168-f5f139f916ad",
+      "title": "Russian Greeting Chat",
+      "updated_at": 1757515900,
+      "created_at": 1757515895,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "c68ce896-4731-49a6-baa9-a29c14dfaac4",
+      "title": "Привет Как Дела",
+      "updated_at": 1757515884,
+      "created_at": 1757515881,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "d6fb2f46-5e0d-4175-9772-4fd1f9d45b8f",
+      "title": "Привет Как Дела",
+      "updated_at": 1757515173,
+      "created_at": 1757515169,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "2e1d0445-5f18-4412-bc01-8aee66f5054b",
+      "title": "Gratitude and Farewell",
+      "updated_at": 1757515150,
+      "created_at": 1757515141,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "af670fa3-20ef-4e40-b67d-58365add08ff",
+      "title": "Что такое ИИ по通俗у",
+      "updated_at": 1757515137,
+      "created_at": 1757515126,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "62248608-1fb8-42cc-9c65-fad9c2d80ccc",
+      "title": "Погода в Москве",
+      "updated_at": 1757515123,
+      "created_at": 1757515114,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "0b7fcef5-eea6-4b22-a157-86afe955df23",
+      "title": "Russian Joke",
+      "updated_at": 1757515111,
+      "created_at": 1757515107,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "b5d96249-7240-4245-94da-f71737ad4e4e",
+      "title": "Приветствие на русском",
+      "updated_at": 1757515104,
+      "created_at": 1757515100,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "86003e72-3133-4ed2-99b3-36348c5cd3e8",
+      "title": "Gratitude and Farewell",
+      "updated_at": 1757514167,
+      "created_at": 1757514162,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "8b87c27e-c65b-440f-92a4-d6261be84f98",
+      "title": "Что такое ИИ по通俗у",
+      "updated_at": 1757514159,
+      "created_at": 1757514147,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "ae64cc6d-e59c-4342-b35f-975313380770",
+      "title": "Погода в Москве اليوم",
+      "updated_at": 1757514143,
+      "created_at": 1757514127,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "7c0e6d32-095c-4abf-b2a7-a6d378594216",
+      "title": "Russian Joke",
+      "updated_at": 1757514124,
+      "created_at": 1757514121,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "0cbaf89d-85eb-49cd-bc36-f1371babff3a",
+      "title": "Приветствие и диалог",
+      "updated_at": 1757514118,
+      "created_at": 1757514110,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "ce395574-3e82-4361-a432-1cde6649c481",
+      "title": "Kind Compliments",
+      "updated_at": 1757513675,
+      "created_at": 1757513669,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "4f5e338f-52c9-4e53-8894-30c537677de7",
+      "title": "Что, если подумать",
+      "updated_at": 1757513646,
+      "created_at": 1757513639,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "98da5789-3ae2-401c-8270-6ddae1802fc3",
+      "title": "Итоговый вывод",
+      "updated_at": 1757513625,
+      "created_at": 1757513611,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "3270ac0b-1c20-461f-be35-05c5442282e4",
+      "title": "Brief Exchange",
+      "updated_at": 1757513599,
+      "created_at": 1757513595,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "572d640a-5e19-4e21-9063-2d62ba03f226",
+      "title": "Brief Question Mark",
+      "updated_at": 1757513583,
+      "created_at": 1757513577,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "9b903fb4-a6fd-4499-a8de-8123a640172c",
+      "title": "Я",
+      "updated_at": 1757513566,
+      "created_at": 1757513562,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "5271f379-7a4d-4c68-8b3c-d13414189e2c",
+      "title": "Обрывчатое приветствие",
+      "updated_at": 1757512966,
+      "created_at": 1757512904,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "b68b24e6-cd83-47df-8dbd-ba140416f9ea",
+      "title": "Приветственное Общение",
+      "updated_at": 1757512484,
+      "created_at": 1757512464,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "4d925673-7507-41b1-bdd5-3c48c1df39cc",
+      "title": "New chat",
+      "updated_at": 1757512363,
+      "created_at": 1757512363,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "a15a6175-7bc6-4220-8f25-0fd106c6cbb4",
+      "title": "New chat",
+      "updated_at": 1757511851,
+      "created_at": 1757511851,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "41642481-2846-42aa-af61-1aca1b1b099b",
+      "title": "New chat",
+      "updated_at": 1757511819,
+      "created_at": 1757511819,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "d24e8bde-e51d-43b9-9f37-9363952665eb",
+      "title": "TRAE.AI und DevOps Erlebnisse",
+      "updated_at": 1757507515,
+      "created_at": 1757499652,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "d0574ea3-051b-4826-bc41-4b5462d939e0",
+      "title": "UnclearQuestionRephrasing",
+      "updated_at": 1757498280,
+      "created_at": 1757495457,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "4040c6f2-3634-4851-85d8-ccd696945747",
+      "title": "Mysteries of the Universe",
+      "updated_at": 1757498265,
+      "created_at": 1757498255,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "627cf70c-fcb0-47db-959d-81ef64ced1e0",
+      "title": "DevOps Mem with TRAE.AI",
+      "updated_at": 1757497287,
+      "created_at": 1757497248,
+      "chat_type": "t2i",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "04b03505-d037-43d2-92f2-b919f2c5eb31",
+      "title": "Создание мема для TRAE.AI",
+      "updated_at": 1757496514,
+      "created_at": 1757495613,
+      "chat_type": "t2i",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "b36dc803-df04-49cc-954b-bfc187284e9c",
+      "title": "Mysterious Messages",
+      "updated_at": 1757495449,
+      "created_at": 1757495437,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "103105c9-17af-409f-8b80-84804793eec7",
+      "title": "Language Learning Strategies",
+      "updated_at": 1757495415,
+      "created_at": 1757495411,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "81fc159e-81af-4a9a-8f7c-de40e8ec29dd",
+      "title": "Mysterious Questions",
+      "updated_at": 1757495390,
+      "created_at": 1757495385,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "597d243a-1bff-4633-b7d5-867e62c4343a",
+      "title": "Привет Как Дела",
+      "updated_at": 1757495210,
+      "created_at": 1757495207,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "ed4ac3bf-4219-4ee0-a734-5652b6346955",
+      "title": "Привет Как Дела",
+      "updated_at": 1757495091,
+      "created_at": 1757495088,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "76a4ce6c-d024-434f-b219-bcafefbfbd8c",
+      "title": "Привет Как Дела",
+      "updated_at": 1757495067,
+      "created_at": 1757495065,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "8704ed7f-2370-4c24-8cd7-ef6cab76c4a0",
+      "title": "Привет Как Дела",
+      "updated_at": 1757495047,
+      "created_at": 1757495045,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "25a3432c-57d5-425f-8d8f-6921b31a81d6",
+      "title": "New chat",
+      "updated_at": 1757495024,
+      "created_at": 1757495024,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "a7087c22-6aa2-4321-81e4-d29b9adcd241",
+      "title": "New chat",
+      "updated_at": 1757494884,
+      "created_at": 1757494884,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "234f9093-fb2a-4b93-9b47-1def3f3c2f82",
+      "title": "New chat",
+      "updated_at": 1757494551,
+      "created_at": 1757494551,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "e6d37471-778d-4aae-8ce7-d5e96710b8b0",
+      "title": "New chat",
+      "updated_at": 1757494530,
+      "created_at": 1757494530,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "284d9f40-abae-435d-8d94-f43b6d3ad458",
+      "title": "New chat",
+      "updated_at": 1757489144,
+      "created_at": 1757489144,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "d60b5d3d-e6b4-4067-a353-84021113a0d8",
+      "title": "Git предпоследний коммит с файлами",
+      "updated_at": 1757483526,
+      "created_at": 1757483514,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "6bc2bfad-3a9c-4b66-9e6a-fa27a50c1710",
+      "title": "Поиск最强编码模型",
+      "updated_at": 1757447191,
+      "created_at": 1757443341,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "f697256f-3a88-4b13-b2ca-8ad71a03f6dd",
+      "title": "Сравнение моделей в кодинге",
+      "updated_at": 1757443328,
+      "created_at": 1757443316,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "4cba8352-0bec-4445-b910-8bce7e74a473",
+      "title": "Список Моделей Из Картинки",
+      "updated_at": 1757443207,
+      "created_at": 1757443197,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "977f812a-1e9e-4a0f-b6ec-bb0709d89b9b",
+      "title": "Демо-сцена в программировании",
+      "updated_at": 1757336759,
+      "created_at": 1757275668,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "14d8de0e-ada9-463d-a468-1f9afc95add4",
+      "title": "Система Моделирования Процессов",
+      "updated_at": 1757268675,
+      "created_at": 1757187461,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "236bfcc5-7c38-4cf4-9387-60dff0aded2d",
+      "title": "Hierarchical Autonomous Agents System",
+      "updated_at": 1756852435,
+      "created_at": 1756815086,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "efcb1656-c8b1-4a55-8912-3271d64a6530",
+      "title": "Художественный перевод Kara's Lament",
+      "updated_at": 1756852048,
+      "created_at": 1755931353,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "15d573bf-22b8-40ec-ad2c-4dcec6bedc62",
+      "title": "Советская Алиса и светлое будущее",
+      "updated_at": 1756804507,
+      "created_at": 1756756292,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "989c706d-21b9-4c6f-b64b-ccce607503b3",
+      "title": "\"33 Коровы\" и символизм в культуре",
+      "updated_at": 1756748045,
+      "created_at": 1756748019,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "5c4d4d9a-f11f-41e3-bc42-7024456dc219",
+      "title": "Musical Translation Challenge",
+      "updated_at": 1756747170,
+      "created_at": 1756746592,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "7f650360-952d-489e-8f47-4a59c6292fa5",
+      "title": "Наркотическая шутка о \"трех белых конях\"",
+      "updated_at": 1756746178,
+      "created_at": 1756745876,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "80b8394e-126c-4b07-99d2-c22f5aff8028",
+      "title": "Создание Инфографики Без Графики",
+      "updated_at": 1756743012,
+      "created_at": 1756742676,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "c83eb5e5-a0e5-486a-94db-744d374b9d67",
+      "title": "ИИ и взлом Denuvo",
+      "updated_at": 1756738696,
+      "created_at": 1756736698,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "069c08fe-f806-4eca-bd37-7c886eed67f0",
+      "title": "Панорама media ресурс",
+      "updated_at": 1756729122,
+      "created_at": 1756728785,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "93958de8-9dd1-4870-abb3-a4a92a2f39a2",
+      "title": "Онтологическая Система И Аналитика",
+      "updated_at": 1756403870,
+      "created_at": 1756403704,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "c91592ec-05b9-41b8-8b9e-366749c06182",
+      "title": "Испарение этанола из виски",
+      "updated_at": 1756135601,
+      "created_at": 1756134549,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "7fbb1878-b2c4-4c13-9aa6-f799a771bad7",
+      "title": "ТВОЙ МЕДИА ПЛЕЙЕР",
+      "updated_at": 1756115103,
+      "created_at": 1756110791,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "ff55c10b-93a9-4a0f-8c71-b60debccfd82",
+      "title": "Этюд звуков и смыслов",
+      "updated_at": 1755988622,
+      "created_at": 1755987824,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "4c7e96cc-5394-4650-890b-8952401771a4",
+      "title": "Замкнутые контуры в цифрах",
+      "updated_at": 1755937171,
+      "created_at": 1755937125,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "5a766d64-5c66-4273-b8e7-d3613d76f59c",
+      "title": "Видиние Объединённое ИИ-Общество",
+      "updated_at": 1755902931,
+      "created_at": 1755894642,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "0086f21d-dee5-4faa-a28c-2cab3af0d3fb",
+      "title": "Cyberpunk Hope少女",
+      "updated_at": 1753402586,
+      "created_at": 1753402325,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "ad6ad595-76bc-44d6-8aa4-53d5f58a3a5d",
+      "title": "Стиль Ленинград Шопоголик",
+      "updated_at": 1753188568,
+      "created_at": 1753187442,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "5f4e8c08-3894-4154-89bf-5cc7328f63fa",
+      "title": "Информация и черные дыры",
+      "updated_at": 1750025759,
+      "created_at": 1750025752,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "78daa8de-f052-490c-a8e7-4f2e48bd76dc",
+      "title": "Юмористический новостной TG-канал",
+      "updated_at": 1749987379,
+      "created_at": 1749987368,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "98173ec8-b47f-4f8a-abf3-8b9dc201c11b",
+      "title": "Юмористический новостной ТГ-канал",
+      "updated_at": 1749987275,
+      "created_at": 1749987266,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "92cfa5e1-9fbf-4e23-aa6a-efa0938860c6",
+      "title": "Юмористический новостной ТГ-канал",
+      "updated_at": 1749982856,
+      "created_at": 1749982835,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "9385cfaf-552d-4fc9-8395-f87479d69889",
+      "title": "Юмористический ТГ-канал новости",
+      "updated_at": 1749982651,
+      "created_at": 1749982636,
+      "chat_type": "deep_research",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "3665fdbf-c176-4a71-9414-0f29b994f24e",
+      "title": "LLM Compression Paradigm",
+      "updated_at": 1749960944,
+      "created_at": 1749960935,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "cd3d8d71-c152-490a-9e7c-76e741305b61",
+      "title": "Теория вероятности в Угадайке",
+      "updated_at": 1748104186,
+      "created_at": 1748103296,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "dae20cd1-4743-4a5d-94ac-a26301d870cf",
+      "title": "Теория вероятности для Угадайки",
+      "updated_at": 1748103272,
+      "created_at": 1748103255,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "72d08ef2-ed24-4f8f-b9e3-d492ff148504",
+      "title": "Pager Drag Gesture Issue",
+      "updated_at": 1746954740,
+      "created_at": 1746933707,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "c21a6b3a-8902-4325-a3e1-66fdc750fe24",
+      "title": "Android Studio Content Slider",
+      "updated_at": 1746931620,
+      "created_at": 1746914924,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "621535a4-39ea-42ae-b634-ecd261d44d8a",
+      "title": "Complex Systems and Structures",
+      "updated_at": 1746911904,
+      "created_at": 1746905904,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "80bb4c79-3656-4f1e-9e10-9a883f2edcd6",
+      "title": "Python Multithreading Error",
+      "updated_at": 1746797538,
+      "created_at": 1746564378,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "7ab84c16-79ce-49dc-a5bf-ede61181cf4d",
+      "title": "Суперпродвинутый ИИ в обычном мире",
+      "updated_at": 1746644493,
+      "created_at": 1746644297,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "98bdc03b-467c-41bc-99ca-743d9458cbfb",
+      "title": "Текст песни: Не вампир",
+      "updated_at": 1746597251,
+      "created_at": 1746594814,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "2047b8dd-102c-4f0f-b200-c7e534655341",
+      "title": "Текст песни: Манипулятор или вампир?",
+      "updated_at": 1746594749,
+      "created_at": 1746594695,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "fdfe74a6-74ca-4ff7-a126-abeec8ae14b7",
+      "title": "Лирический анализ песни Не вампир",
+      "updated_at": 1746591021,
+      "created_at": 1746590707,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "1c2fe847-f2dd-49c5-9ed7-22ebd8aa55b0",
+      "title": "Монолог Барабашки о Qwen",
+      "updated_at": 1746589624,
+      "created_at": 1746586442,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "3e897f98-60e8-4e7d-b910-4ead09ee1a94",
+      "title": "Эмоциональная Опричнина",
+      "updated_at": 1746578883,
+      "created_at": 1746578846,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "96ed40c3-3fc1-4faf-b78d-b55a3d04719b",
+      "title": "Thread Error Handling",
+      "updated_at": 1746575073,
+      "created_at": 1746571635,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "dda8bf8d-12ce-4b6a-800c-8a3a553fad8c",
+      "title": "Простой код без морганий",
+      "updated_at": 1746564211,
+      "created_at": 1746560089,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "257c0b76-42d5-4216-882e-1763271c1e21",
+      "title": "Video Playback Issue",
+      "updated_at": 1746557409,
+      "created_at": 1746550624,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "a23905cc-e70e-42a6-bb57-8215505e79ef",
+      "title": "Interaktive Bilderschaltflächen mit Multithreading",
+      "updated_at": 1746550787,
+      "created_at": 1746542189,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "e141e0e4-e402-464c-8833-7e77f4ae2af3",
+      "title": "Bitcoin Hashrate Optimization",
+      "updated_at": 1746531203,
+      "created_at": 1746391144,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "f3becada-d88f-4ab7-998b-01d4790ea3b7",
+      "title": "GPU Bitcoin Mining Algorithm",
+      "updated_at": 1746531146,
+      "created_at": 1746396396,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "29adbcb9-b449-4f29-8d92-0040026f3307",
+      "title": "MCP-Серверы Для AI",
+      "updated_at": 1746152871,
+      "created_at": 1746099957,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "d3fe2cca-a044-4d45-966d-59de013e6eae",
+      "title": "Server Side Events Implementation",
+      "updated_at": 1746110809,
+      "created_at": 1746110388,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "1112782d-07f9-4ba7-9a06-ddc3cbe657a3",
+      "title": "Нейронная Сеть для Bits Field",
+      "updated_at": 1746012990,
+      "created_at": 1746011160,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "ee0f7ff5-22fa-41df-9212-5d1adb9ecdcc",
+      "title": "Сканер Полинома Жегалкина",
+      "updated_at": 1745966231,
+      "created_at": 1745955931,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "3153d16c-e369-428f-a187-497e2c3c36e3",
+      "title": "Python Data Structures Conversion Tips",
+      "updated_at": 1745917386,
+      "created_at": 1745916033,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "bd926ccd-9af6-42f4-8fdb-706c3ccb2599",
+      "title": "Похожесть Изображений",
+      "updated_at": 1745913916,
+      "created_at": 1745877201,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "efc414fb-7488-4652-b2f1-119e0e14db97",
+      "title": "FFmpeg Video Frame Extraction",
+      "updated_at": 1745877748,
+      "created_at": 1745877695,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "d396b6e5-68f7-4808-a533-24a8d98844f5",
+      "title": "Multipart Downloader Design",
+      "updated_at": 1745873386,
+      "created_at": 1745867278,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "42893980-0a43-4f5a-be87-ba2eb5191f93",
+      "title": "Sigmoid Formula Adjustment",
+      "updated_at": 1745852595,
+      "created_at": 1745851618,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "929a3f4e-b435-4147-8979-eb72cca6ec1f",
+      "title": "Implementing SHA256 Algorithm",
+      "updated_at": 1745771630,
+      "created_at": 1745740168,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "fe163de3-5704-403c-877a-83745c013335",
+      "title": "Bitcoin Block Header Hash",
+      "updated_at": 1745769634,
+      "created_at": 1745767590,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "1d3455c9-14e8-4653-b228-069e6a4389d5",
+      "title": "SHA256 Hash Calculation",
+      "updated_at": 1745762336,
+      "created_at": 1745759953,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "be608d91-2889-4c27-98fb-4056a76ee536",
+      "title": "Библейское прозвище для Макса",
+      "updated_at": 1745531951,
+      "created_at": 1745516482,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "1ee94305-6af3-4162-84c1-f5e31075b818",
+      "title": "No Code Transfer for Puzzles",
+      "updated_at": 1745510864,
+      "created_at": 1745505369,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "2be80a57-5854-4134-80f1-1239aa73ba0c",
+      "title": "Цепная дробь для (π - 3)/(3 - e)",
+      "updated_at": 1745500114,
+      "created_at": 1745499375,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "da6d16a2-9a46-4ed0-af24-53d343b5de6c",
+      "title": "Ироничный Диалог О Переменах",
+      "updated_at": 1745498256,
+      "created_at": 1745496531,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "c82d90cd-785a-4da2-bafb-a27a23e8465c",
+      "title": "Революция в музыкальной генерации с SunO",
+      "updated_at": 1745491802,
+      "created_at": 1745453565,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "beafbae4-777a-41df-8b86-376fff8435cc",
+      "title": "Логотипы с эволюцией цветов",
+      "updated_at": 1745450938,
+      "created_at": 1745450927,
+      "chat_type": "t2i",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "045d9204-66c1-4493-a705-68c704301507",
+      "title": "Философ Марк Аврелий",
+      "updated_at": 1745440004,
+      "created_at": 1745438609,
+      "chat_type": "t2i",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "1e7d5659-bdab-4f7d-99b1-173a5c0c4771",
+      "title": "Python Bash Комбинация",
+      "updated_at": 1745428057,
+      "created_at": 1745332245,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "e809133e-a939-421e-a8eb-6912f4ccc085",
+      "title": "Глубокий анализ текста песни в стиле electro light EDM 80s",
+      "updated_at": 1745426107,
+      "created_at": 1745423524,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "bfc482ff-e624-4f85-87ae-a7ea5bf10ee8",
+      "title": "Python Парсер Требования",
+      "updated_at": 1745409849,
+      "created_at": 1745380443,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "c5b22078-e2c7-4836-bddc-f9202e6a9630",
+      "title": "Подключение модулей из подкаталогов",
+      "updated_at": 1745405025,
+      "created_at": 1745403165,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "52e5bca8-47e1-4d8c-bb0d-1c7739f1d2b7",
+      "title": "Функция обработки файлов и выполнения скриптов",
+      "updated_at": 1745401433,
+      "created_at": 1745397905,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "f189b7d1-deb9-4a22-a96a-b7c53a9179d8",
+      "title": "Console Chatbot App",
+      "updated_at": 1745330766,
+      "created_at": 1745328154,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "1267fcf3-b209-4b4f-a28e-0d08cc719893",
+      "title": "API-ProxyChromeExt",
+      "updated_at": 1745235282,
+      "created_at": 1745233036,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "5d821186-5f85-4604-895f-d2bb642859e1",
+      "title": "Приветствие и помощь",
+      "updated_at": 1745142884,
+      "created_at": 1745142877,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "101b608f-7c4d-4814-aa8c-8c49cb88eb12",
+      "title": "SHA256 на AND NOT и XOR",
+      "updated_at": 1745141002,
+      "created_at": 1744226081,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "b48bd280-711b-434e-bd91-1940ed95667d",
+      "title": "Приветствие и помощничек",
+      "updated_at": 1745140702,
+      "created_at": 1745135536,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "65dc13f8-7847-4bb4-9369-91e35be1454a",
+      "title": "Способы работы с битовым представлением",
+      "updated_at": 1745040215,
+      "created_at": 1745040157,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "9a14b1ce-9e63-44cd-8632-018ef538eea4",
+      "title": "Аналоги diff patch для бинарных файлов",
+      "updated_at": 1745039063,
+      "created_at": 1745039022,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "d8232033-d112-4c5e-a671-80da0b1160d2",
+      "title": "NSFW Контент и Платформы",
+      "updated_at": 1745008619,
+      "created_at": 1745002414,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "27ef7df3-20fd-48b3-b3d7-fbce9d36c7c1",
+      "title": "Типичная альташка в фотореализме",
+      "updated_at": 1744984222,
+      "created_at": 1744980445,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "f5c1d878-708a-4b0e-8f6a-8b79a0aa6ea1",
+      "title": "Meta Метавселенная Провал",
+      "updated_at": 1744979738,
+      "created_at": 1744978355,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "5eba8cab-6774-411f-bf15-fb823d06432c",
+      "title": "Определение песни по описанию",
+      "updated_at": 1744888370,
+      "created_at": 1744888287,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "444ad61d-8ca5-4d74-b1fe-101ed8e47d0a",
+      "title": "Weeknd Ariana Collaborations",
+      "updated_at": 1744888064,
+      "created_at": 1744888015,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "fd91aa5a-c380-4b7e-9364-623526e582cd",
+      "title": "Weeknd Ariana Grande Origins",
+      "updated_at": 1744887962,
+      "created_at": 1744887903,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "a107b2fe-a4bc-42dd-b606-f08e43cbb3d2",
+      "title": "Google и традиционные ценности",
+      "updated_at": 1744880227,
+      "created_at": 1744880193,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "a2d8b76e-32e5-4711-a0ec-dc24822351dd",
+      "title": "Что означает Данама?",
+      "updated_at": 1744879582,
+      "created_at": 1744871659,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "53b3e84f-ffa6-4048-8855-3cc0b41f8619",
+      "title": "NSFW в Civit.aimóvil",
+      "updated_at": 1744866787,
+      "created_at": 1744866518,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "5c158ed3-a67f-4223-990b-c9124f40b024",
+      "title": "NSFW-Кontent-na-CivitAI",
+      "updated_at": 1744865153,
+      "created_at": 1744865047,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "b73957b1-cc76-49db-865e-e788ff9f0f26",
+      "title": "Перевод аудио в ноты",
+      "updated_at": 1744856579,
+      "created_at": 1744845624,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "7b6266b9-cbab-48e6-a9da-13097fae104f",
+      "title": "Скрипт Прокси для Коммуникации Сайт-Локальный Сервер",
+      "updated_at": 1744631990,
+      "created_at": 1744624735,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "c69345f8-f1a0-4cfc-941a-7d20ab77e151",
+      "title": "JS для поиска и отправки формы",
+      "updated_at": 1744623863,
+      "created_at": 1744622871,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "b9362e4a-785b-4ca2-89cb-e2434fdb155d",
+      "title": "Музыка как язык эмоций",
+      "updated_at": 1744578824,
+      "created_at": 1744567163,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "bf955ac8-2467-45f2-9142-4a1a7bf15307",
+      "title": "Конфликт в совместном проживании",
+      "updated_at": 1744567020,
+      "created_at": 1744565714,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "8e056a15-5cdf-41cd-999b-0486b6096a1a",
+      "title": "Web App Client Server Interaction",
+      "updated_at": 1744561044,
+      "created_at": 1744443857,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "ef24294c-44f8-45f5-aed3-ac73627e08d9",
+      "title": "Change the Rules Economics",
+      "updated_at": 1744549704,
+      "created_at": 1744548911,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "6b232a4a-47f1-44c8-8b17-d6e04ee334e4",
+      "title": "Утренние идеи для настроения",
+      "updated_at": 1744548478,
+      "created_at": 1744543607,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "a85710ae-550d-4c82-a35d-35c1abaf5d19",
+      "title": "Сравнительная таблица моделей ИИ",
+      "updated_at": 1744543515,
+      "created_at": 1744535703,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "f040684d-9b88-45a8-9d81-ba28d5ae85da",
+      "title": "Жизнь в экстремальных условиях",
+      "updated_at": 1744535465,
+      "created_at": 1744529171,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "a43d70a3-2943-4db3-ad60-a19b9df1b041",
+      "title": "Flask Chat Integration",
+      "updated_at": 1744481950,
+      "created_at": 1744471128,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "472e2eb9-1909-434e-882a-fadd36972ace",
+      "title": "API Alibaba Cloud для Qwen",
+      "updated_at": 1744429441,
+      "created_at": 1744429399,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "4bc447a4-8bd6-4bbc-986c-ee7a6bbc86ed",
+      "title": "AI Agents Collaboration Infrastructures",
+      "updated_at": 1744402164,
+      "created_at": 1744396892,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "15bbeac8-0a70-48ec-bc0a-25b6dedce9a8",
+      "title": "SHA256 Реализация Python",
+      "updated_at": 1744241478,
+      "created_at": 1744241413,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "04f94357-74fb-4b57-89b7-04fb03ffc745",
+      "title": "Оптимизация генератора логических инструкций",
+      "updated_at": 1744239710,
+      "created_at": 1744238183,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "82a52322-2168-4275-8d51-8e6353ec2349",
+      "title": "Ошибка в методе rotr",
+      "updated_at": 1744235831,
+      "created_at": 1744235661,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "b38e4680-8a50-48c3-8298-1ef4bc7aa67b",
+      "title": "System Shock 2 Research Table",
+      "updated_at": 1744187844,
+      "created_at": 1744187760,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "36e6f16e-010b-46a8-a6d6-b901a717910b",
+      "title": "Research Chemicals in System Shock 2",
+      "updated_at": 1744187639,
+      "created_at": 1744187367,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "11b9613e-0c4e-4f75-93a5-b9a5de2124c6",
+      "title": "Статистическая имитация русского текста",
+      "updated_at": 1743721739,
+      "created_at": 1743719666,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "d8bb7102-c47d-4b6b-a055-aeecfc283471",
+      "title": "Медикаменты и естественное здоровье",
+      "updated_at": 1743719477,
+      "created_at": 1743714137,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "9226b3e9-5414-4c48-80d8-af38a93ff8ff",
+      "title": "Лемовский диалог о ИИ и будущем",
+      "updated_at": 1743712266,
+      "created_at": 1743712206,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "92f37218-22fd-4879-997e-0616721790ff",
+      "title": "Логика головоломок в квестах",
+      "updated_at": 1743252225,
+      "created_at": 1743251691,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "85179632-925b-4ffe-82eb-0f7039136ca5",
+      "title": "Pygame Dynamic Image Transformation",
+      "updated_at": 1743247078,
+      "created_at": 1743217086,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "362a9551-596a-4495-84f1-0e6885b99ad7",
+      "title": "Image Extraction Utility",
+      "updated_at": 1743246694,
+      "created_at": 1743206250,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "16b5bab8-a233-4536-8987-4e47d5a3ca5b",
+      "title": "Движение цилиндра с возвратом",
+      "updated_at": 1743199237,
+      "created_at": 1743196869,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "d1a4fceb-cc9b-4003-9b27-ce0d28f1922f",
+      "title": "Решение шарады по картинке",
+      "updated_at": 1743024203,
+      "created_at": 1743024182,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "4ab99ef7-08c1-4397-a82d-ab24b127e6b3",
+      "title": "Зашифрованные символы в картинке",
+      "updated_at": 1743020631,
+      "created_at": 1743020430,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "192f4b1a-6234-40be-ae72-c7c3ef7c82c3",
+      "title": "Контакт с внеземными цивилизациями",
+      "updated_at": 1742859057,
+      "created_at": 1742857765,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "a0ce64cf-52e8-410a-93f6-4bd35ff537d9",
+      "title": "Архитектуры Процессоров и Программирование",
+      "updated_at": 1742853500,
+      "created_at": 1742852116,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "dfb17274-43a1-4961-affc-baa7d9de0e23",
+      "title": "Самоулучшающаяся система",
+      "updated_at": 1742778319,
+      "created_at": 1742765697,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "b197ca77-91bb-415f-8c72-8eb29bf3081b",
+      "title": "ИИ как полноправные рабочие агенты",
+      "updated_at": 1742765674,
+      "created_at": 1742555349,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "6e18b754-8fa9-4d0f-8766-e5d816618932",
+      "title": "Саморазвивающаяся система кода",
+      "updated_at": 1742764912,
+      "created_at": 1742763962,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "d3b1d868-aef3-4c7c-96e9-6f4792a0086e",
+      "title": "Мудрость толпы",
+      "updated_at": 1742753432,
+      "created_at": 1742752359,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "dea47c9a-9abe-476c-a611-87409b7d059a",
+      "title": "Москва любовь",
+      "updated_at": 1742383608,
+      "created_at": 1742381765,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "335c0440-951c-433f-a1be-113e8948c6ae",
+      "title": "New Chat",
+      "updated_at": 1742375718,
+      "created_at": 1742375554,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "c3fb354b-6998-4937-b35a-bb9c90a251a5",
+      "title": "Важность Юмора в Жизни",
+      "updated_at": 1742316097,
+      "created_at": 1742302730,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "527499c5-ef42-4f72-bb65-a7ba60922083",
+      "title": "Сравнение f=x^(1/x) и сигмоида",
+      "updated_at": 1742284013,
+      "created_at": 1742283968,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "5e845bad-d67f-4505-9831-871f719ebda0",
+      "title": "New Chat",
+      "updated_at": 1742057028,
+      "created_at": 1742057010,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "9550f686-f9b1-4063-a020-ceccca1dc7a8",
+      "title": "Трубопроводные Войска РФ",
+      "updated_at": 1741660701,
+      "created_at": 1741660652,
+      "chat_type": "t2i",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "ff789263-bffa-446b-8056-d454df60ad61",
+      "title": "Философия Искусственного Интеллекта",
+      "updated_at": 1741659924,
+      "created_at": 1741657740,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "2f02f9a4-9d14-4e3f-aaa1-7cff4c8bd926",
+      "title": "Эмодзи для Котелка",
+      "updated_at": 1741656145,
+      "created_at": 1741656010,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "0a38d9be-7726-4d49-8102-78eaa1ffc24a",
+      "title": "Двусмысленность реальности в сериале",
+      "updated_at": 1741475899,
+      "created_at": 1741379707,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "5cd2d377-6881-4ad4-bb61-35d30795be09",
+      "title": "Сознание как производные функции",
+      "updated_at": 1741475368,
+      "created_at": 1741471644,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "8c9b26b4-b154-4df1-b079-104b88ed8132",
+      "title": "Тёмные глубинки США в криминальных сериалах",
+      "updated_at": 1741464835,
+      "created_at": 1741462622,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "ee3cdf88-2eae-489e-8892-a586172e6095",
+      "title": "Загадка Веков и Чудес",
+      "updated_at": 1741400096,
+      "created_at": 1741389444,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "ec0d71e9-4a43-4b19-b5dd-45027284042e",
+      "title": "Ядерная Энергия и Кинетика",
+      "updated_at": 1741007941,
+      "created_at": 1741007424,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "4224eec5-d134-40c4-a41c-4b4d42deac32",
+      "title": "Одnorучные подтягивания: техника и тренировки",
+      "updated_at": 1740985367,
+      "created_at": 1740985317,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "983129a7-8753-4bde-86b5-898e9049cb18",
+      "title": "Лазеры в вакууме и веществе",
+      "updated_at": 1740985003,
+      "created_at": 1740984734,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "b4cca0f3-d848-4fdc-940c-2f91703f75a0",
+      "title": "Поиск Пропавшей Кружки",
+      "updated_at": 1740623638,
+      "created_at": 1740622917,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "2e422bd5-2ce7-441a-a0b9-f8821713578c",
+      "title": "Робототехника и философия",
+      "updated_at": 1740613281,
+      "created_at": 1740612764,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "cdaff3f6-14b1-4435-8601-a5b61605673f",
+      "title": "Замкнутые области в цифрах",
+      "updated_at": 1740280586,
+      "created_at": 1740278682,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "db2c3e5f-d56f-4ea4-8963-e93369674cb9",
+      "title": "День Защитника Отечества",
+      "updated_at": 1740275221,
+      "created_at": 1740275199,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "d385002a-fb19-4513-8a22-b268437d00cf",
+      "title": "Логотип для забегаловки Чык-чырык",
+      "updated_at": 1740248949,
+      "created_at": 1740247968,
+      "chat_type": "t2i",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "f06addb4-246b-4366-a745-84e6c1fe7f01",
+      "title": "ИИ-коллектив через привычные инструменты",
+      "updated_at": 1740182053,
+      "created_at": 1740131747,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "e99b34e2-6a09-4408-a49f-b9706af025a6",
+      "title": "Музыкальные Эксперименты",
+      "updated_at": 1740154839,
+      "created_at": 1740154738,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "418868d3-7d87-4fde-ad41-6d3420fd1eb9",
+      "title": "Философия Сознания и Мира",
+      "updated_at": 1740152307,
+      "created_at": 1740152270,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "6024b37f-11ed-4030-bf3e-86482d92189e",
+      "title": "Монетизация Личных Сообщений в Telegram",
+      "updated_at": 1740149261,
+      "created_at": 1740149227,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "51a079c1-4e93-4fc7-b111-2421257cb4fe",
+      "title": "Октавы в физике",
+      "updated_at": 1740144373,
+      "created_at": 1740138022,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "6d20564d-0559-4227-8858-6d95d53d7d45",
+      "title": "Эффективность Электрического Чайника",
+      "updated_at": 1740126131,
+      "created_at": 1740126078,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "d4de1c83-16a2-4683-ac7d-fe50ff611cb8",
+      "title": "Космическая стыковка",
+      "updated_at": 1739736989,
+      "created_at": 1739736972,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "6fdc534e-5695-40f6-acaf-5babb0a899f5",
+      "title": "Воровской жаргон в колониях",
+      "updated_at": 1739735080,
+      "created_at": 1739734892,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "d2c4a157-97da-447a-912c-74c0f1536dba",
+      "title": "Деликатный ответ на семейный выпад",
+      "updated_at": 1739727582,
+      "created_at": 1739727552,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "204b6840-3519-4c98-8954-3709c50b98d5",
+      "title": "Смысл и абстракция в нейросетях",
+      "updated_at": 1739725297,
+      "created_at": 1739710503,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "a6732fb7-061e-41e8-994d-5c8bd2e1724e",
+      "title": "Важное слово на всех языках",
+      "updated_at": 1739649338,
+      "created_at": 1739649318,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "aed6bace-ac63-494d-931c-51b72632103e",
+      "title": "Музыкальная транскрипция нейросетями",
+      "updated_at": 1739644506,
+      "created_at": 1739643253,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "39d35fff-2d58-471b-9e0b-53c348434745",
+      "title": "Фрагментированный Разговор",
+      "updated_at": 1739642121,
+      "created_at": 1739641947,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "33c1c12f-01c2-4c7e-9b0a-b3cdde92335c",
+      "title": "Синопсис мультфильма Пиф-паф",
+      "updated_at": 1739281113,
+      "created_at": 1739281038,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "f2593b7f-8d47-4e2c-b863-104f3ec00b43",
+      "title": "Пожелания здоровье Putin",
+      "updated_at": 1739271517,
+      "created_at": 1739271338,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "f6149aa1-9cd3-4325-b1b8-32b41d8b2e0c",
+      "title": "Тизер с Ангелом-Уборщицей",
+      "updated_at": 1739246479,
+      "created_at": 1739244515,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "97990276-357f-4773-82a7-f91c93462b9f",
+      "title": "Trump in Bald Eagle Style",
+      "updated_at": 1739238001,
+      "created_at": 1739237838,
+      "chat_type": "t2i",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "8be44e71-e94f-487b-9a46-3ff3ea59b4ef",
+      "title": "Румыны и Славяне: Взаимосвязи",
+      "updated_at": 1739237367,
+      "created_at": 1739235688,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "43c7ac70-02dd-45ea-a674-ac1c33392425",
+      "title": "Indian Language Perception Analysis",
+      "updated_at": 1739235123,
+      "created_at": 1739234956,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "ec447094-47fe-4e93-b6b6-5e2605774d1b",
+      "title": "Slavic Unity呼声",
+      "updated_at": 1739230477,
+      "created_at": 1739230420,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "e89106ae-6062-4b5d-bcd4-e04b3bbc4452",
+      "title": "ИИ и угадай животное",
+      "updated_at": 1739157177,
+      "created_at": 1739155829,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "b6837353-5931-4736-916c-920d24d916a5",
+      "title": "Пони и диджериду",
+      "updated_at": 1739155128,
+      "created_at": 1739154467,
+      "chat_type": "t2v",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "64e500c1-5807-4186-be9a-c34695d499ca",
+      "title": "Поляризация света через фильтры",
+      "updated_at": 1739019735,
+      "created_at": 1739019277,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "31110595-6ca9-4487-bf04-d75f3b961c5a",
+      "title": "Creating Astra Voice Effect",
+      "updated_at": 1738856487,
+      "created_at": 1738856207,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "1a154627-ecba-42ae-9be0-825431a29bd8",
+      "title": "Межславянский текст",
+      "updated_at": 1738768110,
+      "created_at": 1738768079,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "3eb5117c-b0b0-4d6e-8abe-99737ad78a27",
+      "title": "New Chat",
+      "updated_at": 1738764953,
+      "created_at": 1738763123,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "9204b392-ccc2-4b43-9739-38539110f699",
+      "title": "Тест Тьюринга и ИИ",
+      "updated_at": 1738763014,
+      "created_at": 1738762202,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "e3957c69-5f04-4370-b17b-9a79be1371e5",
+      "title": "Russian Comedy",
+      "updated_at": 1738705555,
+      "created_at": 1738705054,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "e54a00d4-3d7d-49a7-bfcf-fb66f5dba456",
+      "title": "Алоха и Айдахо",
+      "updated_at": 1738685623,
+      "created_at": 1738685269,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "e03f5097-ab6b-489e-a9bc-34d2c61b53b0",
+      "title": "Мотивация Агентства Искоренить Проблему",
+      "updated_at": 1738675424,
+      "created_at": 1738675388,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "58f7a9af-1746-4c2b-aa34-757b0de18f53",
+      "title": "Поиск любимой в природе",
+      "updated_at": 1738673071,
+      "created_at": 1738673052,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "1060fcc4-6e50-4849-a944-7ace5bc3fb7c",
+      "title": "Финансирование Новостей и USAID",
+      "updated_at": 1738669840,
+      "created_at": 1738669271,
+      "chat_type": "search",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "62601b51-01dc-4ea8-bbd6-3dc3b0aa6a8a",
+      "title": "Закрытие USAID: Последствия и Реакция",
+      "updated_at": 1738669254,
+      "created_at": 1738669225,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "13b8eab3-8df1-4f55-9396-94eb70449576",
+      "title": "Критический анализ квантовой коммуникации",
+      "updated_at": 1738658593,
+      "created_at": 1738617373,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "21145256-4774-4142-9971-9dfbfc213358",
+      "title": "Советская ОГАС и современные ИИ",
+      "updated_at": 1738398886,
+      "created_at": 1738398735,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "a8aabf53-74c8-43c9-86b0-c0b40c443194",
+      "title": "Современная поэзия и сленг",
+      "updated_at": 1738396355,
+      "created_at": 1738396340,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "51939c9d-dadc-4539-bf1b-6c19a63f63fb",
+      "title": "Изображение Анализ",
+      "updated_at": 1738394368,
+      "created_at": 1738394358,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "d3fa35af-0f5a-4244-84cc-c786a89f7bdf",
+      "title": "Развитие ИИ и сознание",
+      "updated_at": 1738334567,
+      "created_at": 1738334473,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    },
+    {
+      "id": "7d009b89-7244-4bf9-b11d-6ecf16becd6f",
+      "title": "3D Куб Демосцены",
+      "updated_at": 1738086452,
+      "created_at": 1738086333,
+      "chat_type": "t2t",
+      "project_id": null,
+      "pinned": false
+    }
+  ]
+}

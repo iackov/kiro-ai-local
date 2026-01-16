@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "disable_existing_loggers": false,
+  "formatters": {
+    "json": {
+      "()": "pythonjsonlogger.jsonlogger.JsonFormatter",
+      "format": "%(asctime)s %(name)s %(levelname)s %(message)s"
+    }
+  },
+  "handlers": {
+    "console": {
+      "class": "logging.StreamHandler",
+      "formatter": "json",
+      "stream": "ext://sys.stdout"
+    },
+    "file": {
+      "class": "logging.handlers.RotatingFileHandler",
+      "formatter": "json",
+      "filename": "/logs/rag-api.log",
+      "maxBytes": 10485760,
+      "backupCount": 5
+    }
+  },
+  "root": {
+    "level": "INFO",
+    "handlers": ["console", "file"]
+  }
+}

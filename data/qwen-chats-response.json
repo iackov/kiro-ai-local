@@ -1,0 +1,8 @@
+{
+  "success": false,
+  "request_id": "147451cc-ba90-4cb7-9708-243967a9ea1a",
+  "data": {
+    "code": "Unauthorized",
+    "details": "401 Не авторизован"
+  }
+}
