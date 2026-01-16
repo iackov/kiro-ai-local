@@ -5,6 +5,7 @@ from datetime import datetime
 from collections import defaultdict
 from typing import Dict, List
 import time
+from functools import lru_cache
 
 class MetricsStore:
     """In-memory metrics storage"""
@@ -23,6 +24,10 @@ class MetricsStore:
         }
         self.service_health = {}  # Service health tracking
         self.auto_actions = []  # Autonomous actions taken
+        self._insights_cache = None  # Cache for insights
+        self._insights_cache_time = 0  # Cache timestamp
+        self._analysis_cache = None  # Cache for analysis
+        self._analysis_cache_time = 0  # Cache timestamp
         
     def record_query(self, service: str, query: str, latency: float, success: bool):
         """Record a query"""
@@ -82,7 +87,12 @@ class MetricsStore:
         }
     
     def analyze_performance(self) -> Dict:
-        """Analyze performance and detect issues"""
+        """Analyze performance and detect issues (with caching)"""
+        # Cache for 5 seconds
+        now = time.time()
+        if self._analysis_cache and (now - self._analysis_cache_time) < 5:
+            return self._analysis_cache
+        
         issues = []
         suggestions = []
         
@@ -198,13 +208,19 @@ class MetricsStore:
         priority_order = {"high": 0, "medium": 1, "low": 2}
         suggestions.sort(key=lambda x: priority_order.get(x["priority"], 3))
         
-        return {
+        result = {
             "issues": issues,
             "suggestions": suggestions,
             "health_score": self._calculate_health_score(),
             "insights": self._generate_insights(),
             "learning_applied": any(s.get("learning_adjusted") for s in suggestions)
         }
+        
+        # Update cache
+        self._analysis_cache = result
+        self._analysis_cache_time = now
+        
+        return result
     
     def _generate_insights(self) -> List[str]:
         """Generate insights about usage patterns"""
@@ -338,11 +354,16 @@ class MetricsStore:
         }
     
     def get_insights(self) -> Dict:
-        """Get combined insights (metrics + learning)"""
+        """Get combined insights (metrics + learning) with caching"""
+        # Cache for 3 seconds
+        now = time.time()
+        if self._insights_cache and (now - self._insights_cache_time) < 3:
+            return self._insights_cache
+        
         analysis = self.analyze_performance()
         learning = self.get_learning_insights()
         
-        return {
+        result = {
             "insights": analysis["insights"] + learning["insights"],
             "suggestions": analysis["suggestions"],
             "health_score": analysis["health_score"],
@@ -351,6 +372,12 @@ class MetricsStore:
                 "acceptance_rate": learning["acceptance_rate"]
             }
         }
+        
+        # Update cache
+        self._insights_cache = result
+        self._insights_cache_time = now
+        
+        return result
     
     def record_service_health(self, service: str, status: str, details: Dict = None):
         """Record service health status"""
