@@ -432,6 +432,151 @@ class MetricsStore:
         # Keep only last 50
         if len(self.auto_actions) > 50:
             self.auto_actions = self.auto_actions[-50:]
+    
+    def predict_future_issues(self) -> List[Dict]:
+        """Predict future issues based on trends (Level 7: Planning)"""
+        predictions = []
+        
+        # Predict latency degradation
+        for service, lats in self.latencies.items():
+            if len(lats) > 30:
+                # Analyze trend
+                recent_30 = lats[-30:]
+                first_10 = sum(recent_30[:10]) / 10
+                last_10 = sum(recent_30[-10:]) / 10
+                
+                if last_10 > first_10 * 1.2:  # 20% degradation
+                    # Predict when it will become critical
+                    degradation_rate = (last_10 - first_10) / 20  # per query
+                    queries_until_critical = (1000 - last_10) / degradation_rate if degradation_rate > 0 else 999
+                    
+                    predictions.append({
+                        "type": "latency_degradation",
+                        "service": service,
+                        "current": round(last_10, 0),
+                        "trend": "increasing",
+                        "predicted_critical_in": f"{int(queries_until_critical)} queries",
+                        "recommended_action": f"Increase {service} resources proactively",
+                        "confidence": "medium",
+                        "urgency": "low" if queries_until_critical > 100 else "high"
+                    })
+        
+        # Predict error rate increase
+        for service, error_count in self.errors.items():
+            if error_count > 3:
+                # Check if errors are accelerating
+                recent_queries = [q for q in self.queries[-20:] if q["service"] == service]
+                if len(recent_queries) > 10:
+                    recent_errors = len([q for q in recent_queries if not q["success"]])
+                    error_rate = recent_errors / len(recent_queries)
+                    
+                    if error_rate > 0.2:  # >20% error rate
+                        predictions.append({
+                            "type": "error_rate_increase",
+                            "service": service,
+                            "current_rate": f"{error_rate*100:.0f}%",
+                            "trend": "increasing",
+                            "predicted_critical_in": "soon",
+                            "recommended_action": f"Investigate {service} logs and prepare restart",
+                            "confidence": "high",
+                            "urgency": "high"
+                        })
+        
+        # Predict resource exhaustion based on patterns
+        if len(self.queries) > 100:
+            # Check query rate acceleration
+            last_50_time = self._calculate_time_span(self.queries[-50:])
+            prev_50_time = self._calculate_time_span(self.queries[-100:-50])
+            
+            if last_50_time > 0 and prev_50_time > 0:
+                last_rate = 50 / last_50_time
+                prev_rate = 50 / prev_50_time
+                
+                if last_rate > prev_rate * 1.5:  # 50% increase in rate
+                    predictions.append({
+                        "type": "load_increase",
+                        "current_rate": f"{last_rate:.1f} req/s",
+                        "previous_rate": f"{prev_rate:.1f} req/s",
+                        "trend": "accelerating",
+                        "predicted_critical_in": "10-20 minutes",
+                        "recommended_action": "Scale up services or enable caching",
+                        "confidence": "medium",
+                        "urgency": "medium"
+                    })
+        
+        return predictions
+    
+    def _calculate_time_span(self, queries: List[Dict]) -> float:
+        """Calculate time span of queries in seconds"""
+        if len(queries) < 2:
+            return 0
+        
+        from datetime import datetime
+        first = datetime.fromisoformat(queries[0]["timestamp"])
+        last = datetime.fromisoformat(queries[-1]["timestamp"])
+        return (last - first).total_seconds()
+    
+    def generate_action_plan(self) -> Dict:
+        """Generate proactive action plan (Level 7: Planning)"""
+        predictions = self.predict_future_issues()
+        analysis = self.analyze_performance()
+        
+        # Prioritize actions
+        immediate_actions = []
+        planned_actions = []
+        
+        # From predictions
+        for pred in predictions:
+            if pred["urgency"] == "high":
+                immediate_actions.append({
+                    "priority": "immediate",
+                    "reason": pred["type"],
+                    "action": pred["recommended_action"],
+                    "confidence": pred["confidence"]
+                })
+            else:
+                planned_actions.append({
+                    "priority": "planned",
+                    "reason": pred["type"],
+                    "action": pred["recommended_action"],
+                    "confidence": pred["confidence"],
+                    "schedule": pred.get("predicted_critical_in", "future")
+                })
+        
+        # From current issues
+        for issue in analysis["issues"]:
+            immediate_actions.append({
+                "priority": "immediate",
+                "reason": f"{issue['service']} {issue['type']}",
+                "action": f"Address {issue['service']} {issue['metric']} issue",
+                "confidence": "high"
+            })
+        
+        # From suggestions
+        for suggestion in analysis["suggestions"]:
+            if suggestion["priority"] == "high":
+                immediate_actions.append({
+                    "priority": "immediate",
+                    "reason": suggestion["issue"],
+                    "action": suggestion["action"],
+                    "confidence": "high"
+                })
+            else:
+                planned_actions.append({
+                    "priority": "planned",
+                    "reason": suggestion["issue"],
+                    "action": suggestion["action"],
+                    "confidence": "medium",
+                    "schedule": "when convenient"
+                })
+        
+        return {
+            "predictions": predictions,
+            "immediate_actions": immediate_actions,
+            "planned_actions": planned_actions,
+            "total_actions": len(immediate_actions) + len(planned_actions),
+            "requires_attention": len(immediate_actions) > 0
+        }
 
 # Global metrics store
 metrics_store = MetricsStore()

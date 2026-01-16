@@ -15,6 +15,7 @@ from collections import defaultdict
 
 from metrics import metrics_store
 from circuit_breaker import circuit_breaker, CircuitBreakerOpenError
+from knowledge_graph import knowledge_graph
 
 # Rate limiting
 rate_limit_store = defaultdict(list)
@@ -407,6 +408,123 @@ async def reset_circuit_breaker(service: str = Form(...)):
         }
     except Exception as e:
         return {"status": "error", "error": str(e)}
+
+@app.get("/api/planning/predictions")
+async def get_predictions():
+    """Get future issue predictions (Level 7: Planning)"""
+    predictions = metrics_store.predict_future_issues()
+    return {
+        "predictions": predictions,
+        "count": len(predictions),
+        "has_urgent": any(p["urgency"] == "high" for p in predictions)
+    }
+
+@app.get("/api/planning/action-plan")
+async def get_action_plan():
+    """Get proactive action plan (Level 7: Planning)"""
+    return metrics_store.generate_action_plan()
+
+@app.post("/api/planning/execute-plan")
+async def execute_action_plan(auto_execute: bool = Form(False)):
+    """Execute planned actions (Level 7: Planning)"""
+    plan = metrics_store.generate_action_plan()
+    
+    if not auto_execute:
+        return {
+            "status": "preview",
+            "message": "Set auto_execute=true to execute",
+            "plan": plan
+        }
+    
+    executed = []
+    failed = []
+    
+    # Execute immediate actions only
+    for action in plan["immediate_actions"]:
+        try:
+            # Parse action and execute
+            if "restart" in action["action"].lower():
+                # Extract service name
+                service = action["reason"].split()[0]
+                body = {"action_type": "restart_service", "service": service}
+                result = await execute_auto_action(action_type="restart_service", service=service)
+                executed.append({"action": action["action"], "result": result})
+            elif "increase" in action["action"].lower() and "memory" in action["action"].lower():
+                # Extract service name
+                service = action["reason"].split()[0]
+                result = await execute_auto_action(action_type="increase_memory", service=service)
+                executed.append({"action": action["action"], "result": result})
+            else:
+                # Log for manual execution
+                executed.append({"action": action["action"], "result": "logged_for_manual"})
+        except Exception as e:
+            failed.append({"action": action["action"], "error": str(e)})
+    
+    return {
+        "status": "executed",
+        "executed_count": len(executed),
+        "failed_count": len(failed),
+        "executed": executed,
+        "failed": failed
+    }
+
+@app.post("/api/reasoning/analyze")
+async def analyze_with_reasoning(query: str = Form(...)):
+    """Analyze query with knowledge graph reasoning (Level 8: Reasoning)"""
+    reasoning = knowledge_graph.reason_about_query(query)
+    return {
+        "query": query,
+        "reasoning": reasoning,
+        "level": 8,
+        "capability": "knowledge_graph_reasoning"
+    }
+
+@app.get("/api/reasoning/concepts")
+async def get_known_concepts():
+    """Get all known concepts in knowledge graph"""
+    concepts = []
+    for concept, metadata in knowledge_graph.nodes.items():
+        related_count = len(knowledge_graph.edges.get(concept, []))
+        concepts.append({
+            "concept": concept,
+            "metadata": metadata,
+            "related_count": related_count
+        })
+    
+    return {
+        "concepts": concepts,
+        "total": len(concepts)
+    }
+
+@app.post("/api/reasoning/find-path")
+async def find_concept_path(from_concept: str = Form(...), to_concept: str = Form(...)):
+    """Find reasoning path between two concepts"""
+    path = knowledge_graph.find_path(from_concept, to_concept)
+    
+    if not path:
+        return {
+            "found": False,
+            "message": f"No path found between {from_concept} and {to_concept}"
+        }
+    
+    # Build detailed path with relationships
+    detailed_path = []
+    for i in range(len(path) - 1):
+        from_node = path[i]
+        to_node = path[i + 1]
+        rel_type = knowledge_graph.edge_types.get((from_node, to_node), "related_to")
+        detailed_path.append({
+            "from": from_node,
+            "to": to_node,
+            "relationship": rel_type
+        })
+    
+    return {
+        "found": True,
+        "path": path,
+        "detailed_path": detailed_path,
+        "length": len(path) - 1
+    }
 
 @app.get("/api/metrics/insights")
 async def get_metrics_insights():
