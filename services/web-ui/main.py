@@ -24,6 +24,7 @@ from execution_engine import ExecutionEngine
 from adaptive_planner import adaptive_planner
 from decision_engine import decision_engine
 from self_improvement import self_improvement_engine
+from meta_learning import meta_learning_engine
 
 # Rate limiting
 rate_limit_store = defaultdict(list)
@@ -396,6 +397,11 @@ async def get_improvement_plan():
 async def get_improvement_insights():
     """Get self-improvement insights"""
     return self_improvement_engine.get_improvement_insights()
+
+@app.get("/api/meta-learning/insights")
+async def get_meta_learning_insights():
+    """Get meta-learning insights"""
+    return meta_learning_engine.get_meta_insights()
 
 @app.get("/api/production/metrics")
 async def get_production_metrics():
@@ -903,6 +909,19 @@ async def autonomous_interface(
         
         # Record execution for adaptive learning
         adaptive_planner.record_execution(message, optimized_steps, results, summary)
+        
+        # Record meta-learning event
+        learning_context = {
+            "task_type": adaptive_suggestions.get("pattern", "generic"),
+            "has_errors": summary.get("failed", 0) > 0,
+            "has_rag_context": len(rag_context) > 0
+        }
+        recommended_strategy = meta_learning_engine.recommend_learning_strategy(learning_context)
+        meta_learning_engine.record_learning_event(
+            recommended_strategy,
+            learning_context,
+            summary.get("status", "unknown")
+        )
         
         task_obj.status = summary["status"]
         task_obj.completed_at = datetime.now().isoformat()
