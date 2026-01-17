@@ -27,6 +27,7 @@ from self_improvement import self_improvement_engine
 from meta_learning import meta_learning_engine
 from predictive_engine import predictive_engine
 from code_generator import CodeGenerator
+from knowledge_store import init_knowledge_store, knowledge_store
 
 # Rate limiting
 rate_limit_store = defaultdict(list)
@@ -70,6 +71,10 @@ async def lifespan(app: FastAPI):
     import code_generator as cg_module
     cg_module.code_generator = CodeGenerator(ollama_url=SERVICES["ollama"])
     print("✓ Code generator initialized")
+    
+    # Initialize knowledge store
+    init_knowledge_store(rag_url=SERVICES["rag"])
+    print("✓ Knowledge store initialized")
     
     yield
     # Shutdown: close client gracefully
@@ -861,8 +866,9 @@ async def autonomous_interface(
     intent = conversation_manager.detect_intent(message)
     entities = conversation_manager.extract_entities(message)
     
-    # Phase 2: Get RAG context
+    # Phase 2: Get RAG context + similar executions
     rag_context = []
+    similar_executions = []
     try:
         resp = await http_client.post(
             f"{SERVICES['rag']}/query",
@@ -871,6 +877,13 @@ async def autonomous_interface(
         )
         rag_data = resp.json()
         rag_context = rag_data.get("documents", [])
+        
+        # Получаем похожие выполнения для обучения
+        from knowledge_store import knowledge_store
+        if knowledge_store and intent in ["execute", "modify", "create"]:
+            similar_executions = await knowledge_store.query_similar_executions(message, http_client, top_k=2)
+            if similar_executions:
+                print(f"✓ Found {len(similar_executions)} similar past executions")
     except:
         pass
     
@@ -994,23 +1007,57 @@ async def autonomous_interface(
             **task_obj.to_dict(),
             "summary": summary
         }
+        
+        # Автоматически сохраняем результат в базу знаний
+        from knowledge_store import knowledge_store
+        if knowledge_store and summary.get('success_rate', 0) >= 80:
+            # Сохраняем только успешные выполнения (>= 80%)
+            await knowledge_store.store_execution_result(task_result, message, http_client)
+            print(f"✓ Execution result stored in knowledge base")
     
-    # Phase 5: Generate Response
+    # Phase 5: Generate Response with context awareness
     response_text = ""
     if task_result:
         summary = task_result.get("summary", {})
         successful_steps = summary.get("successful", 0)
         total_steps = summary.get("total_steps", len(steps))
-        response_text = f"✓ Task {summary.get('status', 'completed')}: {successful_steps}/{total_steps} steps successful ({summary.get('success_rate', 0)}%). Task ID: {task_result['task_id']}"
+        
+        # Детальный ответ с описанием выполненных действий
+        response_text = f"✓ Задача выполнена успешно: {successful_steps}/{total_steps} шагов ({summary.get('success_rate', 0)}%).\n\n"
+        response_text += "Выполненные действия:\n"
+        for i, step_result in enumerate(task_result.get('result', []), 1):
+            status_icon = '✅' if step_result['status'] in ['success', 'completed'] else '❌'
+            response_text += f"{i}. {status_icon} {step_result['step']}\n"
+        
+        # Добавляем информацию о созданных файлах/ресурсах
+        if any('create' in step['step'].lower() or 'generate' in step['step'].lower() for step in task_result.get('result', [])):
+            response_text += f"\n💾 Результаты сохранены. Task ID: {task_result['task_id']}"
+            
     elif execution_plan:
-        response_text = f"📋 Execution plan ready: {len(execution_plan['steps'])} steps. Set auto_execute=true to run."
+        response_text = f"📋 План готов: {len(execution_plan['steps'])} шагов. Включите Auto-Execute для выполнения."
     else:
-        # Conversational response with RAG context
-        if rag_context:
+        # Conversational response with session context
+        recent_executions = session.get_recent_executions(max_count=3)
+        
+        if recent_executions and any(word in message.lower() for word in ['что', 'what', 'сделал', 'did', 'выполнил', 'результат', 'result']):
+            # Пользователь спрашивает о предыдущих выполнениях
+            last_exec = recent_executions[0]
+            task_info = last_exec['task_result']
+            summary = task_info.get('summary', {})
+            
+            response_text = f"В последнем выполнении (Task ID: {task_info.get('task_id')}):\n"
+            response_text += f"✅ Успешно: {summary.get('successful', 0)}/{summary.get('total_steps', 0)} шагов\n"
+            response_text += f"📊 Success Rate: {summary.get('success_rate', 0)}%\n\n"
+            response_text += "Выполненные шаги:\n"
+            for i, step in enumerate(task_info.get('result', [])[:5], 1):
+                status_icon = '✅' if step['status'] in ['success', 'completed'] else '❌'
+                response_text += f"{i}. {status_icon} {step['step']}\n"
+                
+        elif rag_context:
             context_preview = rag_context[0].get('content', '')[:200]
-            response_text = f"Based on your history: {context_preview}... (Found {len(rag_context)} relevant documents)"
+            response_text = f"На основе базы знаний: {context_preview}... (Найдено {len(rag_context)} документов)"
         else:
-            response_text = f"I understand your {intent} request. System has 9 autonomy levels operational."
+            response_text = f"Понял ваш запрос ({intent}). Система готова к работе с 9 уровнями автономности."
     
     # Phase 6: Save to session
     session.add_message("user", message, {
@@ -1021,7 +1068,8 @@ async def autonomous_interface(
     session.add_message("assistant", response_text, {
         "rag_used": len(rag_context) > 0,
         "task_executed": task_result is not None,
-        "execution_plan": execution_plan
+        "execution_plan": execution_plan,
+        "task_result": task_result  # Сохраняем результаты выполнения для контекста
     })
     
     latency = (time.time() - start_time) * 1000
@@ -1175,6 +1223,44 @@ async def execute_auto_action(action_type: str = Form(...), service: str = Form(
             
     except Exception as e:
         return {"status": "error", "error": str(e)}
+
+@app.get("/api/knowledge/stats")
+async def get_knowledge_stats():
+    """Get knowledge store statistics"""
+    from knowledge_store import knowledge_store
+    if knowledge_store:
+        return knowledge_store.get_stats()
+    return {"stored_executions": 0, "status": "not_initialized"}
+
+@app.get("/api/knowledge/executions")
+async def get_stored_executions(query: str = ""):
+    """Get stored executions from knowledge base"""
+    from knowledge_store import knowledge_store
+    if not knowledge_store:
+        return {"executions": [], "total": 0}
+    
+    try:
+        if query:
+            executions = await knowledge_store.query_similar_executions(query, http_client, top_k=10)
+        else:
+            # Получаем последние выполнения
+            resp = await http_client.post(
+                f"{SERVICES['rag']}/query",
+                json={"query": "execution_result", "top_k": 10},
+                timeout=5.0
+            )
+            data = resp.json()
+            executions = [
+                doc for doc in data.get('documents', [])
+                if doc.get('metadata', {}).get('type') == 'execution_result'
+            ]
+        
+        return {
+            "executions": executions,
+            "total": len(executions)
+        }
+    except Exception as e:
+        return {"error": str(e), "executions": [], "total": 0}
 
 if __name__ == "__main__":
     import uvicorn

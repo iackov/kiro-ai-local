@@ -26,6 +26,22 @@ class ConversationSession:
     def get_context_window(self, max_messages: int = 10) -> List[Dict]:
         return self.messages[-max_messages:]
     
+    def get_recent_executions(self, max_count: int = 5) -> List[Dict]:
+        """Get recent task executions from session history"""
+        executions = []
+        for msg in reversed(self.messages):
+            if msg.get('role') == 'assistant':
+                metadata = msg.get('metadata', {})
+                if metadata.get('task_executed') and metadata.get('task_result'):
+                    executions.append({
+                        'timestamp': msg.get('timestamp'),
+                        'task_result': metadata.get('task_result'),
+                        'content': msg.get('content')
+                    })
+                    if len(executions) >= max_count:
+                        break
+        return executions
+    
     def to_dict(self) -> Dict:
         return {
             "session_id": self.session_id,

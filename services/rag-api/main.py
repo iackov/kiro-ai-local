@@ -98,6 +98,32 @@ async def ingest(request: IngestRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+class AddDocumentRequest(BaseModel):
+    content: str = Field(..., description="Document content to add")
+    metadata: Optional[Dict[str, Any]] = Field(default={}, description="Document metadata")
+
+
+@app.post("/add")
+async def add_document(request: AddDocumentRequest):
+    """
+    Add a single document directly to the vector database
+    """
+    try:
+        logger.info("add_document_started", content_length=len(request.content))
+        
+        result = await rag_engine.add_document(
+            content=request.content,
+            metadata=request.metadata
+        )
+        
+        logger.info("add_document_completed", **result)
+        return result
+        
+    except Exception as e:
+        logger.error("add_document_failed", error=str(e))
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.post("/ingest/upload")
 async def ingest_upload(file: UploadFile = File(...)):
     """

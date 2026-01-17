@@ -228,6 +228,49 @@ class RAGEngine:
             "collection_name": self.collection.name
         }
     
+    async def add_document(self, content: str, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
+        """Add a single document directly to the vector database"""
+        try:
+            if metadata is None:
+                metadata = {}
+            
+            # Split content into chunks
+            chunks = self.text_splitter.split_text(content)
+            
+            # Prepare for ChromaDB
+            texts = chunks
+            metadatas = [
+                {
+                    **metadata,
+                    "chunk_index": i,
+                    "total_chunks": len(chunks)
+                }
+                for i in range(len(chunks))
+            ]
+            
+            # Generate unique IDs
+            import uuid
+            base_id = str(uuid.uuid4())
+            ids = [f"{base_id}_{i}" for i in range(len(chunks))]
+            
+            # Add to collection
+            self.collection.add(
+                documents=texts,
+                metadatas=metadatas,
+                ids=ids
+            )
+            
+            logger.info("document_added", chunks=len(chunks), base_id=base_id)
+            
+            return {
+                "success": True,
+                "chunks_created": len(chunks),
+                "document_id": base_id
+            }
+        except Exception as e:
+            logger.error("add_document_failed", error=str(e))
+            raise
+    
     async def clear(self) -> Dict[str, Any]:
         """Clear all documents"""
         self.chroma_client.delete_collection(self.collection.name)
