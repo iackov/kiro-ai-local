@@ -1,0 +1,114 @@
+{
+  "timestamp": "2026-01-18T04:27:08.158858",
+  "total_duration": 45.02176594734192,
+  "results": [
+    {
+      "name": "1.1 Проверка здоровья сервисов",
+      "status": "PASS",
+      "duration": 0.03918290138244629,
+      "result": true
+    },
+    {
+      "name": "1.2 Доступность Dashboard",
+      "status": "PASS",
+      "duration": 0.035295963287353516,
+      "result": true
+    },
+    {
+      "name": "1.3 Доступность Chat",
+      "status": "PASS",
+      "duration": 0.014703512191772461,
+      "result": true
+    },
+    {
+      "name": "2.1 Автономное выполнение задачи",
+      "status": "PASS",
+      "duration": 40.518112897872925,
+      "result": true
+    },
+    {
+      "name": "2.2 Определение намерений",
+      "status": "PASS",
+      "duration": 0.8275818824768066,
+      "result": true
+    },
+    {
+      "name": "2.3 Принятие решений",
+      "status": "PASS",
+      "duration": 1.3489930629730225,
+      "result": true
+    },
+    {
+      "name": "3.1 Knowledge Store активен",
+      "status": "PASS",
+      "duration": 0.011191844940185547,
+      "result": true
+    },
+    {
+      "name": "3.2 Сохранение результатов",
+      "status": "PASS",
+      "duration": 0.011031627655029297,
+      "result": true
+    },
+    {
+      "name": "3.3 Запросы к RAG",
+      "status": "PASS",
+      "duration": 0.43138861656188965,
+      "result": true
+    },
+    {
+      "name": "4.1 Autonomous Optimizer активен",
+      "status": "PASS",
+      "duration": 0.008297204971313477,
+      "result": true
+    },
+    {
+      "name": "4.2 Ручной анализ системы",
+      "status": "PASS",
+      "duration": 0.012694358825683594,
+      "result": true
+    },
+    {
+      "name": "4.3 Сбор метрик",
+      "status": "PASS",
+      "duration": 0.008622884750366211,
+      "result": true
+    },
+    {
+      "name": "5.1 Proactive Engine активен",
+      "status": "PASS",
+      "duration": 0.020616531372070312,
+      "result": true
+    },
+    {
+      "name": "5.2 Создание предсказаний",
+      "status": "FAIL",
+      "duration": 0.030329465866088867,
+      "result": false
+    },
+    {
+      "name": "6.1 Понимание контекста",
+      "status": "PASS",
+      "duration": 1.4522593021392822,
+      "result": true
+    },
+    {
+      "name": "6.2 Адаптивное обучение",
+      "status": "PASS",
+      "duration": 0.015530824661254883,
+      "result": true
+    },
+    {
+      "name": "7.1 Время отклика",
+      "status": "PASS",
+      "duration": 0.08173656463623047,
+      "result": true
+    },
+    {
+      "name": "7.2 Параллельные запросы",
+      "status": "PASS",
+      "duration": 0.13173389434814453,
+      "result": true
+    }
+  ]
+}
