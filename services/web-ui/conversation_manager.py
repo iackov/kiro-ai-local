@@ -57,10 +57,15 @@ class ConversationManager:
         """Advanced intent detection with context awareness"""
         message_lower = message.lower()
         
+        print(f"DEBUG detect_intent: message='{message_lower}'")
+        
         # Priority 1: Code/Content Creation (NEW - highest priority for creative tasks)
-        creation_keywords = ["create", "generate", "write", "build", "make"]
+        creation_keywords = ["create", "generate", "write", "build", "make", 
+                           "создать", "создай", "сгенерировать", "написать", "напиши", "сделать", "сделай"]
         creative_targets = ["code", "program", "script", "game", "app", "calculator", 
-                          "function", "class", "tic-tac-toe", "file", "project", "python"]
+                          "function", "class", "tic-tac-toe", "file", "project", "python",
+                          "код", "программ", "скрипт", "игр", "приложение", "калькулятор",
+                          "функци", "класс", "файл", "проект", "питон"]
         safe_zones = ["playground/", "generated/", "experiments/", "tic-tac-toe/", 
                      "demos/", "examples/"]
         
@@ -69,13 +74,18 @@ class ConversationManager:
         has_safe_zone = any(zone in message_lower for zone in safe_zones)
         has_save_to_safe = "save" in message_lower and has_safe_zone
         
+        print(f"DEBUG: has_creation={has_creation}, has_creative_target={has_creative_target}, has_safe_zone={has_safe_zone}")
+        
         # If creating code/game OR saving to safe zone, it's creation
         if (has_creation and (has_creative_target or has_safe_zone)) or has_save_to_safe:
+            print("DEBUG: Detected intent=CREATE")
             return "create"
         
         # Priority 2: Action verbs (execute)
         action_verbs = ["check", "test", "run", "execute", "perform", "start", "stop", 
-                       "restart", "deploy", "rollback", "apply", "fix", "debug", "play"]
+                       "restart", "deploy", "rollback", "apply", "fix", "debug", "play",
+                       "проверь", "тест", "запусти", "выполни", "исполни", "старт", "стоп",
+                       "перезапусти", "примени", "исправь", "отладь", "играть"]
         if any(verb in message_lower for verb in action_verbs):
             # But if it's "play" after creation, still treat as create
             if "play" in message_lower and has_creation:
@@ -98,9 +108,11 @@ class ConversationManager:
         query_words = ["what", "how", "why", "when", "where", "who", "explain",
                       "tell me", "show me", "list", "get", "find"]
         if any(word in message_lower for word in query_words):
+            print("DEBUG: Detected intent=QUERY")
             return "query"
         
         # Default: treat as query
+        print("DEBUG: Detected intent=QUERY (default)")
         return "query"
     
     def extract_entities(self, message: str) -> Dict:

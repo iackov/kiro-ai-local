@@ -26,7 +26,6 @@ from decision_engine import decision_engine
 from self_improvement import self_improvement_engine
 from meta_learning import meta_learning_engine
 from predictive_engine import predictive_engine
-from code_generator import CodeGenerator
 
 # Rate limiting
 rate_limit_store = defaultdict(list)
@@ -66,11 +65,6 @@ async def lifespan(app: FastAPI):
     execution_engine = ExecutionEngine(http_client, SERVICES)
     print("✓ Execution engine initialized")
     
-    # Initialize code generator
-    import code_generator as cg_module
-    cg_module.code_generator = CodeGenerator(ollama_url=SERVICES["ollama"])
-    print("✓ Code generator initialized")
-    
     yield
     # Shutdown: close client gracefully
     print("Shutting down HTTP client...")
@@ -93,11 +87,6 @@ SERVICES = {
 async def home(request: Request):
     """Main dashboard"""
     return templates.TemplateResponse("index.html", {"request": request})
-
-@app.get("/chat", response_class=HTMLResponse)
-async def chat(request: Request):
-    """Interactive chat interface"""
-    return templates.TemplateResponse("chat.html", {"request": request})
 
 @app.get("/api/status")
 async def get_status():
@@ -837,15 +826,10 @@ async def get_task_status(task_id: str):
 async def autonomous_interface(
     message: str = Form(...),
     session_id: str = Form(None),
-    auto_execute: str = Form("false")
+    auto_execute: bool = Form(False)
 ):
     """Unified autonomous interface - intelligent planning + execution"""
     start_time = time.time()
-    
-    # Parse auto_execute string to boolean
-    auto_execute_bool = auto_execute.lower() in ['true', '1', 'yes']
-    
-    print(f"DEBUG autonomous: message='{message[:50]}...', auto_execute='{auto_execute}', auto_execute_bool={auto_execute_bool}")
     
     # Create/get session
     if not session_id:
@@ -874,15 +858,10 @@ async def autonomous_interface(
     adaptive_suggestions = None
     autonomous_decision = None
     
-    print(f"DEBUG Phase 3: intent='{intent}', checking if in ['execute', 'modify', 'create']")
-    
-    if intent in ["execute", "modify", "create"]:
-        print("DEBUG: Creating execution plan...")
+    if intent in ["execute", "modify"]:
         # Create task with intelligent decomposition
         task_obj = task_executor.create_task(message)
         steps = task_executor.decompose_task(message)
-        
-        print(f"DEBUG: Steps created: {len(steps)} steps")
         
         # Get adaptive suggestions
         adaptive_suggestions = adaptive_planner.suggest_improvements(message, steps)
@@ -897,8 +876,6 @@ async def autonomous_interface(
             "rag_context_available": len(rag_context) > 0
         }
         autonomous_decision = decision_engine.make_decision(decision_context)
-        
-        print(f"DEBUG: Autonomous decision: {autonomous_decision.action}")
         
         # Optimize steps based on learning
         optimized_steps = adaptive_planner.optimize_steps(steps)
@@ -919,38 +896,27 @@ async def autonomous_interface(
             "original_steps": steps,
             "optimizations_applied": len(steps) != len(optimized_steps),
             "estimated_duration": len(optimized_steps) * 2,
-            "requires_approval": not auto_execute_bool or autonomous_decision.action == "require_approval",
+            "requires_approval": not auto_execute or autonomous_decision.action == "require_approval",
             "safety_level": "high" if any(word in message.lower() for word in ["delete", "remove", "drop"]) else "medium",
             "adaptive_suggestions": adaptive_suggestions,
             "autonomous_decision": autonomous_decision.to_dict()
         }
         
-        print(f"DEBUG: Execution plan created with {len(optimized_steps)} steps, requires_approval={execution_plan['requires_approval']}")
-        
         # Predict failure points
         failure_predictions = predictive_engine.predict_failure_points(execution_plan)
         execution_plan["predicted_failure_points"] = failure_predictions
-    else:
-        print(f"DEBUG: Intent '{intent}' not in execution list, skipping plan creation")
     
     # Phase 4: Execution (if auto_execute and decision allows)
     task_result = None
-    should_execute = auto_execute_bool and execution_plan
-    
-    print(f"DEBUG Phase 4: auto_execute_bool={auto_execute_bool}, execution_plan={execution_plan is not None}, should_execute={should_execute}")
+    should_execute = auto_execute and execution_plan
     
     # Check autonomous decision
     if should_execute and autonomous_decision:
-        print(f"DEBUG: autonomous_decision.action={autonomous_decision.action}")
         if autonomous_decision.action == "require_approval":
             should_execute = False
-            print("DEBUG: Execution blocked - requires approval")
         elif autonomous_decision.action == "suggest_execute":
             # Execute but mark as suggested
-            print("DEBUG: Execution suggested")
             pass
-    
-    print(f"DEBUG: Final should_execute={should_execute}")
     
     if should_execute:
         task_obj.status = "running"
@@ -1033,7 +999,7 @@ async def autonomous_interface(
         "capabilities": {
             "conversational": True,
             "task_execution": True,
-            "autonomous": auto_execute_bool,
+            "autonomous": auto_execute,
             "intelligent_planning": True,
             "context_aware": len(rag_context) > 0
         }

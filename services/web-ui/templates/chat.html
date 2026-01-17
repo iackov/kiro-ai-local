@@ -243,8 +243,20 @@
 
         .task-result-header {
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             color: #00d9ff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .success-badge {
+            background: #00ff88;
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
         }
 
         .task-step {
@@ -479,9 +491,18 @@
             
             if (message.taskResult) {
                 const result = message.taskResult;
+                const successRate = result.summary.success_rate;
+                const badge = successRate === 100 ? 
+                    `<span class="success-badge">✅ ${successRate}%</span>` :
+                    `<span style="background: #ffaa00; color: #000; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: bold;">⚠️ ${successRate}%</span>`;
+                
                 content += `<div class="task-result">
                     <div class="task-result-header">
-                        ✅ Задача выполнена: ${result.summary.success_rate}%
+                        <span>🚀 Задача выполнена</span>
+                        ${badge}
+                    </div>
+                    <div style="font-size: 12px; color: #888; margin-bottom: 8px;">
+                        ${result.summary.successful}/${result.summary.total_steps} шагов успешно
                     </div>
                     ${result.result.map(step => `
                         <div class="task-step ${step.status === 'success' || step.status === 'completed' ? 'success' : 'failed'}">
@@ -529,9 +550,13 @@
             try {
                 // Send to API
                 const autoExecute = document.getElementById('autoExecute').checked;
+                console.log('Sending request:', { message, autoExecute });
+                
                 const formData = new FormData();
                 formData.append('message', message);
                 formData.append('auto_execute', autoExecute ? 'true' : 'false');
+                
+                console.log('FormData auto_execute:', formData.get('auto_execute'));
                 
                 const response = await fetch('http://localhost:9000/api/autonomous', {
                     method: 'POST',
@@ -539,6 +564,7 @@
                 });
                 
                 const data = await response.json();
+                console.log('Response:', data);
                 
                 // Add assistant response
                 const assistantMessage = {

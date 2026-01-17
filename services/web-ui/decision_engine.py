@@ -72,9 +72,20 @@ class DecisionEngine:
             if intent == "create":
                 safe_zones = ["playground/", "generated/", "experiments/", "tic-tac-toe/", "demos/", "examples/"]
                 is_in_safe_zone = any(zone in message.lower() for zone in safe_zones)
-                if is_in_safe_zone:
+                
+                # If creating code/script without specifying dangerous location, assume safe
+                code_creation_keywords = ["script", "code", "program", "game", "app", "function",
+                                         "скрипт", "код", "программ", "игр", "приложение", "функци"]
+                is_code_creation = any(keyword in message.lower() for keyword in code_creation_keywords)
+                
+                # Check if it's NOT modifying production/system files
+                dangerous_targets = ["production", "system", "config", "/etc/", "/var/", "docker-compose",
+                                    "продакшн", "система", "конфиг"]
+                is_dangerous = any(target in message.lower() for target in dangerous_targets)
+                
+                if is_in_safe_zone or (is_code_creation and not is_dangerous):
                     confidence = 0.95
-                    reasoning.append("Code creation in safe zone - auto-approved")
+                    reasoning.append("Code creation without dangerous targets - auto-approved")
                     action = "auto_execute"
                     return Decision(intent, action, confidence, reasoning)
             
