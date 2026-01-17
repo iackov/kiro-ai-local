@@ -29,6 +29,7 @@ from predictive_engine import predictive_engine
 from code_generator import CodeGenerator
 from knowledge_store import init_knowledge_store, knowledge_store
 from autonomous_optimizer import autonomous_optimizer
+from proactive_engine import proactive_engine
 
 # Rate limiting
 rate_limit_store = defaultdict(list)
@@ -84,6 +85,14 @@ async def lifespan(app: FastAPI):
         )
     )
     print("✓ Autonomous optimizer started")
+    
+    # Start proactive action loop in background
+    asyncio.create_task(
+        proactive_engine.continuous_proactive_loop(
+            metrics_store, knowledge_store, http_client
+        )
+    )
+    print("✓ Proactive engine started")
     
     yield
     # Shutdown: close client gracefully
@@ -1297,6 +1306,36 @@ async def trigger_analysis():
             "status": "completed",
             "analysis": analysis,
             "improvements_applied": applied
+        }
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
+
+@app.get("/api/proactive/status")
+async def get_proactive_status():
+    """Get proactive engine status"""
+    return {
+        "stats": proactive_engine.get_stats(),
+        "pending_actions": proactive_engine.get_pending_actions(),
+        "recent_executed": proactive_engine.get_executed_actions(limit=5)
+    }
+
+@app.post("/api/proactive/predict")
+async def trigger_prediction():
+    """Manually trigger proactive prediction"""
+    try:
+        from knowledge_store import knowledge_store
+        actions = await proactive_engine.predict_and_act(
+            metrics_store, knowledge_store, http_client
+        )
+        
+        # Выполняем автоматические действия
+        executed = await proactive_engine.execute_proactive_actions(http_client)
+        
+        return {
+            "status": "completed",
+            "predictions": len(actions),
+            "actions_created": [a.to_dict() for a in actions],
+            "actions_executed": executed
         }
     except Exception as e:
         return {"status": "error", "error": str(e)}
