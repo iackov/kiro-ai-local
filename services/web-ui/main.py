@@ -99,6 +99,11 @@ async def chat(request: Request):
     """Interactive chat interface"""
     return templates.TemplateResponse("chat.html", {"request": request})
 
+@app.get("/dashboard", response_class=HTMLResponse)
+async def dashboard(request: Request):
+    """System metrics dashboard"""
+    return templates.TemplateResponse("dashboard.html", {"request": request})
+
 @app.get("/api/status")
 async def get_status():
     """Get status of all services"""

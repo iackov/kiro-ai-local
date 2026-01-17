@@ -1,0 +1,215 @@
+#!/usr/bin/env python3
+"""Создание dashboard.html"""
+
+dashboard_html = """<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI System Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+        }
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #00d9ff, #0099cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .status {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #00ff88;
+            color: #000;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #00d9ff;
+        }
+        .card-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #00d9ff;
+        }
+        .card-value {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .metric-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .metric-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00d9ff, #0099cc);
+            transition: width 0.5s ease;
+        }
+        .service-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .service-status {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .service-status.healthy {
+            background: #00ff88;
+            box-shadow: 0 0 10px #00ff88;
+        }
+        .service-status.unhealthy {
+            background: #ff4444;
+            box-shadow: 0 0 10px #ff4444;
+        }
+        .refresh-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00d9ff, #0099cc);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 217, 255, 0.4);
+        }
+        .refresh-btn:hover {
+            transform: scale(1.1) rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🤖 AI System Dashboard</h1>
+        <div class="status" id="systemStatus">● СИСТЕМА РАБОТАЕТ</div>
+        <div style="margin-top: 10px; color: #888;">Обновлено: <span id="lastUpdate">--:--:--</span></div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="card-title">⚡ Health Score</div>
+            <div class="card-value" id="healthScore">--</div>
+            <div class="metric-bar">
+                <div class="metric-bar-fill" id="healthBar" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">📊 Всего запросов</div>
+            <div class="card-value" id="totalRequests">--</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">✅ Success Rate</div>
+            <div class="card-value" id="successRate">--%</div>
+            <div class="metric-bar">
+                <div class="metric-bar-fill" id="successBar" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">⚙️ Автономных действий</div>
+            <div class="card-value" id="autoActions">--</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">🔧 Статус сервисов</div>
+        <div id="servicesGrid"></div>
+    </div>
+
+    <button class="refresh-btn" onclick="loadDashboard()" title="Обновить">↻</button>
+
+    <script>
+        async function loadDashboard() {
+            try {
+                const metricsResponse = await fetch('/api/production/metrics');
+                const metrics = await metricsResponse.json();
+
+                document.getElementById('healthScore').textContent = metrics.health.score || metrics.health.health_score;
+                document.getElementById('healthBar').style.width = (metrics.health.score || metrics.health.health_score) + '%';
+                
+                document.getElementById('totalRequests').textContent = metrics.performance.total_requests;
+                
+                const successRate = metrics.performance.total_requests > 0 
+                    ? ((metrics.performance.total_requests - metrics.performance.error_count) / metrics.performance.total_requests * 100).toFixed(1)
+                    : 100;
+                document.getElementById('successRate').textContent = successRate + '%';
+                document.getElementById('successBar').style.width = successRate + '%';
+                
+                document.getElementById('autoActions').textContent = metrics.autonomy.auto_actions_taken;
+
+                const statusResponse = await fetch('/api/status');
+                const status = await statusResponse.json();
+
+                const servicesHtml = Object.entries(status).map(([name, data]) => {
+                    const isHealthy = data.status === 'healthy';
+                    return `
+                        <div class="service-card">
+                            <span class="service-status ${isHealthy ? 'healthy' : 'unhealthy'}"></span>
+                            <span>${name.toUpperCase()}: ${isHealthy ? 'Работает' : 'Недоступен'}</span>
+                        </div>
+                    `;
+                }).join('');
+                document.getElementById('servicesGrid').innerHTML = servicesHtml;
+
+                document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+
+            } catch (error) {
+                console.error('Ошибка загрузки dashboard:', error);
+                document.getElementById('systemStatus').textContent = '● ОШИБКА ЗАГРУЗКИ';
+                document.getElementById('systemStatus').style.background = '#ff4444';
+            }
+        }
+
+        setInterval(loadDashboard, 5000);
+        loadDashboard();
+    </script>
+</body>
+</html>
+"""
+
+with open('services/web-ui/templates/dashboard.html', 'w', encoding='utf-8') as f:
+    f.write(dashboard_html)
+
+print("✅ dashboard.html создан успешно!")
