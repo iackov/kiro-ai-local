@@ -28,6 +28,7 @@ from meta_learning import meta_learning_engine
 from predictive_engine import predictive_engine
 from code_generator import CodeGenerator
 from knowledge_store import init_knowledge_store, knowledge_store
+from autonomous_optimizer import autonomous_optimizer
 
 # Rate limiting
 rate_limit_store = defaultdict(list)
@@ -75,6 +76,14 @@ async def lifespan(app: FastAPI):
     # Initialize knowledge store
     init_knowledge_store(rag_url=SERVICES["rag"])
     print("✓ Knowledge store initialized")
+    
+    # Start autonomous optimization loop in background
+    asyncio.create_task(
+        autonomous_optimizer.continuous_optimization_loop(
+            metrics_store, adaptive_planner, decision_engine, http_client
+        )
+    )
+    print("✓ Autonomous optimizer started")
     
     yield
     # Shutdown: close client gracefully
@@ -1261,6 +1270,36 @@ async def get_stored_executions(query: str = ""):
         }
     except Exception as e:
         return {"error": str(e), "executions": [], "total": 0}
+
+@app.get("/api/autonomous/status")
+async def get_autonomous_status():
+    """Get autonomous optimizer status"""
+    return {
+        "optimizer": autonomous_optimizer.get_optimization_report(),
+        "last_analysis": autonomous_optimizer.last_analysis.isoformat() if autonomous_optimizer.last_analysis else None,
+        "is_active": True
+    }
+
+@app.post("/api/autonomous/analyze")
+async def trigger_analysis():
+    """Manually trigger system analysis"""
+    try:
+        analysis = await autonomous_optimizer.analyze_system_performance(
+            metrics_store, adaptive_planner, decision_engine
+        )
+        
+        # Автоматически применяем улучшения
+        applied = []
+        if analysis.get("auto_actions"):
+            applied = await autonomous_optimizer.apply_auto_improvements(analysis, http_client)
+        
+        return {
+            "status": "completed",
+            "analysis": analysis,
+            "improvements_applied": applied
+        }
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
 
 if __name__ == "__main__":
     import uvicorn
