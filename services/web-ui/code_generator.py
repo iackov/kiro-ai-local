@@ -56,14 +56,23 @@ class CodeGenerator:
         """Generate code using Ollama"""
         try:
             print(f"DEBUG generate_code: Starting generation for prompt: {prompt[:100]}...")
-            async with httpx.AsyncClient(timeout=60.0) as client:
+            # Увеличенный таймаут для генерации кода
+            async with httpx.AsyncClient(timeout=180.0) as client:
                 print(f"DEBUG generate_code: Calling Ollama at {self.ollama_url}")
+                
+                # Упрощённый промпт для быстрой генерации
+                simple_prompt = f"Write a simple {language} {prompt.split('.')[0]}. Keep it minimal and functional."
+                
                 response = await client.post(
                     f"{self.ollama_url}/api/generate",
                     json={
                         "model": "qwen2.5-coder:7b",
-                        "prompt": f"Write {language} code for: {prompt}\n\nProvide only the code, no explanations:",
-                        "stream": False
+                        "prompt": simple_prompt,
+                        "stream": False,
+                        "options": {
+                            "temperature": 0.7,
+                            "num_predict": 500  # Ограничиваем длину для скорости
+                        }
                     }
                 )
                 
@@ -76,9 +85,11 @@ class CodeGenerator:
                     
                     # Clean up code (remove markdown if present)
                     if "```" in code:
-                        code = code.split("```")[1]
-                        if code.startswith("python") or code.startswith("py"):
-                            code = "\n".join(code.split("\n")[1:])
+                        parts = code.split("```")
+                        if len(parts) >= 2:
+                            code = parts[1]
+                            if code.startswith("python") or code.startswith("py"):
+                                code = "\n".join(code.split("\n")[1:])
                     
                     return {
                         "success": True,
