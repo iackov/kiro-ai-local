@@ -94,6 +94,11 @@ async def home(request: Request):
     """Main dashboard"""
     return templates.TemplateResponse("index.html", {"request": request})
 
+@app.get("/chat", response_class=HTMLResponse)
+async def chat(request: Request):
+    """Interactive chat interface"""
+    return templates.TemplateResponse("chat.html", {"request": request})
+
 @app.get("/api/status")
 async def get_status():
     """Get status of all services"""
