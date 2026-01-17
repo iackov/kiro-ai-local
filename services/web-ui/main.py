@@ -1340,6 +1340,22 @@ async def trigger_prediction():
     except Exception as e:
         return {"status": "error", "error": str(e)}
 
+@app.get("/api/models/stats")
+async def get_model_stats():
+    """Get model router statistics"""
+    from model_router import model_router
+    return {
+        "stats": model_router.get_stats(),
+        "external_configured": bool(model_router.external_qwen_url)
+    }
+
+@app.post("/api/models/clear-cache")
+async def clear_model_cache():
+    """Clear model router cache"""
+    from model_router import model_router
+    model_router.clear_cache()
+    return {"status": "cleared", "message": "Model cache cleared successfully"}
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8080)

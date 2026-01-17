@@ -52,36 +52,27 @@ class CodeGenerator:
                 return True
         return False
     
-    async def generate_code(self, prompt: str, language: str = "python") -> Dict[str, Any]:
-        """Generate code using Ollama"""
+    async def generate_code(self, prompt: str, language: str = "python", context: Dict = None) -> Dict[str, Any]:
+        """Generate code using Model Router for intelligent model selection"""
         try:
             print(f"DEBUG generate_code: Starting generation for prompt: {prompt[:100]}...")
-            # Увеличенный таймаут для генерации кода
+            
+            # Используем Model Router для выбора модели
+            from model_router import model_router
+            
+            # Упрощённый промпт для быстрой генерации
+            simple_prompt = f"Write a simple {language} {prompt.split('.')[0]}. Keep it minimal and functional. Return only code, no explanations."
+            
             async with httpx.AsyncClient(timeout=180.0) as client:
-                print(f"DEBUG generate_code: Calling Ollama at {self.ollama_url}")
-                
-                # Упрощённый промпт для быстрой генерации
-                simple_prompt = f"Write a simple {language} {prompt.split('.')[0]}. Keep it minimal and functional."
-                
-                response = await client.post(
-                    f"{self.ollama_url}/api/generate",
-                    json={
-                        "model": "qwen2.5-coder:7b",
-                        "prompt": simple_prompt,
-                        "stream": False,
-                        "options": {
-                            "temperature": 0.7,
-                            "num_predict": 500  # Ограничиваем длину для скорости
-                        }
-                    }
+                result = await model_router.generate(
+                    prompt=simple_prompt,
+                    context=context or {},
+                    http_client=client
                 )
                 
-                print(f"DEBUG generate_code: Ollama response status: {response.status_code}")
-                
-                if response.status_code == 200:
-                    result = response.json()
-                    code = result.get("response", "")
-                    print(f"DEBUG generate_code: Got code, length: {len(code)}")
+                if result.get("success"):
+                    code = result.get("content", "")
+                    print(f"DEBUG generate_code: Got code from {result.get('model')}, length: {len(code)}")
                     
                     # Clean up code (remove markdown if present)
                     if "```" in code:
@@ -94,10 +85,11 @@ class CodeGenerator:
                     return {
                         "success": True,
                         "code": code.strip(),
-                        "language": language
+                        "language": language,
+                        "model": result.get("model_name", "unknown")
                     }
                 else:
-                    error_msg = f"Ollama returned {response.status_code}"
+                    error_msg = result.get("error", "Unknown error")
                     print(f"DEBUG generate_code: ERROR - {error_msg}")
                     return {
                         "success": False,
