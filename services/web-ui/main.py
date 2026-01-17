@@ -837,10 +837,13 @@ async def get_task_status(task_id: str):
 async def autonomous_interface(
     message: str = Form(...),
     session_id: str = Form(None),
-    auto_execute: bool = Form(False)
+    auto_execute: str = Form("false")
 ):
     """Unified autonomous interface - intelligent planning + execution"""
     start_time = time.time()
+    
+    # Parse auto_execute string to boolean
+    auto_execute_bool = auto_execute.lower() in ['true', '1', 'yes']
     
     # Create/get session
     if not session_id:
@@ -907,7 +910,7 @@ async def autonomous_interface(
             "original_steps": steps,
             "optimizations_applied": len(steps) != len(optimized_steps),
             "estimated_duration": len(optimized_steps) * 2,
-            "requires_approval": not auto_execute or autonomous_decision.action == "require_approval",
+            "requires_approval": not auto_execute_bool or autonomous_decision.action == "require_approval",
             "safety_level": "high" if any(word in message.lower() for word in ["delete", "remove", "drop"]) else "medium",
             "adaptive_suggestions": adaptive_suggestions,
             "autonomous_decision": autonomous_decision.to_dict()
@@ -919,7 +922,7 @@ async def autonomous_interface(
     
     # Phase 4: Execution (if auto_execute and decision allows)
     task_result = None
-    should_execute = auto_execute and execution_plan
+    should_execute = auto_execute_bool and execution_plan
     
     # Check autonomous decision
     if should_execute and autonomous_decision:
@@ -1010,7 +1013,7 @@ async def autonomous_interface(
         "capabilities": {
             "conversational": True,
             "task_execution": True,
-            "autonomous": auto_execute,
+            "autonomous": auto_execute_bool,
             "intelligent_planning": True,
             "context_aware": len(rag_context) > 0
         }

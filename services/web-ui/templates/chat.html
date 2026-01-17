@@ -531,7 +531,7 @@
                 const autoExecute = document.getElementById('autoExecute').checked;
                 const formData = new FormData();
                 formData.append('message', message);
-                formData.append('auto_execute', autoExecute);
+                formData.append('auto_execute', autoExecute ? 'true' : 'false');
                 
                 const response = await fetch('http://localhost:9000/api/autonomous', {
                     method: 'POST',
