@@ -31,6 +31,7 @@ from knowledge_store import init_knowledge_store, knowledge_store
 from autonomous_optimizer import autonomous_optimizer
 from proactive_engine import proactive_engine
 from self_modification import self_modification
+from tree_of_thought import tree_of_thought
 
 # Rate limiting
 rate_limit_store = defaultdict(list)
@@ -1400,6 +1401,42 @@ async def autonomous_self_improve():
         }
     except Exception as e:
         return {"status": "error", "error": str(e)}
+
+@app.get("/api/tree-of-thought/status")
+async def get_tree_of_thought_status():
+    """Get Tree-of-Thought engine status"""
+    return tree_of_thought.get_stats()
+
+@app.post("/api/tree-of-thought/solve")
+async def solve_with_tree_of_thought(task: str = Form(...)):
+    """
+    Solve task using Tree-of-Thought approach
+    
+    Generates multiple solution branches, evaluates each,
+    selects best successful branch, hides failed branches from context
+    """
+    try:
+        result = await tree_of_thought.solve_with_tree(
+            task, execution_engine, {"original_task": task}
+        )
+        return result
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
+
+@app.get("/api/tree-of-thought/context/{tree_id}")
+async def get_tree_context(tree_id: str):
+    """Get context with only successful steps (what model sees)"""
+    context = tree_of_thought.get_successful_context(tree_id)
+    return {
+        "tree_id": tree_id,
+        "context": context,
+        "note": "This is what the model sees - only successful steps, no failures"
+    }
+
+@app.get("/api/tree-of-thought/stats/{tree_id}")
+async def get_tree_stats(tree_id: str):
+    """Get detailed statistics for a specific tree"""
+    return tree_of_thought.get_tree_stats(tree_id)
 
 if __name__ == "__main__":
     import uvicorn
