@@ -30,6 +30,7 @@ from code_generator import CodeGenerator
 from knowledge_store import init_knowledge_store, knowledge_store
 from autonomous_optimizer import autonomous_optimizer
 from proactive_engine import proactive_engine
+from self_modification import self_modification
 
 # Rate limiting
 rate_limit_store = defaultdict(list)
@@ -1355,6 +1356,50 @@ async def clear_model_cache():
     from model_router import model_router
     model_router.clear_cache()
     return {"status": "cleared", "message": "Model cache cleared successfully"}
+
+@app.get("/api/self-modification/status")
+async def get_self_modification_status():
+    """Get self-modification engine status"""
+    return {
+        "stats": self_modification.get_stats(),
+        "history": self_modification.get_modification_history(limit=5),
+        "safe_zones": self_modification.safe_modification_zones,
+        "protected_files": self_modification.protected_files
+    }
+
+@app.post("/api/self-modification/propose")
+async def propose_self_modification(
+    file_path: str = Form(...),
+    modification_type: str = Form(...),
+    description: str = Form(...)
+):
+    """Propose a self-modification"""
+    proposal = self_modification.propose_modification(
+        file_path, modification_type, description
+    )
+    return proposal
+
+@app.post("/api/self-modification/autonomous")
+async def autonomous_self_improve():
+    """Trigger autonomous self-improvement"""
+    try:
+        # Получаем анализ системы
+        analysis = await autonomous_optimizer.analyze_system_performance(
+            metrics_store, adaptive_planner, decision_engine
+        )
+        
+        # Предлагаем самоулучшения
+        improvements = await self_modification.autonomous_self_improvement(
+            analysis, http_client
+        )
+        
+        return {
+            "status": "completed",
+            "analysis": analysis,
+            "improvements": improvements
+        }
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
 
 if __name__ == "__main__":
     import uvicorn

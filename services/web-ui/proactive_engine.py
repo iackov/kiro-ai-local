@@ -109,7 +109,7 @@ class ProactiveEngine:
     def _analyze_error_trend(self, stats: Dict) -> str:
         """Анализ тренда ошибок"""
         total_errors = sum(stats.get("errors", {}).values())
-        total_queries = stats.get("total_queries", 1)
+        total_queries = max(stats.get("total_queries", 1), 1)
         
         error_rate = total_errors / total_queries
         
@@ -123,7 +123,7 @@ class ProactiveEngine:
         if not avg_latencies or len(avg_latencies) == 0:
             return "stable"
         
-        avg_latency = sum(avg_latencies.values()) / len(avg_latencies)
+        avg_latency = sum(avg_latencies.values()) / max(len(avg_latencies), 1)
         
         if avg_latency > 1000:  # > 1 секунды
             return "degrading"
