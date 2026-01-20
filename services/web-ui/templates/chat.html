@@ -547,6 +547,15 @@
             sendBtn.disabled = true;
             sendBtn.innerHTML = '<div class="loading"></div>';
             
+            // Add "typing" indicator
+            const typingMessage = {
+                role: 'system',
+                content: '🤖 Система обрабатывает запрос...',
+                timestamp: new Date().toISOString(),
+                isTyping: true
+            };
+            addMessageToUI(typingMessage);
+            
             try {
                 // Send to API
                 const autoExecute = document.getElementById('autoExecute').checked;
@@ -558,13 +567,25 @@
                 
                 console.log('FormData auto_execute:', formData.get('auto_execute'));
                 
-                const response = await fetch('http://localhost:9000/api/autonomous', {
+                // Use relative URL instead of hardcoded localhost
+                const response = await fetch('/api/autonomous', {
                     method: 'POST',
                     body: formData
                 });
                 
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
                 const data = await response.json();
                 console.log('Response:', data);
+                
+                // Remove typing indicator
+                const messagesDiv = document.getElementById('messages');
+                const typingIndicator = messagesDiv.querySelector('.message.system:last-child');
+                if (typingIndicator && typingIndicator.textContent.includes('обрабатывает')) {
+                    typingIndicator.remove();
+                }
                 
                 // Add assistant response
                 const assistantMessage = {
@@ -582,9 +603,10 @@
                 addMessageToUI(assistantMessage);
                 
             } catch (error) {
+                console.error('Error sending message:', error);
                 const errorMessage = {
                     role: 'system',
-                    content: `❌ Ошибка: ${error.message}`,
+                    content: `❌ Ошибка: ${error.message}. Проверьте что сервер запущен (docker-compose up)`,
                     timestamp: new Date().toISOString()
                 };
                 chat.messages.push(errorMessage);
@@ -617,6 +639,31 @@
 
         // Focus input on load
         document.getElementById('messageInput').focus();
+        
+        // Check API availability on load
+        async function checkAPIStatus() {
+            try {
+                const response = await fetch('/api/status');
+                if (response.ok) {
+                    console.log('✅ API доступен');
+                    return true;
+                }
+            } catch (error) {
+                console.error('❌ API недоступен:', error);
+                const messagesDiv = document.getElementById('messages');
+                if (messagesDiv.children.length === 0) {
+                    const warningMsg = {
+                        role: 'system',
+                        content: '⚠️ Предупреждение: Не удается подключиться к API. Убедитесь что сервер запущен (docker-compose up)',
+                        timestamp: new Date().toISOString()
+                    };
+                    addMessageToUI(warningMsg);
+                }
+                return false;
+            }
+        }
+        
+        checkAPIStatus();
     </script>
 </body>
 </html>
