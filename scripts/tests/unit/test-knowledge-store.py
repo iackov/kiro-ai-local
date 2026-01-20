@@ -13,7 +13,7 @@ print("-" * 60)
 response = requests.post(
     'http://localhost:9000/api/autonomous',
     data={
-        'message': 'Создай простой калькулятор на Python',
+        'message': 'Create a simple calculator script in Python. Save to playground/calculator.py',
         'auto_execute': 'true'
     },
     timeout=120
@@ -46,7 +46,7 @@ print("-" * 60)
 
 executions_response = requests.get(
     'http://localhost:9000/api/knowledge/executions',
-    params={'query': 'калькулятор'}
+    params={'query': 'calculator script'}
 )
 executions_data = executions_response.json()
 
@@ -68,7 +68,7 @@ print("-" * 60)
 response2 = requests.post(
     'http://localhost:9000/api/autonomous',
     data={
-        'message': 'Создай еще один калькулятор, но с умножением',
+        'message': 'Create another calculator script with multiplication. Save to playground/calc2.py',
         'auto_execute': 'true'
     },
     timeout=120
@@ -80,7 +80,8 @@ print(f"✓ Task executed: {result2.get('task_result') is not None}")
 if result2.get('task_result'):
     summary2 = result2['task_result']['summary']
     print(f"✓ Success rate: {summary2.get('success_rate')}%")
-    print(f"✓ Used similar executions: {len(result2.get('rag_context_used', 0)) > 0}")
+    rag_context = result2.get('rag_context_used', [])
+    print(f"✓ Used similar executions: {len(rag_context) > 0 if isinstance(rag_context, list) else False}")
 
 print("\n" + "="*60)
 print("\n✅ Knowledge Store работает! Система учится на своем опыте.")

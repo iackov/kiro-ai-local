@@ -80,7 +80,8 @@ print(f"✓ Task executed: {result2.get('task_result') is not None}")
 if result2.get('task_result'):
     summary2 = result2['task_result']['summary']
     print(f"✓ Success rate: {summary2.get('success_rate')}%")
-    print(f"✓ Used similar executions: {len(result2.get('rag_context_used', 0)) > 0}")
+    rag_context = result2.get('rag_context_used', [])
+    print(f"✓ Used similar executions: {len(rag_context) > 0 if isinstance(rag_context, list) else False}")
 
 print("\n" + "="*60)
 print("\n✅ Knowledge Store работает! Система учится на своем опыте.")
