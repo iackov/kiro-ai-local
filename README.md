@@ -205,6 +205,24 @@ $result = Invoke-RestMethod -Uri "http://localhost:9000/api/tree-of-thought/solv
 - [HOW-TO-CHECK-QWEN-IN-KIRO.md](HOW-TO-CHECK-QWEN-IN-KIRO.md) - Проверка интеграции с Kiro
 
 ### Тестирование
+
+#### 🧪 Структурированные Тесты (Рекомендуется)
+```bash
+# Все тесты (9 тестов: unit + integration + verification)
+python scripts/tests/run-all.py
+
+# По категориям
+python scripts/tests/run-all.py --unit           # 5 юнит-тестов (~2 мин)
+python scripts/tests/run-all.py --integration    # 3 интеграционных (~5 мин)
+python scripts/tests/run-all.py --verification   # Проверка 25 возможностей (~10 мин)
+
+# Отдельный тест
+python scripts/tests/unit/test-tree-of-thought.py
+```
+
+📚 **Документация:** [scripts/tests/README.md](scripts/tests/README.md) | [Quick Start](scripts/tests/QUICK-START.md)
+
+#### PowerShell Тесты (Legacy)
 ```powershell
 .\scripts\full-system-check.ps1      # Полная проверка (22 теста)
 .\scripts\test-full-autonomy.ps1     # Тест всех 6 уровней
