@@ -2,6 +2,15 @@
 # -*- coding: utf-8 -*-
 """Тестирование выполнения задач"""
 
+import sys
+# Установка кодировки для Windows
+if sys.platform == 'win32':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+        sys.stderr.reconfigure(encoding='utf-8')
+    except:
+        pass
+
 import requests
 import json
 

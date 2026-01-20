@@ -1,0 +1,47 @@
+{
+  "timestamp": "2026-01-20T16:44:23.833958",
+  "total_duration": 3.6925253868103027,
+  "summary": {
+    "total": 5,
+    "passed": 0,
+    "failed": 5,
+    "success_rate": 0.0
+  },
+  "results": [
+    {
+      "category": "Unit Tests",
+      "name": "Tree-of-Thought Engine",
+      "success": false,
+      "duration": 0.7042369842529297,
+      "timestamp": "2026-01-20T16:44:20.846179"
+    },
+    {
+      "category": "Unit Tests",
+      "name": "Self-Modification Engine",
+      "success": false,
+      "duration": 0.7382283210754395,
+      "timestamp": "2026-01-20T16:44:21.584590"
+    },
+    {
+      "category": "Unit Tests",
+      "name": "Autonomous Optimizer",
+      "success": false,
+      "duration": 0.7225251197814941,
+      "timestamp": "2026-01-20T16:44:22.307326"
+    },
+    {
+      "category": "Unit Tests",
+      "name": "Proactive Engine",
+      "success": false,
+      "duration": 0.7253530025482178,
+      "timestamp": "2026-01-20T16:44:23.032871"
+    },
+    {
+      "category": "Unit Tests",
+      "name": "Knowledge Store",
+      "success": false,
+      "duration": 0.8007409572601318,
+      "timestamp": "2026-01-20T16:44:23.833860"
+    }
+  ]
+}

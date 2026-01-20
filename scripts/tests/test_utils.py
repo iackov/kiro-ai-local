@@ -1,12 +1,27 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Общие утилиты для тестирования
 Используются всеми тестами для единообразия
 """
 
+import sys
 import requests
 import time
 from typing import Optional, Dict, Any, Callable
 from datetime import datetime
+
+# Установка кодировки для Windows
+if sys.platform == 'win32':
+    try:
+        import codecs
+        sys.stdout.reconfigure(encoding='utf-8')
+        sys.stderr.reconfigure(encoding='utf-8')
+    except:
+        # Для старых версий Python
+        import io
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 
 class Colors:
     """ANSI цветовые коды для консоли"""

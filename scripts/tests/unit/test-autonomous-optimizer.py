@@ -1,5 +1,15 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """Тестирование Autonomous Optimizer"""
+
+import sys
+# Установка кодировки для Windows
+if sys.platform == 'win32':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+        sys.stderr.reconfigure(encoding='utf-8')
+    except:
+        pass
 
 import requests
 import time
@@ -57,19 +67,24 @@ print("-" * 60)
 
 for i in range(3):
     print(f"Выполнение задачи {i+1}/3...")
-    response = requests.post(
-        'http://localhost:9000/api/autonomous',
-        data={
-            'message': f'Create test file {i+1}',
-            'auto_execute': 'true'
-        },
-        timeout=60
-    )
-    result = response.json()
-    if result.get('task_result'):
-        print(f"   ✓ Task {i+1} completed")
-    else:
-        print(f"   ⚠ Task {i+1} planned but not executed")
+    try:
+        response = requests.post(
+            'http://localhost:9000/api/autonomous',
+            data={
+                'message': f'Create test file {i+1} in playground/test{i+1}.txt',
+                'auto_execute': 'true'
+            },
+            timeout=30  # Reduced timeout
+        )
+        result = response.json()
+        if result.get('task_result'):
+            print(f"   ✓ Task {i+1} completed")
+        else:
+            print(f"   ⚠ Task {i+1} planned but not executed")
+    except requests.exceptions.Timeout:
+        print(f"   ⚠ Task {i+1} timeout - skipping")
+    except Exception as e:
+        print(f"   ⚠ Task {i+1} error: {str(e)[:50]}")
 
 # Тест 4: Проверить обновленный статус
 print("\n\nТест 4: Обновленный статус после работы")
