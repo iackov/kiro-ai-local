@@ -3,10 +3,17 @@
 Test Qwen API directly - send a message and get response
 """
 import sys
+import os
 from pathlib import Path
 
-# Add qwen path
-qwen_path = Path(r"C:\Users\Jack\source\kiro\qwen\src\mcp_server")
+# Add qwen path - try environment variable first, then default
+qwen_path_env = os.getenv("QWEN_PATH")
+if qwen_path_env:
+    qwen_path = Path(qwen_path_env)
+else:
+    # Default path (можно изменить под вашу систему)
+    qwen_path = Path(r"C:\Users\Jack\source\kiro\qwen\src\mcp_server")
+
 sys.path.insert(0, str(qwen_path))
 
 print("=== Testing Qwen API Direct ===")

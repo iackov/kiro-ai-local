@@ -107,15 +107,42 @@ python scripts/tests/run-all.py --verification
 ## 🎯 Активно Используемые Скрипты
 
 ### В Корне scripts/
+
+Эти скрипты остаются в корне для быстрого доступа:
+
+#### Системные Проверки
+```powershell
+# Полная проверка системы (22 теста)
+.\scripts\full-system-check.ps1
+
+# Быстрая проверка (5 тестов, ~30 секунд)
+.\scripts\quick-test.ps1
+
+# Нагрузочное тестирование
+.\scripts\stress-test.ps1
 ```
-full-system-check.ps1      # Полная проверка (22 теста)
-quick-test.ps1             # Быстрая проверка
-stress-test.ps1            # Нагрузочное тестирование
-publish-to-github.py       # Публикация на GitHub
-publish-to-github-cli.py   # Публикация через CLI
-test-web-behavior.py       # Тест веб-интерфейса
-test-qwen-api-direct.py    # Тест Qwen API
+
+#### Публикация
+```bash
+# Публикация через Personal Access Token
+python scripts/publish-to-github.py
+
+# Публикация через GitHub CLI
+python scripts/publish-to-github-cli.py
 ```
+
+#### Специфичные Тесты
+```bash
+# Эмуляция веб-интерфейса (отладка)
+python scripts/test-web-behavior.py
+
+# Прямой тест Qwen API
+python scripts/test-qwen-api-direct.py
+# Можно задать путь через переменную окружения:
+# $env:QWEN_PATH = "C:\path\to\qwen\src\mcp_server"
+```
+
+📚 **Подробнее:** [ROOT-SCRIPTS-ANALYSIS.md](ROOT-SCRIPTS-ANALYSIS.md)
 
 ## 📊 Статистика
 
