@@ -1,47 +1,47 @@
 {
-  "timestamp": "2026-01-20T16:44:23.833958",
-  "total_duration": 3.6925253868103027,
+  "timestamp": "2026-01-20T16:49:17.612122",
+  "total_duration": 117.02002120018005,
   "summary": {
     "total": 5,
-    "passed": 0,
-    "failed": 5,
-    "success_rate": 0.0
+    "passed": 5,
+    "failed": 0,
+    "success_rate": 100.0
   },
   "results": [
     {
       "category": "Unit Tests",
       "name": "Tree-of-Thought Engine",
-      "success": false,
-      "duration": 0.7042369842529297,
-      "timestamp": "2026-01-20T16:44:20.846179"
+      "success": true,
+      "duration": 0.9440944194793701,
+      "timestamp": "2026-01-20T16:47:21.536621"
     },
     {
       "category": "Unit Tests",
       "name": "Self-Modification Engine",
-      "success": false,
-      "duration": 0.7382283210754395,
-      "timestamp": "2026-01-20T16:44:21.584590"
+      "success": true,
+      "duration": 0.6276476383209229,
+      "timestamp": "2026-01-20T16:47:22.164472"
     },
     {
       "category": "Unit Tests",
       "name": "Autonomous Optimizer",
-      "success": false,
-      "duration": 0.7225251197814941,
-      "timestamp": "2026-01-20T16:44:22.307326"
+      "success": true,
+      "duration": 6.185403108596802,
+      "timestamp": "2026-01-20T16:47:28.358879"
     },
     {
       "category": "Unit Tests",
       "name": "Proactive Engine",
-      "success": false,
-      "duration": 0.7253530025482178,
-      "timestamp": "2026-01-20T16:44:23.032871"
+      "success": true,
+      "duration": 48.822957277297974,
+      "timestamp": "2026-01-20T16:48:17.182072"
     },
     {
       "category": "Unit Tests",
       "name": "Knowledge Store",
-      "success": false,
-      "duration": 0.8007409572601318,
-      "timestamp": "2026-01-20T16:44:23.833860"
+      "success": true,
+      "duration": 60.42977452278137,
+      "timestamp": "2026-01-20T16:49:17.612020"
     }
   ]
 }
